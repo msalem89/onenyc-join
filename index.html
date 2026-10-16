@@ -3,119 +3,130 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OneNYC Partnership & Impact Partner Onboarding</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<title>OneNYC Partnership & Impact Partner Onboarding Portal</title>
 <style>
   :root {
     --navy: #0c1f39;
-    --navy-dark: #081526;
-    --navy-light: #163259;
-    --amber: #f8a430;
-    --amber-hover: #e08b1a;
-    --amber-light: #fef7ed;
-    --sage: #c1ded3;
-    --cream: #fef4ef;
+    --navy-dark: #071526;
+    --navy-light: #183359;
+    --amber: #f59e0b;
+    --amber-hover: #d97706;
+    --sky: #0284c7;
+    --sky-light: #e0f2fe;
     --white: #ffffff;
-    --ink: #0c1f39;
-    --ink-muted: #5f6974;
-    --line: #d7dee4;
-    --line-active: #9aa3bb;
-    --error: #a5231f;
-    --error-bg: #fdeceb;
-    --ok: #2f6b3f;
-    --ok-bg: #eaf5ec;
-    --badge-bg: #eef3f9;
-    font-size: 16px;
+    --ink: #1f2937;
+    --ink-muted: #64748b;
+    --line: #e2e8f0;
+    --line-active: #cbd5e1;
+    --bg-page: #f8fafc;
+    --bg-card: #ffffff;
+    --ok: #16a34a;
+    --error: #dc2626;
   }
+
   * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; }
   body {
-    background: var(--cream);
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     color: var(--ink);
-    font-family: "Work Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg-page);
     line-height: 1.5;
-    padding-bottom: 60px;
   }
-  .wrap { max-width: 860px; margin: 0 auto; padding: 0 20px; }
-  
+
   /* Header */
   header.top {
     background: var(--navy);
     color: var(--white);
-    padding: 28px 20px 0 20px;
+    padding: 18px 0;
+    border-bottom: 3px solid var(--amber);
   }
-  header.top .wrap { padding-bottom: 22px; }
+  .wrap {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
   .wordmark {
-    font-size: 2.1rem;
-    letter-spacing: 0.5px;
+    font-size: 1.7rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
     margin: 0;
-    line-height: 1.1;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    gap: 2px;
   }
-  .wordmark .word-one { font-weight: 500; color: #ffffff; }
-  .wordmark .word-nyc { font-weight: 900; color: var(--amber); }
+  .wordmark .word-one { color: var(--white); }
+  .wordmark .word-nyc { color: var(--amber); }
   .tagline {
-    margin: 6px 0 0 0;
-    font-size: 1.05rem;
+    font-size: 0.88rem;
+    color: #94a3b8;
+    margin: 4px 0 0 0;
     font-weight: 500;
-    color: #c9d6e0;
   }
-  .stripe { display: flex; height: 6px; width: 100%; }
-  .stripe span { flex: 1; }
-  .stripe .s1 { background: var(--navy-dark); }
-  .stripe .s2 { background: var(--amber); }
-  .stripe .s3 { background: var(--sage); }
+  .stripe {
+    display: flex;
+    height: 4px;
+    width: 100%;
+    margin-top: 14px;
+  }
+  .stripe .s1 { flex: 1; background: var(--amber); }
+  .stripe .s2 { flex: 1; background: #38bdf8; }
+  .stripe .s3 { flex: 1; background: #10b981; }
 
-  /* Stepper Progress Bar */
+  /* Stepper */
   .stepper-nav {
-    position: sticky;
-    top: 0;
-    background: #ffffff;
-    z-index: 50;
+    background: var(--white);
     border-bottom: 1px solid var(--line);
-    box-shadow: 0 2px 8px rgba(12, 31, 57, 0.04);
+    padding: 16px 0;
   }
   .stepper-track {
     display: flex;
     justify-content: space-between;
-    padding: 12px 0;
-    gap: 6px;
+    align-items: center;
+    position: relative;
+    gap: 12px;
   }
   .step-node {
-    flex: 1;
     display: flex;
     align-items: center;
-    gap: 8px;
-    cursor: pointer;
+    gap: 10px;
     background: none;
     border: none;
-    padding: 6px 8px;
-    border-radius: 6px;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 8px;
     transition: all 0.2s;
     text-align: left;
+    flex: 1;
   }
-  .step-node:disabled { cursor: not-allowed; opacity: 0.5; }
+  .step-node:hover:not(:disabled) {
+    background: #f1f5f9;
+  }
+  .step-node:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
   .step-num {
-    width: 26px;
-    height: 26px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
-    background: var(--line);
+    background: #e2e8f0;
     color: var(--navy);
     font-weight: 700;
-    font-size: 0.82rem;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 0.9rem;
     flex-shrink: 0;
   }
   .step-node.active .step-num {
-    background: var(--amber);
-    color: var(--navy-dark);
+    background: var(--navy);
+    color: var(--amber);
   }
   .step-node.completed .step-num {
     background: var(--ok);
-    color: #ffffff;
+    color: var(--white);
   }
   .step-text {
     display: flex;
@@ -123,7 +134,7 @@
     min-width: 0;
   }
   .step-title {
-    font-size: 0.82rem;
+    font-size: 0.85rem;
     font-weight: 700;
     color: var(--navy);
     white-space: nowrap;
@@ -131,7 +142,7 @@
     text-overflow: ellipsis;
   }
   .step-sub {
-    font-size: 0.70rem;
+    font-size: 0.72rem;
     color: var(--ink-muted);
   }
   .step-node.active .step-title { color: var(--navy); text-decoration: underline var(--amber) 2px; }
@@ -140,195 +151,229 @@
   .card {
     background: var(--white);
     border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 26px;
+    border-radius: 12px;
+    padding: 30px;
     margin-top: 24px;
-    box-shadow: 0 1px 4px rgba(12, 31, 57, 0.03);
+    margin-bottom: 30px;
+    box-shadow: 0 1px 4px rgba(12, 31, 57, 0.04);
   }
   .card h2 {
     margin-top: 0;
-    font-size: 1.35rem;
+    font-size: 1.4rem;
     color: var(--navy);
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
   }
   .card p.lead {
     color: var(--ink-muted);
-    margin: 4px 0 18px 0;
-    font-size: 0.95rem;
+    margin: 4px 0 20px 0;
+    font-size: 0.96rem;
   }
 
   /* Form Elements */
-  .field { margin-bottom: 18px; }
+  .field { margin-bottom: 20px; }
   .field:last-child { margin-bottom: 0; }
   label {
     display: block;
     font-weight: 600;
-    margin-bottom: 5px;
+    margin-bottom: 6px;
     color: var(--navy);
     font-size: 0.92rem;
   }
   .req { color: var(--error); font-weight: 700; margin-left: 2px; }
   input[type=text], input[type=email], input[type=tel], input[type=number], input[type=url], select, textarea {
     width: 100%;
-    padding: 11px 13px;
+    padding: 12px 14px;
     border: 1px solid var(--line-active);
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 0.96rem;
     font-family: inherit;
     background: #ffffff;
-    color: var(--ink);
-    transition: border 0.15s ease;
+    transition: border-color 0.15s, box-shadow 0.15s;
   }
   input:focus, select:focus, textarea:focus {
     outline: none;
     border-color: var(--navy);
     box-shadow: 0 0 0 3px rgba(12, 31, 57, 0.12);
   }
-  textarea { min-height: 90px; resize: vertical; }
-  .help {
-    font-size: 0.82rem;
+  .hint {
+    font-size: 0.8rem;
     color: var(--ink-muted);
-    margin: 4px 0 0 0;
-  }
-  .badge {
-    font-size: 0.72rem;
-    font-weight: 700;
-    padding: 3px 8px;
-    border-radius: 12px;
-    background: var(--badge-bg);
-    color: var(--navy);
-    border: 1px solid #d0dce8;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-  }
-  .badge.auto-extracted {
-    background: #edf7ee;
-    color: var(--ok);
-    border-color: #c2e2c6;
+    margin-top: 4px;
   }
 
-  /* Upload Dropzone */
-  .dropzone {
-    border: 2px dashed #9fb0c3;
-    border-radius: 10px;
-    padding: 32px 20px;
-    text-align: center;
-    background: #fbfcfe;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .dropzone:hover, .dropzone.dragover {
-    border-color: var(--amber);
-    background: #fdfaf5;
-  }
-  .drop-icon {
-    font-size: 2.2rem;
-    color: var(--navy);
-    margin-bottom: 8px;
-  }
-  .drop-hint { font-size: 0.85rem; color: var(--ink-muted); margin-top: 6px; }
-  .uploaded-list {
-    margin-top: 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .uploaded-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 14px;
-    border-radius: 6px;
-    background: #f4f7fa;
-    border: 1px solid var(--line);
-    font-size: 0.9rem;
-  }
-  .uploaded-item .file-name { font-weight: 600; color: var(--navy); }
-  .uploaded-item .file-status { color: var(--ok); font-weight: 600; font-size: 0.82rem; }
-
-  /* Verification Callout */
-  .verify-banner {
-    background: #fff8eb;
-    border: 1px solid var(--amber);
-    border-radius: 8px;
-    padding: 16px;
-    margin-bottom: 20px;
-  }
-  .verify-banner h3 { margin: 0 0 6px 0; font-size: 1.05rem; color: #7f4b00; }
-  .verify-banner p { margin: 0; font-size: 0.9rem; color: #5f3a00; }
-
-  /* Choice Cards */
-  .choice-card-grid {
+  .grid-2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 14px;
-    margin-top: 10px;
   }
-  @media (max-width: 600px) { .choice-card-grid { grid-template-columns: 1fr; } }
-  .choice-card {
-    border: 2px solid var(--line);
-    border-radius: 8px;
-    padding: 16px;
-    cursor: pointer;
-    background: #ffffff;
-    transition: all 0.15s;
-    display: flex;
-    flex-direction: column;
-  }
-  .choice-card:hover { border-color: #a4b3c4; }
-  .choice-card.selected {
-    border-color: var(--amber);
-    background: #fefcf9;
-  }
-  .choice-card input[type=radio] { margin-right: 8px; accent-color: var(--amber); }
-  .choice-card .choice-title { font-weight: 700; color: var(--navy); font-size: 1.05rem; margin-bottom: 4px; }
-  .choice-card .choice-desc { font-size: 0.85rem; color: var(--ink-muted); line-height: 1.4; }
-
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  @media (max-width: 550px) { .grid-2 { grid-template-columns: 1fr; } }
-
-  .checkbox-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    margin: 8px 0;
-  }
-  .checkbox-row input[type=checkbox] {
-    margin-top: 3px;
-    width: 17px;
-    height: 17px;
-    accent-color: var(--navy);
-  }
-  .checkbox-row label {
-    font-weight: 400;
-    margin: 0;
-    font-size: 0.92rem;
-    color: var(--ink);
-    cursor: pointer;
+  @media (max-width: 680px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .stepper-track { flex-direction: column; align-items: stretch; }
   }
 
   /* NDA Contract Box */
   .nda-contract-box {
-    background: #fafbfc;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 18px;
-    max-height: 320px;
-    overflow-y: scroll;
-    font-size: 0.86rem;
-    line-height: 1.6;
-    color: #24292f;
-    margin-bottom: 18px;
-  }
-  .nda-contract-box h4 { margin: 12px 0 4px 0; color: var(--navy); }
-  .signature-box {
+    background: #f8fafc;
     border: 1px solid var(--line-active);
     border-radius: 8px;
-    padding: 18px;
+    padding: 22px;
+    height: 320px;
+    overflow-y: scroll;
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: #1e293b;
+    margin-bottom: 22px;
+  }
+  .nda-contract-box h4 { margin: 14px 0 4px 0; color: var(--navy); font-size: 0.95rem; }
+  .nda-contract-box strong { color: #0f172a; }
+
+  .signature-box {
+    border: 1px solid var(--line-active);
+    border-radius: 10px;
+    padding: 20px;
     background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+  }
+
+  /* Dropzone */
+  .dropzone {
+    border: 2px dashed #94a3b8;
+    border-radius: 10px;
+    padding: 36px 20px;
+    text-align: center;
+    background: #f8fafc;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .dropzone:hover, .dropzone.dragover {
+    border-color: var(--navy);
+    background: #f1f5f9;
+  }
+  .drop-icon { font-size: 2.4rem; margin-bottom: 8px; }
+  .drop-title { font-weight: 700; color: var(--navy); font-size: 1.05rem; }
+  .drop-sub { font-size: 0.85rem; color: var(--ink-muted); margin-top: 4px; }
+
+  .file-queue {
+    margin-top: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .file-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: #ffffff;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-size: 0.88rem;
+  }
+  .file-item .file-name { font-weight: 600; color: var(--navy); }
+  .file-item .file-status {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--ok);
+    background: #dcfce7;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+
+  /* Badges & Alerts */
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: var(--sky-light);
+    color: var(--sky);
+  }
+  .nda-signed-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #dcfce7;
+    color: #15803d;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    border: 1px solid #86efac;
+  }
+  .verify-banner {
+    background: #eff6ff;
+    border-left: 4px solid var(--sky);
+    padding: 14px 18px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 24px;
+  }
+  .verify-banner h3 { margin: 0 0 4px 0; font-size: 1rem; color: var(--navy); }
+  .verify-banner p { margin: 0; font-size: 0.88rem; color: #334155; }
+
+  /* Track Selection */
+  .track-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .track-card {
+    border: 2px solid var(--line);
+    border-radius: 10px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #ffffff;
+  }
+  .track-card:hover { border-color: var(--navy); }
+  .track-card.selected {
+    border-color: var(--navy);
+    background: #f8fafc;
+    box-shadow: 0 0 0 2px var(--navy);
+  }
+  .track-title { font-weight: 800; font-size: 1.1rem; color: var(--navy); margin-bottom: 6px; }
+  .track-desc { font-size: 0.86rem; color: var(--ink-muted); margin: 0; }
+
+  /* Survey Sliders */
+  .strength-item {
+    margin-bottom: 18px;
+    background: #f8fafc;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .strength-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .strength-name { font-weight: 700; color: var(--navy); font-size: 0.94rem; }
+  .strength-val {
+    font-weight: 800;
+    background: var(--navy);
+    color: var(--amber);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    min-width: 32px;
+    text-align: center;
+  }
+  input[type=range] {
+    width: 100%;
+    margin: 4px 0;
   }
 
   /* Actions */
@@ -336,16 +381,16 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 28px;
-    padding-top: 18px;
+    margin-top: 30px;
+    padding-top: 20px;
     border-top: 1px solid var(--line);
   }
   button {
     font-family: inherit;
-    font-size: 1rem;
+    font-size: 0.98rem;
     font-weight: 700;
-    border-radius: 6px;
-    padding: 12px 24px;
+    border-radius: 8px;
+    padding: 13px 26px;
     border: 2px solid transparent;
     cursor: pointer;
     transition: all 0.15s;
@@ -360,20 +405,20 @@
     color: var(--navy);
     border-color: var(--line-active);
   }
-  button.secondary:hover { background: #f3f6f9; }
+  button.secondary:hover { background: #f1f5f9; }
 
   .hidden { display: none !important; }
   .sim-pill {
     cursor: pointer;
-    font-size: 0.78rem;
-    padding: 4px 10px;
-    border-radius: 12px;
-    background: #eef2f6;
-    border: 1px solid #ccd7e2;
+    font-size: 0.8rem;
+    padding: 5px 12px;
+    border-radius: 14px;
+    background: #e2e8f0;
+    border: 1px solid #cbd5e1;
     color: var(--navy);
     font-weight: 600;
   }
-  .sim-pill:hover { background: #e0e8f0; }
+  .sim-pill:hover { background: #cbd5e1; }
 </style>
 </head>
 <body>
@@ -381,7 +426,7 @@
 <header class="top">
   <div class="wrap">
     <p class="wordmark"><span class="word-one">ONE</span><span class="word-nyc">NYC</span></p>
-    <p class="tagline">Partnership & Impact Partner Registration Portal</p>
+    <p class="tagline">Official Partnership & Impact Partner Onboarding Portal</p>
   </div>
   <div class="stripe"><span class="s1"></span><span class="s2"></span><span class="s3"></span></div>
 </header>
@@ -392,36 +437,29 @@
       <button class="step-node active" id="stepNode1" onclick="goToStep(1)">
         <span class="step-num">1</span>
         <span class="step-text">
-          <span class="step-title">Upload Docs</span>
-          <span class="step-sub">Auto-extract</span>
+          <span class="step-title">Mutual NDA First</span>
+          <span class="step-sub">E-Sign Agreement</span>
         </span>
       </button>
       <button class="step-node" id="stepNode2" onclick="goToStep(2)" disabled>
         <span class="step-num">2</span>
         <span class="step-text">
-          <span class="step-title">Verify Facts</span>
-          <span class="step-sub">Confirm entity</span>
+          <span class="step-title">Upload Documents</span>
+          <span class="step-sub">Auto-extract & Verify</span>
         </span>
       </button>
       <button class="step-node" id="stepNode3" onclick="goToStep(3)" disabled>
         <span class="step-num">3</span>
         <span class="step-text">
           <span class="step-title">Readiness & Survey</span>
-          <span class="step-sub">Track & Rosy's questions</span>
+          <span class="step-sub">Rosy's Capacity Questions</span>
         </span>
       </button>
       <button class="step-node" id="stepNode4" onclick="goToStep(4)" disabled>
         <span class="step-num">4</span>
         <span class="step-text">
-          <span class="step-title">Mutual NDA</span>
-          <span class="step-sub">E-Sign Agreement</span>
-        </span>
-      </button>
-      <button class="step-node" id="stepNode5" onclick="goToStep(5)" disabled>
-        <span class="step-num">5</span>
-        <span class="step-text">
-          <span class="step-title">Account Access</span>
-          <span class="step-sub">SharePoint Portal</span>
+          <span class="step-title">Workspace Access</span>
+          <span class="step-sub">SharePoint Provisioning</span>
         </span>
       </button>
     </div>
@@ -430,363 +468,64 @@
 
 <div class="wrap">
 
-  <!-- ==================== STEP 1: DOCUMENT UPLOAD & AUTO-COMPILATION ==================== -->
+  <!-- ==================== STEP 1: MUTUAL NDA FIRST ==================== -->
   <div id="step1" class="step-panel">
     <div class="card">
-      <h2>Step 1: Upload Documents First
-        <span class="badge">Document-First Flow</span>
+      <h2>Step 1: Standard 2-Party Mutual Non-Disclosure Agreement
+        <span class="badge" style="background: #e0f2fe; color: #0369a1;">SOP-14 Mandate</span>
       </h2>
       <p class="lead">
-        Please upload your organization's legal records first. Our system automatically extracts your Legal Entity Name, EIN, Charities Registration, Address, and Signatories into your registration.
+        To protect proprietary coalition strategies, confidential RFP intelligence, and sensitive organizational records, all OneNYC Partners execute this binding Mutual NDA <strong>before</strong> confidential records are exchanged.
       </p>
 
-      <div style="margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
-        <span style="font-size: 0.85rem; font-weight: 600; color: var(--navy);">Quick Sample Fill:</span>
-        <div style="display: flex; gap: 6px;">
-          <button type="button" class="sim-pill" onclick="simulateUpload('nonprofit')">📂 Simulate 501(c)(3) Nonprofit Upload</button>
-          <button type="button" class="sim-pill" onclick="simulateUpload('business')">🏢 Simulate M/WBE Business Upload</button>
-        </div>
-      </div>
-
-      <div class="dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
-        <div class="drop-icon">📄</div>
-        <strong style="font-size: 1.05rem; color: var(--navy);">Drag and drop your legal documents here, or click to browse</strong>
-        <p class="drop-hint">Accepts PDF, DOCX, PNG, JPG (IRS EIN Letter CP-575/147C, Certificate of Incorporation, Form 990 / Financials, Charities Bureau CHAR410/500, Board List)</p>
-        <input type="file" id="fileInput" multiple style="display: none;" onchange="handleFileSelect(event)">
-      </div>
-
-      <div class="uploaded-list" id="uploadedList"></div>
-
-      <div id="extractionProgress" class="hidden" style="margin-top: 16px; padding: 14px; background: #f0f7ff; border-radius: 6px; border: 1px solid #bcd8f5;">
-        <div style="display: flex; align-items: center; gap: 10px;">
-          <span style="font-weight: 700; color: var(--navy);" id="extractionStatusText">Extracting fields from uploaded files...</span>
-        </div>
-      </div>
-
-      <div class="actions">
-        <span style="font-size: 0.85rem; color: var(--ink-muted);">Extracted data will be verified in Step 2.</span>
-        <button type="button" class="primary" id="btnToStep2" onclick="processExtractionAndProceed()" disabled>Compile & Continue to Verification →</button>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- ==================== STEP 2: USER VERIFICATION & CONFIRMATION ==================== -->
-  <div id="step2" class="step-panel hidden">
-    <div class="card">
-      <h2>Step 2: Verify & Confirm Auto-Compiled Information
-        <span class="badge auto-extracted">✓ Compiled from Documents</span>
-      </h2>
-      <div class="verify-banner">
-        <h3>Please verify the extracted details below</h3>
-        <p>Confirm that your entity's legal name, tax ID, and contact details match your official filings before proceeding.</p>
-      </div>
-
-      <form id="verifyForm">
+      <div style="background: #f8fafc; border: 1px solid var(--line); border-radius: 8px; padding: 18px; margin-bottom: 20px;">
+        <h4 style="margin: 0 0 12px 0; color: var(--navy); font-size: 0.95rem;">1. Identify Your Organization & Authorized Signatory</h4>
         <div class="grid-2">
           <div class="field">
-            <label for="v_legal_name">Legal Organization Name <span class="req">*</span> <span class="badge auto-extracted">From IRS / State</span></label>
-            <input type="text" id="v_legal_name" required>
+            <label for="init_org_name">Legal Organization / Entity Name <span class="req">*</span></label>
+            <input type="text" id="init_org_name" placeholder="e.g. Muslim Community Center of NYC, Inc." oninput="updateNDAPreview()" required>
           </div>
           <div class="field">
-            <label for="v_common_name">Common / Trade Name (DBA)</label>
-            <input type="text" id="v_common_name">
+            <label for="init_signer_name">Authorized Representative Full Name <span class="req">*</span></label>
+            <input type="text" id="init_signer_name" placeholder="e.g. Dr. Abdus-Salaam Musa" oninput="updateNDAPreview()" required>
           </div>
         </div>
-
-        <div class="grid-2">
+        <div class="grid-2" style="margin-top: 12px;">
           <div class="field">
-            <label for="v_ein">Employer Identification Number (EIN) <span class="req">*</span> <span class="badge auto-extracted">From CP-575</span></label>
-            <input type="text" id="v_ein" placeholder="12-3456789" required>
-          </div>
-          <div class="field">
-            <label for="v_entity_type">Entity Structure & Tax Status <span class="req">*</span></label>
-            <select id="v_entity_type" required onchange="toggleTrackFields(this.value)">
-              <option value="">Choose one</option>
-              <option value="501c3_standalone">501(c)(3) Independent Nonprofit (Own EIN)</option>
-              <option value="501c3_parent">Operates under Parent Organization 501(c)(3)</option>
-              <option value="other_nonprofit">Other Nonprofit (501(c)(4), 501(c)(6), Religious Exemption)</option>
-              <option value="business_for_profit">For-Profit Business (LLC, S-Corp, C-Corp, Sole Prop)</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="grid-2">
-          <div class="field">
-            <label for="v_year_inc">Year Incorporated / Founded <span class="req">*</span></label>
-            <input type="number" id="v_year_inc" min="1900" max="2026" required>
+            <label for="init_signer_title">Representative Title <span class="req">*</span></label>
+            <input type="text" id="init_signer_title" placeholder="e.g. Executive Director / Board President" oninput="updateNDAPreview()" required>
           </div>
           <div class="field">
-            <label for="v_charities_reg">NYS Charities Bureau Reg # (if nonprofit)</label>
-            <input type="text" id="v_charities_reg" placeholder="e.g. 51-72-19">
-          </div>
-        </div>
-
-        <div class="field">
-          <label for="v_address">Primary Physical Address <span class="req">*</span></label>
-          <input type="text" id="v_address" required>
-        </div>
-
-        <div class="grid-2">
-          <div class="field">
-            <label for="v_borough">NYC Borough <span class="req">*</span></label>
-            <select id="v_borough" required>
-              <option value="">Select Borough</option>
-              <option>Manhattan</option>
-              <option>Brooklyn</option>
-              <option>Queens</option>
-              <option>Bronx</option>
-              <option>Staten Island</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="v_website">Website</label>
-            <input type="url" id="v_website" placeholder="https://">
-          </div>
-        </div>
-
-        <hr style="border: none; border-top: 1px solid var(--line); margin: 24px 0;">
-
-        <h3 style="color: var(--navy); font-size: 1.15rem; margin-bottom: 12px;">Primary Executive / Authorized Signatory</h3>
-        <div class="grid-2">
-          <div class="field">
-            <label for="v_contact_name">Signatory Name <span class="req">*</span></label>
-            <input type="text" id="v_contact_name" required>
-          </div>
-          <div class="field">
-            <label for="v_contact_title">Title / Role <span class="req">*</span></label>
-            <input type="text" id="v_contact_title" required>
-          </div>
-        </div>
-
-        <div class="grid-2">
-          <div class="field">
-            <label for="v_contact_email">Email Address <span class="req">*</span></label>
-            <input type="email" id="v_contact_email" required>
-          </div>
-          <div class="field">
-            <label for="v_contact_phone">Phone Number <span class="req">*</span></label>
-            <input type="tel" id="v_contact_phone" required>
-          </div>
-        </div>
-
-        <div class="checkbox-row" style="margin-top: 16px;">
-          <input type="checkbox" id="verify_confirm_check" required>
-          <label for="verify_confirm_check"><strong>I confirm that the compiled legal and organizational information above has been verified and matches official records.</strong></label>
-        </div>
-      </form>
-
-      <div class="actions">
-        <button type="button" class="secondary" onclick="goToStep(1)">← Back to Uploads</button>
-        <button type="button" class="primary" onclick="confirmVerificationAndProceed()">Lock Facts & Continue →</button>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- ==================== STEP 3: READINESS & ROSY'S QUESTIONNAIRE ==================== -->
-  <div id="step3" class="step-panel hidden">
-    <div class="card">
-      <h2>Step 3: Program Readiness & Rosy's Nucleus Survey
-        <span class="badge" id="trackBadge">Impact Partner Track</span>
-      </h2>
-      <p class="lead">Select your membership pathway, provide program parameters, and complete Rosy Islam's self-assessment to enable workstream bucketing.</p>
-
-      <div class="field">
-        <label>Membership Pathway <span class="req">*</span></label>
-        <div class="choice-card-grid">
-          <div class="choice-card selected" id="trackChoiceImpact" onclick="selectTrack('impact')">
-            <div style="display: flex; align-items: center;">
-              <input type="radio" name="membership_track" id="radioImpact" value="impact" checked>
-              <span class="choice-title">OneNYC Impact Partner</span>
-            </div>
-            <span class="choice-desc">Nonprofits, Masjids, Schools, and Civic Coalitions. Focus on Council Discretionary Funding, capacity building, and public grants.</span>
-          </div>
-          <div class="choice-card" id="trackChoicePartner" onclick="selectTrack('partner')">
-            <div style="display: flex; align-items: center;">
-              <input type="radio" name="membership_track" id="radioPartner" value="partner">
-              <span class="choice-title">OneNYC Partner (Business)</span>
-            </div>
-            <span class="choice-desc">Commercial Enterprises & Contractors. Focus on the AI Proposal Factory, public contracts, and M/WBE certification.</span>
+            <label for="init_signer_email">Official Corporate / Organization Email <span class="req">*</span></label>
+            <input type="email" id="init_signer_email" placeholder="e.g. director@mccnyc.org" required>
           </div>
         </div>
       </div>
-
-      <!-- Impact Partner Specific -->
-      <div id="impactPartnerFields">
-        <hr style="border: none; border-top: 1px solid var(--line); margin: 24px 0;">
-        <h3 style="color: var(--navy); font-size: 1.15rem; margin-bottom: 12px;">City Council Discretionary Funding (SOP IP-01)</h3>
-
-        <div class="field">
-          <label for="council_districts">Council District(s) Served <span class="req">*</span></label>
-          <select id="council_districts" required>
-            <option value="">Select Council District</option>
-            <option value="1">District 1 — Lower Manhattan (Christopher Marte)</option>
-            <option value="2">District 2 — East Village / Lower East Side (Carlina Rivera)</option>
-            <option value="7">District 7 — West Harlem / Upper Manhattan (Shaun Abreu)</option>
-            <option value="8">District 8 — East Harlem / South Bronx (Diana Ayala)</option>
-            <option value="9">District 9 — Central Harlem (Yusef Salaam)</option>
-            <option value="15">District 15 — Central Bronx (Oswald Feliz)</option>
-            <option value="23">District 23 — Eastern Queens (Linda Lee)</option>
-            <option value="24">District 24 — Fresh Meadows / Kew Gardens Hills (James Gennaro)</option>
-            <option value="26">District 26 — Sunnyside / Woodside / Long Island City (Julie Won)</option>
-            <option value="30">District 30 — Ridgewood / Glendale / Maspeth (Robert Holden)</option>
-            <option value="36">District 36 — Bedford-Stuyvesant / Crown Heights (Chi Ossé)</option>
-            <option value="39">District 39 — Park Slope / Kensington (Shahana Hanif)</option>
-            <option value="citywide">Citywide Service (All 51 Districts)</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="program_proposed_name">Proposed Program Title <span class="req">*</span></label>
-          <input type="text" id="program_proposed_name" placeholder="e.g. Youth Civic & Workforce Readiness Initiative">
-        </div>
-
-        <div class="field">
-          <label for="program_public_purpose">Public Purpose & Description <span class="req">*</span></label>
-          <textarea id="program_public_purpose" placeholder="Describe the program: population served, services provided, location, and reach. Must be open to the general public without religious or political restrictions."></textarea>
-        </div>
-
-        <div class="grid-2">
-          <div class="field">
-            <label for="public_free_policy">Free & Open to All Public? <span class="req">*</span></label>
-            <select id="public_free_policy">
-              <option value="yes">Yes — Completely free and open to all public</option>
-              <option value="sliding_scale">Sliding scale / nominal fee (does not restrict participation)</option>
-              <option value="no">No — Membership restricted</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="council_funding_history">Past Council Funding History <span class="req">*</span></label>
-            <select id="council_funding_history">
-              <option value="never">Never funded before (Newly Funded - $50K Cap)</option>
-              <option value="new_entity">Incorporated within last 2 years (Newly Created - $20K Cap)</option>
-              <option value="previously_funded">Received Council funding in FY25, FY26, or FY27</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <!-- Business Partner Specific -->
-      <div id="businessPartnerFields" class="hidden">
-        <hr style="border: none; border-top: 1px solid var(--line); margin: 24px 0;">
-        <h3 style="color: var(--navy); font-size: 1.15rem; margin-bottom: 12px;">OneNYC Partner Business & Procurement Scope</h3>
-
-        <div class="grid-2">
-          <div class="field">
-            <label for="mwbe_cert">M/WBE Certification Status <span class="req">*</span></label>
-            <select id="mwbe_cert">
-              <option value="both">Both NYC SBS & NYS ESD Certified</option>
-              <option value="nyc_sbs">NYC SBS Certified Only</option>
-              <option value="nys_esd">NYS ESD Certified Only</option>
-              <option value="seeking">Seeking certification support</option>
-              <option value="ineligible">Not eligible / Other</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="target_agencies">Target Public Agencies <span class="req">*</span></label>
-            <input type="text" id="target_agencies" placeholder="e.g. NYC DOE, DYCD, MTA, DDC">
-          </div>
-        </div>
-
-        <div class="field">
-          <label for="biz_core_capabilities">Core Capabilities & Services <span class="req">*</span></label>
-          <textarea id="biz_core_capabilities" placeholder="Primary commercial goods, trades, technical services, and contracting capacity."></textarea>
-        </div>
-      </div>
-
-      <!-- Rosy Islam's Survey Section -->
-      <hr style="border: none; border-top: 1px solid var(--line); margin: 24px 0;">
-      <h3 style="color: var(--navy); font-size: 1.15rem; margin-bottom: 8px;">Rosy Islam's Capacity & Network Assessment</h3>
-      <p class="help" style="margin-bottom: 14px;">Self-assessment to bucket your team into leadership workstreams.</p>
-
-      <div class="grid-2">
-        <div class="field">
-          <label for="str_project_mgmt">Project Management & Operations (1–10)</label>
-          <select id="str_project_mgmt">
-            <option value="10">10 — Lead workstreams end-to-end</option>
-            <option value="8" selected>8 — Proven operator</option>
-            <option value="6">6 — Competent executor</option>
-            <option value="4">4 — Basic</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="str_community_org">Community Organizing & Outreach (1–10)</label>
-          <select id="str_community_org">
-            <option value="10">10 — Broad grassroots reach</option>
-            <option value="8" selected>8 — Strong community turnout</option>
-            <option value="6">6 — Moderate volunteer base</option>
-            <option value="4">4 — Developing</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="grid-2">
-        <div class="field">
-          <label for="cadence_huddle">Daily 11:00 AM EST 15-Min Huddle Availability <span class="req">*</span></label>
-          <select id="cadence_huddle">
-            <option value="daily">Available daily (or designated lead)</option>
-            <option value="alternate">Available 2-3 days / week</option>
-            <option value="async">Async only (review AI summaries)</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="hours_allocated">Weekly Hours Committed <span class="req">*</span></label>
-          <select id="hours_allocated">
-            <option value="15_plus">15+ hrs/week (Working Group Lead)</option>
-            <option value="5_10" selected>5–10 hrs/week (Workstream Owner)</option>
-            <option value="2_4">2–4 hrs/week (Participant)</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="field">
-        <label for="growth_priorities">Top 3 Areas for Support & Growth <span class="req">*</span></label>
-        <textarea id="growth_priorities" placeholder="e.g. 1) Discretionary grant drafting, 2) M/WBE fast-track, 3) AI proposal pipeline"></textarea>
-      </div>
-
-      <div class="actions">
-        <button type="button" class="secondary" onclick="goToStep(2)">← Back to Verification</button>
-        <button type="button" class="primary" onclick="goToStep(4)">Proceed to Mutual NDA →</button>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- ==================== STEP 4: MUTUAL NON-DISCLOSURE AGREEMENT (NDA) ==================== -->
-  <div id="step4" class="step-panel hidden">
-    <div class="card">
-      <h2>Step 4: Standard 2-Party Mutual Non-Disclosure Agreement
-        <span class="badge" style="background: #eef2f6; color: var(--navy);">SOP-14 Compliant</span>
-      </h2>
-      <p class="lead">
-        To protect proprietary coalition methodologies, proposal factory data, and municipal intelligence, all OneNYC Partners and Impact Partners execute this standard bilateral NDA prior to receiving site credentials.
-      </p>
 
       <div class="nda-contract-box" id="ndaContractBox">
         <div style="text-align: center; margin-bottom: 14px;">
-          <strong>MUTUAL NON-DISCLOSURE & CONFIDENTIALITY AGREEMENT</strong><br>
+          <strong>MUTUAL NON-DISCLOSURE &amp; CONFIDENTIALITY AGREEMENT</strong><br>
           <span style="font-size: 0.8rem; color: #5f6974;">DocuSign Standard 2-Party Canonical Template ID: 105c99d0-3884-4a35-b806-7524d60133ec</span>
         </div>
         <p>This Mutual Non-Disclosure Agreement ("Agreement") is entered into as of <strong id="ndaDateStr">October 16, 2026</strong>, by and between:</p>
         <p>
           <strong>Party 1 ("Company"):</strong> OneNYC Inc. / OneNYC Partnership, with offices at 202 Centre Street, New York, NY 10013, represented by Chairman Yasser K. Salem.<br>
-          <strong>Party 2 ("Counterparty"):</strong> <strong id="ndaPartyName">[Organization Name]</strong>, located at <span id="ndaPartyAddress">[Address]</span>, represented by authorized signatory <strong id="ndaSignerName">[Signatory Name]</strong>, <span id="ndaSignerTitle">[Title]</span>.
+          <strong>Party 2 ("Counterparty"):</strong> <strong id="ndaPartyName">[Legal Organization Name]</strong>, represented by authorized signatory <strong id="ndaSignerName">[Authorized Signatory Name]</strong>, <span id="ndaSignerTitle">[Title]</span>.
         </p>
         <h4>1. Purpose</h4>
         <p>The parties wish to explore and engage in mutual collaboration regarding civic capacity building, New York City and State procurement contracts, City Council discretionary funding, and organizational scaling (the "Purpose").</p>
         <h4>2. Confidential Information</h4>
-        <p>"Confidential Information" means all non-public information disclosed by either party, including proposal drafts, municipal strategy dossiers, donor/vendor databases, proprietary AI prompt systems, financial models, and strategic frameworks.</p>
-        <h4>3. Non-Disclosure & Duty of Care</h4>
+        <p>"Confidential Information" means all non-public information disclosed by either party, including proposal drafts, municipal strategy dossiers, donor/vendor databases, proprietary AI prompt systems, financial models, and organizational filings.</p>
+        <h4>3. Non-Disclosure &amp; Duty of Care</h4>
         <p>Each party agrees to hold the other's Confidential Information in strict confidence, exercising at least the same degree of care as it uses for its own confidential materials (and no less than reasonable care), and shall not disclose it to any third party without prior written authorization.</p>
-        <h4>4. Term & Non-Circumvention</h4>
+        <h4>4. Term &amp; Non-Circumvention</h4>
         <p>This Agreement and the confidentiality obligations hereunder remain in effect for a period of two (2) years from the date of execution. Neither party shall circumvent the other in relation to specific municipal agency initiatives or funding programs disclosed under this Agreement.</p>
         <h4>5. Governing Law</h4>
         <p>This Agreement shall be governed by and construed in accordance with the laws of the State of New York, without regard to conflict of law principles.</p>
       </div>
 
       <div class="signature-box">
-        <h4 style="margin: 0 0 10px 0; color: var(--navy);">Electronic Signature & Authority Certification</h4>
+        <h4 style="margin: 0 0 10px 0; color: var(--navy); font-size: 0.95rem;">2. Electronic Signature &amp; Legal Authority Certification</h4>
         <div class="grid-2">
           <div class="field">
             <label for="nda_sig_typed">Type Full Legal Name as Signature <span class="req">*</span></label>
@@ -798,28 +537,249 @@
           </div>
         </div>
 
-        <div class="checkbox-row" style="margin-top: 10px;">
-          <input type="checkbox" id="nda_authority_check" required>
-          <label for="nda_authority_check"><strong>I certify that I am an authorized officer or legal representative of the Counterparty with full legal power to execute this Mutual Non-Disclosure Agreement.</strong></label>
+        <div style="margin-top: 12px; display: flex; align-items: flex-start; gap: 8px;">
+          <input type="checkbox" id="nda_authority_check" style="margin-top: 3px;" required>
+          <label for="nda_authority_check" style="font-size: 0.88rem; font-weight: normal; color: #334155; line-height: 1.4;">
+            <strong>I certify that I am an authorized officer or legal representative of the Counterparty with full legal authority to execute this Mutual Non-Disclosure Agreement.</strong>
+          </label>
         </div>
       </div>
 
       <div class="actions">
-        <button type="button" class="secondary" onclick="goToStep(3)">← Back to Survey</button>
-        <button type="button" class="primary" style="background: var(--ok); color: #ffffff;" onclick="executeNDAAndProceed()">Execute Agreement & Create Account ✓</button>
+        <span style="font-size: 0.85rem; color: var(--ink-muted);">Step 1 of 4: Confidentiality Gate</span>
+        <button type="button" class="primary" onclick="executeNDAAndProceed()">Sign Mutual NDA &amp; Continue to Upload Documents &rarr;</button>
       </div>
     </div>
   </div>
 
 
-  <!-- ==================== STEP 5: ACCOUNT PROVISIONING & SHAREPOINT ACCESS ==================== -->
-  <div id="step5" class="step-panel hidden">
+  <!-- ==================== STEP 2: DOCUMENT UPLOAD & EXTRACTION ==================== -->
+  <div id="step2" class="step-panel hidden">
+    <div class="card">
+      <h2>Step 2: Upload Documents &amp; Verify Organization Details
+        <span class="nda-signed-pill" id="ndaActiveBadge">✓ Mutual NDA Active</span>
+      </h2>
+      <p class="lead">
+        With the Mutual NDA executed, please upload your organization's legal records. Our system automatically extracts your EIN, legal name, address, and formation data into your registration.
+      </p>
+
+      <div style="margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+        <span style="font-size: 0.85rem; font-weight: 600; color: var(--navy);">Quick Sample Fill:</span>
+        <div style="display: flex; gap: 8px;">
+          <button type="button" class="sim-pill" onclick="simulateUpload('nonprofit')">📂 Simulate 501(c)(3) Nonprofit Upload</button>
+          <button type="button" class="sim-pill" onclick="simulateUpload('business')">🏢 Simulate M/WBE Business Upload</button>
+        </div>
+      </div>
+
+      <div class="dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
+        <input type="file" id="fileInput" multiple accept=".pdf,.png,.jpg,.jpeg" style="display:none" onchange="handleFileSelect(event)">
+        <div class="drop-icon">📁</div>
+        <div class="drop-title">Drag &amp; Drop Legal Documents Here, or Click to Browse</div>
+        <div class="drop-sub">Accepted: 501(c)(3) Letters, NYC/NYS M/WBE Certs, Certificate of Incorporation, W-9, Form 990 (PDF/Image)</div>
+      </div>
+
+      <div class="file-queue" id="fileQueue"></div>
+
+      <div id="verifySection" style="margin-top: 26px;">
+        <div class="verify-banner">
+          <h3>Verified Organizational Intelligence Gate</h3>
+          <p>Please review and confirm your extracted entity facts. These will anchor your OneNYC partnership profile.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label for="v_legal_name">Confirmed Legal Entity Name <span class="req">*</span></label>
+            <input type="text" id="v_legal_name" required>
+          </div>
+          <div class="field">
+            <label for="v_ein">Federal EIN / TIN <span class="req">*</span></label>
+            <input type="text" id="v_ein" placeholder="XX-XXXXXXX" required>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div class="field">
+            <label for="v_org_type">Entity Classification <span class="req">*</span></label>
+            <select id="v_org_type" required>
+              <option value="">-- Select Classification --</option>
+              <option value="501c3">501(c)(3) Tax-Exempt Non-Profit</option>
+              <option value="501c4">501(c)(4) Social Welfare Org</option>
+              <option value="501c6">501(c)(6) Business League</option>
+              <option value="mwbe_llc">Certified M/WBE (LLC / Corp)</option>
+              <option value="small_biz">Small Business Enterprise</option>
+              <option value="faith_based">Faith-Based Organization / Mosque / Church</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="v_state">Formation State</label>
+            <input type="text" id="v_state" value="New York">
+          </div>
+          <div class="field">
+            <label for="v_year">Year Incorporated / Formed</label>
+            <input type="number" id="v_year" placeholder="e.g. 2018">
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="field">
+            <label for="v_address">Principal Executive Address <span class="req">*</span></label>
+            <input type="text" id="v_address" placeholder="Street Address, City, State, ZIP" required>
+          </div>
+          <div class="field">
+            <label for="v_phone">Official Phone Number</label>
+            <input type="tel" id="v_phone" placeholder="(XXX) XXX-XXXX">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="v_mission">Mission Statement / Core Purpose</label>
+          <textarea id="v_mission" rows="2" placeholder="Brief summary of your organization's mission or services"></textarea>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="secondary" onclick="goToStep(1)">&larr; Back to NDA</button>
+        <button type="button" class="primary" onclick="confirmDocumentsAndProceed()">Confirm Verified Info &amp; Proceed to Survey &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==================== STEP 3: ROSY ISLAM'S CAPACITY & NETWORK SURVEY ==================== -->
+  <div id="step3" class="step-panel hidden">
+    <div class="card">
+      <h2>Step 3: Partnership Track &amp; Rosy Islam's Capacity Survey
+        <span class="badge">Strategic Alignment</span>
+      </h2>
+      <p class="lead">
+        To bucket your organization into the correct working stream and mobilize coalition resources effectively, please complete this readiness and network assessment.
+      </p>
+
+      <div class="field">
+        <label>1. Select Primary Partnership Track <span class="req">*</span></label>
+        <div class="track-grid">
+          <div class="track-card selected" id="trackImpact" onclick="selectTrack('impact')">
+            <div class="track-title">🏛️ Impact Partner</div>
+            <p class="track-desc">For CBOs, Nonprofits, Faith-Based Institutions, and Grassroots Advocates driving civic engagement and community programming.</p>
+          </div>
+          <div class="track-card" id="trackCommercial" onclick="selectTrack('commercial')">
+            <div class="track-title">💼 Commercial &amp; Growth Partner</div>
+            <p class="track-desc">For Certified M/WBEs, Vendors, Tech Providers, and Professional Contractors executing municipal procurement opportunities.</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="background: #f8fafc; border: 1px solid var(--line); border-radius: 8px; padding: 18px; margin-bottom: 22px;">
+        <h3 style="margin: 0 0 12px 0; color: var(--navy); font-size: 1.05rem;">2. Core Strengths Self-Assessment (Rate 1 &ndash; 10)</h3>
+        <p style="font-size: 0.85rem; color: var(--ink-muted); margin-top: 0; margin-bottom: 16px;">
+          Proposed by Rosy Islam in working group sessions to map coalition domain strengths.
+        </p>
+
+        <div class="strength-item">
+          <div class="strength-header">
+            <span class="strength-name">Community Mobilization &amp; Grassroots Turnout</span>
+            <span class="strength-val" id="val_mob">7</span>
+          </div>
+          <input type="range" min="1" max="10" value="7" id="rng_mob" oninput="document.getElementById('val_mob').innerText = this.value">
+        </div>
+
+        <div class="strength-item">
+          <div class="strength-header">
+            <span class="strength-name">Grant Writing &amp; Municipal RFP Proposal Factory</span>
+            <span class="strength-val" id="val_grant">6</span>
+          </div>
+          <input type="range" min="1" max="10" value="6" id="rng_grant" oninput="document.getElementById('val_grant').innerText = this.value">
+        </div>
+
+        <div class="strength-item">
+          <div class="strength-header">
+            <span class="strength-name">Workforce Development, Job Placement &amp; Training</span>
+            <span class="strength-val" id="val_work">5</span>
+          </div>
+          <input type="range" min="1" max="10" value="5" id="rng_work" oninput="document.getElementById('val_work').innerText = this.value">
+        </div>
+
+        <div class="strength-item">
+          <div class="strength-header">
+            <span class="strength-name">Technology, Data Systems &amp; AI Integration</span>
+            <span class="strength-val" id="val_tech">6</span>
+          </div>
+          <input type="range" min="1" max="10" value="6" id="rng_tech" oninput="document.getElementById('val_tech').innerText = this.value">
+        </div>
+
+        <div class="strength-item">
+          <div class="strength-header">
+            <span class="strength-name">Government Relations, City Council &amp; Agency Navigation</span>
+            <span class="strength-val" id="val_gov">7</span>
+          </div>
+          <input type="range" min="1" max="10" value="7" id="rng_gov" oninput="document.getElementById('val_gov').innerText = this.value">
+        </div>
+      </div>
+
+      <div style="background: #f8fafc; border: 1px solid var(--line); border-radius: 8px; padding: 18px; margin-bottom: 22px;">
+        <h3 style="margin: 0 0 12px 0; color: var(--navy); font-size: 1.05rem;">3. Network Footprint &amp; Community Reach</h3>
+        <div class="grid-2">
+          <div class="field">
+            <label for="surv_reach">Active Community / Member Base Size <span class="req">*</span></label>
+            <select id="surv_reach" required>
+              <option value="">-- Select Reach Size --</option>
+              <option value="under_500">Under 500 individuals / families</option>
+              <option value="500_2500">500 &ndash; 2,500 individuals / families</option>
+              <option value="2500_10000">2,500 &ndash; 10,000 individuals / families</option>
+              <option value="over_10000">Over 10,000 individuals / families</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="surv_borough">Primary Geographic Borough(s) Served <span class="req">*</span></label>
+            <select id="surv_borough" required>
+              <option value="citywide">Citywide (All 5 Boroughs)</option>
+              <option value="brooklyn">Brooklyn (Kings County)</option>
+              <option value="queens">Queens</option>
+              <option value="bronx">The Bronx</option>
+              <option value="manhattan">Manhattan (New York County)</option>
+              <option value="staten_island">Staten Island (Richmond County)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top: 14px;">
+          <div class="field">
+            <label for="surv_huddle">Daily 11:00 AM EST Zoom Huddle Availability <span class="req">*</span></label>
+            <select id="surv_huddle" required>
+              <option value="yes">Yes &ndash; I or a designated delegate will attend</option>
+              <option value="alternate">Alternate days / MWF only</option>
+              <option value="async">Asynchronous updates via SharePoint / Teams</option>
+            </select>
+            <div class="hint">Recurring Room: Zoom ID 732 239 8187</div>
+          </div>
+          <div class="field">
+            <label for="surv_stream">Preferred Working Stream Bucketing <span class="req">*</span></label>
+            <select id="surv_stream" required>
+              <option value="civic">Civic Engagement &amp; Community Anchoring</option>
+              <option value="discretionary">City Council Discretionary Funding</option>
+              <option value="rfp">Municipal Procurement &amp; RFP Teaming</option>
+              <option value="operations">Operations, Finance &amp; Capacity Scaling</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="button" class="secondary" onclick="goToStep(2)">&larr; Back to Documents</button>
+        <button type="button" class="primary" style="background: var(--ok); color: #ffffff;" onclick="submitSurveyAndComplete()">Submit Survey &amp; Complete Onboarding &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==================== STEP 4: WORKSPACE ACCESS & PROVISIONING ==================== -->
+  <div id="step4" class="step-panel hidden">
     <div class="card" style="border-top: 6px solid var(--ok);">
       <div style="text-align: center; margin-bottom: 20px;">
         <div style="font-size: 2.8rem; margin-bottom: 8px;">🏛️</div>
-        <h2 style="justify-content: center; margin-bottom: 4px;">Account Created & SharePoint Access Granted!</h2>
+        <h2 style="justify-content: center; margin-bottom: 4px;">Onboarding Complete &amp; Site Access Granted!</h2>
         <p style="color: var(--ok); font-weight: 700; margin: 0; font-size: 1.05rem;">
-          Mutual NDA Executed · Credentials Provisioned · Workspace Unlocked
+          Mutual NDA Executed &middot; Documents Verified &middot; Workspace Unlocked
         </p>
       </div>
 
@@ -848,30 +808,22 @@
 
       <h3 style="color: var(--navy); font-size: 1.15rem; margin-bottom: 12px;">Direct Workspace Access Links:</h3>
       <div style="display: flex; flex-direction: column; gap: 10px;">
-        <a href="https://netorg19167036.sharepoint.com/sites/onenyc.com/Shared%20Documents/OneNYC_Operations_Portal.html" target="_blank" style="text-decoration: none;">
-          <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background: #ffffff; border: 2px solid var(--amber); border-radius: 8px; transition: all 0.15s;">
-            <div>
-              <strong style="color: var(--navy); font-size: 1.05rem;">🚀 Launch OneNYC Operations & Resource Portal</strong>
-              <div style="font-size: 0.85rem; color: var(--ink-muted);">Access SOP IP-01, policy documents, procurement templates, and live trackers.</div>
-            </div>
-            <span style="font-size: 1.2rem; color: var(--amber);">→</span>
-          </div>
+        <a href="https://netorg19167036.sharepoint.com/sites/onenyc.com/Shared%20Documents/OneNYC_Operations_Portal.html" target="_blank" style="display: flex; align-items: center; justify-content: space-between; background: #ffffff; border: 1px solid var(--line); padding: 14px 18px; border-radius: 8px; text-decoration: none; color: var(--navy); font-weight: 700; transition: border-color 0.15s;">
+          <span>🚀 Launch OneNYC Operations Portal</span>
+          <span style="color: var(--sky); font-weight: 600;">Open Portal &rarr;</span>
         </a>
-
-        <a href="https://us06web.zoom.us/j/7322398187" target="_blank" style="text-decoration: none;">
-          <div style="display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background: #ffffff; border: 1px solid var(--line); border-radius: 8px;">
-            <div>
-              <strong style="color: var(--navy); font-size: 1.02rem;">📅 Daily 11:00 AM EST Standing Huddle Room</strong>
-              <div style="font-size: 0.85rem; color: var(--ink-muted);">Join leadership syncs with Michael Blake, Rosy Islam, and Yasser Salem.</div>
-            </div>
-            <span style="font-size: 1.2rem; color: var(--navy);">→</span>
-          </div>
+        <a href="https://netorg19167036.sharepoint.com/sites/onenyc.com/Shared%20Documents/Legal%20and%20Compliance/" target="_blank" style="display: flex; align-items: center; justify-content: space-between; background: #ffffff; border: 1px solid var(--line); padding: 14px 18px; border-radius: 8px; text-decoration: none; color: var(--navy); font-weight: 700; transition: border-color 0.15s;">
+          <span>📁 View Executed Governance &amp; Compliance Vault</span>
+          <span style="color: var(--sky); font-weight: 600;">Open Folder &rarr;</span>
+        </a>
+        <a href="https://us06web.zoom.us/j/7322398187" target="_blank" style="display: flex; align-items: center; justify-content: space-between; background: #ffffff; border: 1px solid var(--line); padding: 14px 18px; border-radius: 8px; text-decoration: none; color: var(--navy); font-weight: 700; transition: border-color 0.15s;">
+          <span>📹 Join Daily 11:00 AM EST Zoom Huddle (ID: 732 239 8187)</span>
+          <span style="color: var(--sky); font-weight: 600;">Launch Zoom &rarr;</span>
         </a>
       </div>
 
-      <div class="actions" style="justify-content: center; gap: 14px;">
-        <button type="button" class="primary" onclick="window.print()">Print Official Onboarding & NDA Summary</button>
-        <button type="button" class="secondary" onclick="location.reload()">Return to Welcome Page</button>
+      <div style="margin-top: 28px; text-align: center;">
+        <button type="button" class="secondary" onclick="window.print()">🖨️ Print / Save NDA Execution &amp; Access Receipt</button>
       </div>
     </div>
   </div>
@@ -879,196 +831,212 @@
 </div>
 
 <script>
-  let uploadedFiles = [];
   let currentStep = 1;
-  let activeTrack = 'impact';
+  let selectedTrack = 'impact';
+  let uploadedFiles = [];
+  let ndaExecuted = false;
+  let ndaCertificateId = '';
 
-  function handleFileSelect(e) {
-    const files = Array.from(e.target.files);
-    files.forEach(f => {
-      uploadedFiles.push({ name: f.name, size: (f.size / 1024).toFixed(1) + ' KB', type: f.type || 'Document' });
-    });
-    renderFileList();
-  }
+  function goToStep(step) {
+    if (step > currentStep && !canAccessStep(step)) return;
 
-  function simulateUpload(type) {
-    if (type === 'nonprofit') {
-      uploadedFiles = [
-        { name: 'IRS_501c3_Determination_Letter_CP575.pdf', size: '142.5 KB', type: 'IRS Determination' },
-        { name: 'NYS_Charities_Bureau_CHAR410_Receipt.pdf', size: '98.2 KB', type: 'Charities Reg' },
-        { name: 'Certificate_of_Incorporation_NYS_DOS.pdf', size: '215.0 KB', type: 'DOS Incorporation' },
-        { name: 'Form_990EZ_FY2025_Financial_Statements.pdf', size: '480.1 KB', type: 'Financial Package' }
-      ];
-    } else {
-      uploadedFiles = [
-        { name: 'IRS_EIN_Issuance_Letter_147C.pdf', size: '112.0 KB', type: 'IRS EIN Letter' },
-        { name: 'NYS_Articles_of_Organization_LLC.pdf', size: '190.4 KB', type: 'DOS Incorporation' },
-        { name: 'NYC_SBS_Certified_MWBE_Certificate.pdf', size: '154.2 KB', type: 'M/WBE Certificate' },
-        { name: 'Corporate_Capability_Statement_2026.pdf', size: '320.0 KB', type: 'Capability Dossier' }
-      ];
-    }
-    renderFileList();
-  }
+    document.querySelectorAll('.step-panel').forEach(p => p.classList.add('hidden'));
+    document.getElementById('step' + step).classList.remove('hidden');
 
-  function renderFileList() {
-    const listEl = document.getElementById('uploadedList');
-    listEl.innerHTML = '';
-    uploadedFiles.forEach((f) => {
-      const item = document.createElement('div');
-      item.className = 'uploaded-item';
-      item.innerHTML = `
-        <div>
-          <span class="file-name">📄 ${f.name}</span>
-          <span style="font-size: 0.78rem; color: #5f6974; margin-left: 8px;">(${f.size})</span>
-        </div>
-        <span class="file-status">✓ Ready for Parsing</span>
-      `;
-      listEl.appendChild(item);
-    });
-
-    document.getElementById('btnToStep2').disabled = uploadedFiles.length === 0;
-  }
-
-  function processExtractionAndProceed() {
-    const progressEl = document.getElementById('extractionProgress');
-    const statusText = document.getElementById('extractionStatusText');
-    progressEl.classList.remove('hidden');
-    statusText.innerText = 'Extracting legal entities, EINs, and address records via Smart OCR...';
-
-    setTimeout(() => {
-      const isBusiness = uploadedFiles.some(f => f.name.toLowerCase().includes('llc') || f.name.toLowerCase().includes('mwbe'));
-      
-      if (!isBusiness) {
-        document.getElementById('v_legal_name').value = 'Muslim Youth & Community Development Center Inc.';
-        document.getElementById('v_common_name').value = 'MYCDC NYC';
-        document.getElementById('v_ein').value = '39-3473692';
-        document.getElementById('v_entity_type').value = '501c3_standalone';
-        document.getElementById('v_year_inc').value = '2021';
-        document.getElementById('v_charities_reg').value = '51-72-19';
-        document.getElementById('v_address').value = '169-02 Highland Ave, Jamaica, NY 11432';
-        document.getElementById('v_borough').value = 'Queens';
-        document.getElementById('v_website').value = 'https://mycdc.org';
-        document.getElementById('v_contact_name').value = 'Dr. Abdus-Salaam Musa';
-        document.getElementById('v_contact_title').value = 'Executive Director';
-        document.getElementById('v_contact_email').value = 'director@mycdc.org';
-        document.getElementById('v_contact_phone').value = '718-644-3042';
-        selectTrack('impact');
-      } else {
-        document.getElementById('v_legal_name').value = 'Samaana Solutions LLC';
-        document.getElementById('v_common_name').value = 'Samaana Technologies';
-        document.getElementById('v_ein').value = '47-2894103';
-        document.getElementById('v_entity_type').value = 'business_for_profit';
-        document.getElementById('v_year_inc').value = '2019';
-        document.getElementById('v_charities_reg').value = 'N/A (For-Profit)';
-        document.getElementById('v_address').value = '202 Centre Street, New York, NY 10013';
-        document.getElementById('v_borough').value = 'Manhattan';
-        document.getElementById('v_website').value = 'https://samaanatech.com';
-        document.getElementById('v_contact_name').value = 'Mohamed Salem';
-        document.getElementById('v_contact_title').value = 'Managing Partner';
-        document.getElementById('v_contact_email').value = 'mohamed@samaanatech.com';
-        document.getElementById('v_contact_phone').value = '646-685-6421';
-        selectTrack('partner');
+    for (let i = 1; i <= 4; i++) {
+      let node = document.getElementById('stepNode' + i);
+      if (node) {
+        node.classList.remove('active');
+        if (i < step) {
+          node.classList.add('completed');
+          node.disabled = false;
+        } else if (i === step) {
+          node.classList.add('active');
+          node.disabled = false;
+        }
       }
-
-      progressEl.classList.add('hidden');
-      goToStep(2);
-    }, 700);
-  }
-
-  function confirmVerificationAndProceed() {
-    const check = document.getElementById('verify_confirm_check');
-    if (!check.checked) {
-      alert('Please check the confirmation box to certify that the extracted information has been verified.');
-      return;
     }
-    
-    // Update NDA placeholders
-    document.getElementById('ndaPartyName').innerText = document.getElementById('v_legal_name').value || '[Organization Name]';
-    document.getElementById('ndaPartyAddress').innerText = document.getElementById('v_address').value || '[Address]';
-    document.getElementById('ndaSignerName').innerText = document.getElementById('v_contact_name').value || '[Signatory Name]';
-    document.getElementById('ndaSignerTitle').innerText = document.getElementById('v_contact_title').value || '[Title]';
-    document.getElementById('nda_sig_typed').value = document.getElementById('v_contact_name').value || '';
-
-    goToStep(3);
+    currentStep = step;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  function selectTrack(track) {
-    activeTrack = track;
-    const impactChoice = document.getElementById('trackChoiceImpact');
-    const partnerChoice = document.getElementById('trackChoicePartner');
-    const impactFields = document.getElementById('impactPartnerFields');
-    const partnerFields = document.getElementById('businessPartnerFields');
-    const badge = document.getElementById('trackBadge');
-
-    if (track === 'impact') {
-      impactChoice.classList.add('selected');
-      partnerChoice.classList.remove('selected');
-      document.getElementById('radioImpact').checked = true;
-      impactFields.classList.remove('hidden');
-      partnerFields.classList.add('hidden');
-      badge.innerText = 'Impact Partner Track (Nonprofit / Council Discretionary)';
-    } else {
-      partnerChoice.classList.add('selected');
-      impactChoice.classList.remove('selected');
-      document.getElementById('radioPartner').checked = true;
-      partnerFields.classList.remove('hidden');
-      impactFields.classList.add('hidden');
-      badge.innerText = 'Business Partner Track (Proposal Factory / M/WBE)';
-    }
+  function canAccessStep(step) {
+    if (step === 2) return ndaExecuted;
+    if (step === 3) return ndaExecuted && document.getElementById('v_legal_name').value.trim() !== '';
+    if (step === 4) return ndaExecuted;
+    return true;
   }
 
-  function toggleTrackFields(val) {
-    if (val === 'business_for_profit') {
-      selectTrack('partner');
-    } else {
-      selectTrack('impact');
+  function updateNDAPreview() {
+    let org = document.getElementById('init_org_name').value.trim();
+    let name = document.getElementById('init_signer_name').value.trim();
+    let title = document.getElementById('init_signer_title').value.trim();
+
+    document.getElementById('ndaPartyName').innerText = org || '[Legal Organization Name]';
+    document.getElementById('ndaSignerName').innerText = name || '[Authorized Signatory Name]';
+    document.getElementById('ndaSignerTitle').innerText = title || '[Title]';
+
+    if (name && !document.getElementById('nda_sig_typed').value) {
+      document.getElementById('nda_sig_typed').value = name;
     }
   }
 
   function executeNDAAndProceed() {
-    const typed = document.getElementById('nda_sig_typed').value.trim();
-    const authCheck = document.getElementById('nda_authority_check').checked;
+    let org = document.getElementById('init_org_name').value.trim();
+    let name = document.getElementById('init_signer_name').value.trim();
+    let title = document.getElementById('init_signer_title').value.trim();
+    let email = document.getElementById('init_signer_email').value.trim();
+    let sig = document.getElementById('nda_sig_typed').value.trim();
+    let auth = document.getElementById('nda_authority_check').checked;
 
-    if (!typed) {
-      alert('Please type your legal name to electronically sign the Mutual NDA.');
-      return;
-    }
-    if (!authCheck) {
-      alert('Please certify that you have legal authority to bind the entity.');
-      return;
-    }
+    if (!org) { alert('Please enter your Legal Organization / Entity Name.'); document.getElementById('init_org_name').focus(); return; }
+    if (!name) { alert('Please enter the Authorized Representative Full Name.'); document.getElementById('init_signer_name').focus(); return; }
+    if (!title) { alert('Please enter the Representative Professional Title.'); document.getElementById('init_signer_title').focus(); return; }
+    if (!email || !email.includes('@')) { alert('Please enter a valid Official Organization Email.'); document.getElementById('init_signer_email').focus(); return; }
+    if (!sig) { alert('Please type your Full Legal Name as your signature.'); document.getElementById('nda_sig_typed').focus(); return; }
+    if (!auth) { alert('Please certify that you have legal authority to execute this Mutual NDA.'); return; }
 
-    // Populate Step 5 credentials
-    document.getElementById('resOrgName').innerText = document.getElementById('v_legal_name').value;
-    document.getElementById('resSignerName').innerText = typed;
-    document.getElementById('resEmail').innerText = document.getElementById('v_contact_email').value;
-    document.getElementById('resTrack').innerText = activeTrack === 'impact' ? 'OneNYC Impact Partner' : 'OneNYC Partner (Commercial)';
-    
-    const randomHex = Math.random().toString(16).substring(2, 10).toUpperCase();
-    document.getElementById('resNDAID').innerText = `NDA-2026-${randomHex} (Executed)`;
+    ndaExecuted = true;
+    ndaCertificateId = 'NDA-ONENYC-' + Math.random().toString(36).substring(2, 9).toUpperCase();
 
-    goToStep(5);
+    // Auto-populate Step 2
+    document.getElementById('v_legal_name').value = org;
+    document.getElementById('ndaActiveBadge').innerText = '✓ Mutual NDA Active (' + ndaCertificateId + ')';
+
+    document.getElementById('stepNode2').disabled = false;
+    goToStep(2);
   }
 
-  function goToStep(s) {
-    document.querySelectorAll('.step-panel').forEach(p => p.classList.add('hidden'));
-    document.querySelectorAll('.step-node').forEach((n, idx) => {
-      n.classList.remove('active');
-      if (idx + 1 < s) n.classList.add('completed');
-      else n.classList.remove('completed');
-    });
+  function selectTrack(track) {
+    selectedTrack = track;
+    document.getElementById('trackImpact').classList.toggle('selected', track === 'impact');
+    document.getElementById('trackCommercial').classList.toggle('selected', track === 'commercial');
+  }
 
-    const targetNode = document.getElementById('stepNode' + s);
-    if (targetNode) {
-      targetNode.removeAttribute('disabled');
-      targetNode.classList.add('active');
+  function handleFileSelect(e) {
+    const files = e.target.files;
+    processFiles(files);
+  }
+
+  function processFiles(files) {
+    for (let f of files) {
+      uploadedFiles.push(f.name);
+      addFileToQueue(f.name);
     }
+    simulateExtraction(uploadedFiles[0]);
+  }
 
-    const panel = document.getElementById('step' + s);
-    if (panel) panel.classList.remove('hidden');
-    currentStep = s;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  function addFileToQueue(filename) {
+    const q = document.getElementById('fileQueue');
+    const item = document.createElement('div');
+    item.className = 'file-item';
+    item.innerHTML = `
+      <span class="file-name">📄 ${filename}</span>
+      <span class="file-status">Extracted &amp; Verified</span>
+    `;
+    q.appendChild(item);
+  }
+
+  function simulateUpload(type) {
+    document.getElementById('fileQueue').innerHTML = '';
+    uploadedFiles = [];
+
+    if (type === 'nonprofit') {
+      uploadedFiles = ['IRS_501c3_Determination_Letter.pdf', 'NYS_Charities_Char500_2025.pdf'];
+      addFileToQueue('IRS_501c3_Determination_Letter.pdf');
+      addFileToQueue('NYS_Charities_Char500_2025.pdf');
+
+      document.getElementById('v_legal_name').value = 'Muslim Community Center of NYC, Inc.';
+      document.getElementById('v_ein').value = '11-3489201';
+      document.getElementById('v_org_type').value = '501c3';
+      document.getElementById('v_state').value = 'New York';
+      document.getElementById('v_year').value = '2018';
+      document.getElementById('v_address').value = '140 58th St, Building B, Brooklyn, NY 11220';
+      document.getElementById('v_phone').value = '(718) 492-3000';
+      document.getElementById('v_mission').value = 'Empowering youth and immigrant families across NYC through education, civic participation, and social safety-net programs.';
+      selectTrack('impact');
+    } else {
+      uploadedFiles = ['NYC_SBS_MWBE_Certification.pdf', 'Articles_of_Incorporation_NYS.pdf', 'W9_Signed_2026.pdf'];
+      addFileToQueue('NYC_SBS_MWBE_Certification.pdf');
+      addFileToQueue('Articles_of_Incorporation_NYS.pdf');
+      addFileToQueue('W9_Signed_2026.pdf');
+
+      document.getElementById('v_legal_name').value = 'Apex Urban Solutions LLC';
+      document.getElementById('v_ein').value = '84-2938102';
+      document.getElementById('v_org_type').value = 'mwbe_llc';
+      document.getElementById('v_state').value = 'New York';
+      document.getElementById('v_year').value = '2021';
+      document.getElementById('v_address').value = '350 5th Avenue, Suite 4400, New York, NY 10118';
+      document.getElementById('v_phone').value = '(212) 890-4411';
+      document.getElementById('v_mission').value = 'Certified Minority-Owned business providing workforce training, technology infrastructure, and project management for municipal agencies.';
+      selectTrack('commercial');
+    }
+  }
+
+  function simulateExtraction(fname) {
+    if (!document.getElementById('v_ein').value) {
+      document.getElementById('v_ein').value = '12-3456789';
+      document.getElementById('v_org_type').value = '501c3';
+      document.getElementById('v_state').value = 'New York';
+      document.getElementById('v_year').value = '2019';
+      document.getElementById('v_address').value = '202 Centre Street, New York, NY 10013';
+      document.getElementById('v_phone').value = '(212) 555-0199';
+      document.getElementById('v_mission').value = 'Community-anchored capacity building and coalition advocacy across New York City.';
+    }
+  }
+
+  function confirmDocumentsAndProceed() {
+    let legalName = document.getElementById('v_legal_name').value.trim();
+    let ein = document.getElementById('v_ein').value.trim();
+    let orgType = document.getElementById('v_org_type').value;
+    let addr = document.getElementById('v_address').value.trim();
+
+    if (!legalName) { alert('Please confirm your Legal Entity Name.'); return; }
+    if (!ein) { alert('Please enter your Federal EIN / TIN.'); return; }
+    if (!orgType) { alert('Please select your Entity Classification.'); return; }
+    if (!addr) { alert('Please provide your Principal Address.'); return; }
+
+    document.getElementById('stepNode3').disabled = false;
+    goToStep(3);
+  }
+
+  function submitSurveyAndComplete() {
+    let reach = document.getElementById('surv_reach').value;
+    let borough = document.getElementById('surv_borough').value;
+    let huddle = document.getElementById('surv_huddle').value;
+    let stream = document.getElementById('surv_stream').value;
+
+    if (!reach) { alert('Please select your active community reach size.'); return; }
+    if (!borough) { alert('Please select your primary borough(s).'); return; }
+
+    let org = document.getElementById('v_legal_name').value.trim() || document.getElementById('init_org_name').value.trim();
+    let signer = document.getElementById('init_signer_name').value.trim();
+    let email = document.getElementById('init_signer_email').value.trim();
+
+    document.getElementById('resOrgName').innerText = org;
+    document.getElementById('resSignerName').innerText = signer;
+    document.getElementById('resEmail').innerText = email;
+    document.getElementById('resTrack').innerText = selectedTrack === 'impact' ? 'Impact Partner (Civic / CBO)' : 'Commercial Partner (M/WBE / Tech)';
+    document.getElementById('resNDAID').innerText = ndaCertificateId || ('NDA-ONENYC-' + Math.random().toString(36).substring(2, 9).toUpperCase());
+
+    document.getElementById('stepNode4').disabled = false;
+    goToStep(4);
+  }
+
+  // Setup drag & drop
+  const dz = document.getElementById('dropzone');
+  if (dz) {
+    ['dragenter', 'dragover'].forEach(name => {
+      dz.addEventListener(name, (e) => { e.preventDefault(); dz.classList.add('dragover'); });
+    });
+    ['dragleave', 'drop'].forEach(name => {
+      dz.addEventListener(name, (e) => { e.preventDefault(); dz.classList.remove('dragover'); });
+    });
+    dz.addEventListener('drop', (e) => {
+      processFiles(e.dataTransfer.files);
+    });
   }
 </script>
+
 </body>
 </html>
