@@ -428,7 +428,42 @@
     font-weight: 600;
   }
   .sim-pill:hover { background: #cbd5e1; }
+  .extracted-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #166534;
+    background: #dcfce7;
+    border: 1px solid #bbf7d0;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  .field-extracted {
+    border-color: #22c55e !important;
+    background-color: #f0fdf4 !important;
+  }
+  .parse-spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid #0284c7;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    vertical-align: middle;
+    margin-right: 6px;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
 </style>
+  <!-- Mozilla PDF.js for automated client-side document extraction -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body>
 
@@ -1029,28 +1064,213 @@
     document.getElementById('trackCommercial').classList.toggle('selected', track === 'commercial');
   }
 
+  if (typeof pdfjsLib !== 'undefined') {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
+
   function handleFileSelect(e) {
     const files = e.target.files;
     processFiles(files);
   }
 
-  function processFiles(files) {
+  async function processFiles(files) {
     for (let f of files) {
       uploadedFiles.push(f.name);
-      addFileToQueue(f.name);
+      addFileToQueue(f.name, true);
     }
-    simulateExtraction(uploadedFiles[0]);
+    
+    // Parse each uploaded file
+    for (let f of files) {
+      if (f.type === 'application/pdf' || f.name.toLowerCase().endsWith('.pdf')) {
+        await extractTextFromPDF(f);
+      } else {
+        updateFileStatus(f.name, 'Uploaded (Image/Document)');
+      }
+    }
   }
 
-  function addFileToQueue(filename) {
+  async function extractTextFromPDF(file) {
+    if (typeof pdfjsLib === 'undefined') {
+      updateFileStatus(file.name, 'Uploaded');
+      return;
+    }
+
+    try {
+      updateFileStatus(file.name, '<span class="parse-spinner"></span> Scanning document text layer...');
+      const arrayBuffer = await file.arrayBuffer();
+      const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+      const pdf = await loadingTask.promise;
+      let fullText = '';
+      const maxPages = Math.min(pdf.numPages, 5);
+      for (let i = 1; i <= maxPages; i++) {
+        const page = await pdf.getPage(i);
+        const textContent = await page.getTextContent();
+        const pageText = textContent.items.map(item => item.str).join(' ');
+        fullText += ' ' + pageText;
+      }
+
+      if (fullText.trim().length > 30) {
+        parseAndPopulateExtractedData(fullText, file.name);
+        updateFileStatus(file.name, '✓ Text Layer Parsed & Entities Extracted');
+      } else {
+        updateFileStatus(file.name, '⚠️ Scanned/Image PDF (No text layer) — Manual entry enabled');
+      }
+    } catch (err) {
+      console.warn('PDF parse error for ' + file.name + ':', err);
+      updateFileStatus(file.name, 'Uploaded (Review fields below)');
+    }
+  }
+
+  function parseAndPopulateExtractedData(text, filename) {
+    // 1. EIN / Tax ID (XX-XXXXXXX or 9 digits)
+    let einMatch = text.match(/\b\d{2}-\d{7}\b/) || 
+                   text.match(/(?:EIN|TIN|Employer Identification Number|Taxpayer Identification Number)[^\d]{0,25}(\d{2}-\d{7}|\d{9})/i);
+    if (einMatch) {
+      let rawEin = einMatch[1] || einMatch[0];
+      if (rawEin.length === 9 && !rawEin.includes('-')) {
+        rawEin = rawEin.substring(0, 2) + '-' + rawEin.substring(2);
+      }
+      const einEl = document.getElementById('v_ein');
+      if (einEl) {
+        einEl.value = rawEin;
+        markFieldExtracted('v_ein', 'EIN');
+      }
+    }
+
+    // 2. Entity Classification
+    const orgTypeEl = document.getElementById('v_org_type');
+    if (orgTypeEl) {
+      if (/501\s*\([cC]\)\s*\(3\)|501\s*\(c\)\s*3|Section 501\(c\)\(3\)/i.test(text)) {
+        orgTypeEl.value = '501c3';
+        markFieldExtracted('v_org_type', '501(c)(3) Letter');
+        selectTrack('impact');
+      } else if (/501\s*\([cC]\)\s*\(4\)/i.test(text)) {
+        orgTypeEl.value = '501c4';
+        markFieldExtracted('v_org_type', '501(c)(4)');
+        selectTrack('impact');
+      } else if (/M\/WBE|Minority\s*and\s*Women|WBE|MBE|Small Business Services/i.test(text)) {
+        orgTypeEl.value = 'mwbe_llc';
+        markFieldExtracted('v_org_type', 'M/WBE Certification');
+        selectTrack('commercial');
+      } else if (/Mosque|Masjid|Islamic Center|Church|Synagogue|Religious/i.test(text)) {
+        orgTypeEl.value = 'faith_based';
+        markFieldExtracted('v_org_type', 'Faith-Based');
+        selectTrack('impact');
+      }
+    }
+
+    // 3. Organization Name
+    let nameEl = document.getElementById('v_legal_name');
+    if (nameEl) {
+      let nameMatch = null;
+      let m = text.match(/Dear Applicant:\s*([A-Za-z0-9\s,\.\-&]{4,60}?)(?=\s+(?:We are pleased|Our records|PO BOX|[0-9]{1,5}\s+[A-Z]))/i);
+      if (m) nameMatch = m[1];
+      
+      if (!nameMatch) {
+        let w9m = text.match(/1\s*Name\s*\([^)]*\)\s*([A-Za-z0-9\s,\.\-&]{4,60}?)(?=\s+(?:2\s*Business|3\s*Check))/i);
+        if (w9m) nameMatch = w9m[1];
+      }
+
+      if (!nameMatch) {
+        let dosm = text.match(/Entity Name:\s*([A-Za-z0-9\s,\.\-&]{4,60}?)(?=\s+(?:DOS ID|Selected Name))/i);
+        if (dosm) nameMatch = dosm[1];
+      }
+
+      if (!nameMatch) {
+        let incm = text.match(/\b([A-Z][A-Za-z0-9\s,\-&]{3,50}?\b(?:INC(?:ORPORATED|\.)?|LLC|CORP(?:ORATION|\.)?|FOUNDATION|ASSOCIATION|CENTER|INSTITUTE))\b/);
+        if (incm && !/TREASURY|INTERNAL REVENUE|DEPARTMENT/i.test(incm[1])) {
+          nameMatch = incm[1];
+        }
+      }
+
+      if (nameMatch) {
+        let cleanName = nameMatch.trim().replace(/\s{2,}/g, ' ');
+        nameEl.value = cleanName;
+        markFieldExtracted('v_legal_name', 'Doc Header');
+      }
+    }
+
+    // 4. Address & State / Zip
+    const addrEl = document.getElementById('v_address');
+    if (addrEl && (!addrEl.value || addrEl.value.includes('Centre Street'))) {
+      let addrMatch = text.match(/\b(\d{1,5}\s+[A-Za-z0-9\.\s]{3,35}\b(?:Street|St|Avenue|Ave|Boulevard|Blvd|Road|Rd|Drive|Dr|Way|Place|Pl|Broadway)[^\n\r,]{0,25},\s*(?:[A-Za-z\s]{3,20},\s*)?NY\s*1\d{4})\b/i);
+      if (addrMatch) {
+        addrEl.value = addrMatch[1].trim().replace(/\s{2,}/g, ' ');
+        markFieldExtracted('v_address', 'Address');
+      }
+    }
+
+    // 5. Year Incorporated / Effective Exemption Date
+    const yearEl = document.getElementById('v_year');
+    if (yearEl) {
+      let yearMatch = text.match(/(?:Effective date of exemption|incorporated|formation|dated|filed on)[^\d]{1,30}\b(19\d{2}|20\d{2})\b/i);
+      if (yearMatch) {
+        yearEl.value = yearMatch[1];
+        markFieldExtracted('v_year', 'Year');
+      }
+    }
+
+    // 6. Phone number
+    const phoneEl = document.getElementById('v_phone');
+    if (phoneEl && (!phoneEl.value || phoneEl.value.includes('555-0199'))) {
+      let phoneMatch = text.match(/\b(?:\+?1[-.\s]?)?\(?([2-9][0-9]{2})\)?[-.\s]?([0-9]{3})[-.\s]?([0-9]{4})\b/);
+      if (phoneMatch && !phoneMatch[0].includes('800-') && !phoneMatch[0].includes('877-')) {
+        phoneEl.value = phoneMatch[0];
+        markFieldExtracted('v_phone', 'Phone');
+      }
+    }
+
+    // 7. Charities Bureau status
+    if (/CHAR410|CHAR500|Charities Bureau/i.test(text)) {
+      const charEl = document.getElementById('cr_charities');
+      if (charEl) {
+        charEl.value = 'current';
+        markFieldExtracted('cr_charities', 'Charities Filing');
+      }
+    }
+  }
+
+  function markFieldExtracted(fieldId, labelText) {
+    const el = document.getElementById(fieldId);
+    if (!el) return;
+    el.classList.add('field-extracted');
+    
+    const parent = el.closest('.field');
+    if (parent) {
+      let badge = parent.querySelector('.extracted-tag');
+      if (!badge) {
+        const label = parent.querySelector('label');
+        if (label) {
+          badge = document.createElement('span');
+          badge.className = 'extracted-tag';
+          label.appendChild(badge);
+        }
+      }
+      if (badge) {
+        badge.innerHTML = '⚡ Auto-Extracted (' + labelText + ')';
+      }
+    }
+  }
+
+  function addFileToQueue(filename, isProcessing = false) {
     const q = document.getElementById('fileQueue');
     const item = document.createElement('div');
     item.className = 'file-item';
+    item.id = 'file_item_' + filename.replace(/[^a-zA-Z0-9]/g, '_');
     item.innerHTML = `
       <span class="file-name">📄 ${filename}</span>
-      <span class="file-status">Extracted &amp; Verified</span>
+      <span class="file-status">${isProcessing ? '<span class="parse-spinner"></span> Scanning document text...' : 'Uploaded'}</span>
     `;
     q.appendChild(item);
+  }
+
+  function updateFileStatus(filename, statusHtml) {
+    const id = 'file_item_' + filename.replace(/[^a-zA-Z0-9]/g, '_');
+    const item = document.getElementById(id);
+    if (item) {
+      const statusSpan = item.querySelector('.file-status');
+      if (statusSpan) statusSpan.innerHTML = statusHtml;
+    }
   }
 
   function simulateUpload(type) {
