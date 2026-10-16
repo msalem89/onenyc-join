@@ -34,7 +34,6 @@
     line-height: 1.5;
   }
 
-  /* Header */
   header.top {
     background: var(--navy);
     color: var(--white);
@@ -220,7 +219,7 @@
     .stepper-track { flex-direction: column; align-items: stretch; }
   }
 
-  /* NDA Contract Box */
+  /* Contract & Signatures */
   .nda-contract-box {
     background: #f8fafc;
     border: 1px solid var(--line-active);
@@ -322,7 +321,20 @@
   .verify-banner h3 { margin: 0 0 4px 0; font-size: 1rem; color: var(--navy); }
   .verify-banner p { margin: 0; font-size: 0.88rem; color: #334155; }
 
-  /* Track Selection */
+  .callout-box {
+    background: #f8fafc;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 18px;
+    margin-bottom: 22px;
+  }
+  .callout-box h3 {
+    margin: 0 0 12px 0;
+    color: var(--navy);
+    font-size: 1.05rem;
+  }
+
+  /* Track Cards */
   .track-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -346,10 +358,10 @@
   .track-title { font-weight: 800; font-size: 1.1rem; color: var(--navy); margin-bottom: 6px; }
   .track-desc { font-size: 0.86rem; color: var(--ink-muted); margin: 0; }
 
-  /* Survey Sliders */
+  /* Sliders */
   .strength-item {
     margin-bottom: 18px;
-    background: #f8fafc;
+    background: #ffffff;
     border: 1px solid var(--line);
     border-radius: 8px;
     padding: 14px 16px;
@@ -371,10 +383,7 @@
     min-width: 32px;
     text-align: center;
   }
-  input[type=range] {
-    width: 100%;
-    margin: 4px 0;
-  }
+  input[type=range] { width: 100%; margin: 4px 0; }
 
   /* Actions */
   .actions {
@@ -444,15 +453,15 @@
       <button class="step-node" id="stepNode2" onclick="goToStep(2)" disabled>
         <span class="step-num">2</span>
         <span class="step-text">
-          <span class="step-title">Upload Documents</span>
-          <span class="step-sub">Auto-extract & Verify</span>
+          <span class="step-title">Upload & City Readiness</span>
+          <span class="step-sub">PASSPort & Documents</span>
         </span>
       </button>
       <button class="step-node" id="stepNode3" onclick="goToStep(3)" disabled>
         <span class="step-num">3</span>
         <span class="step-text">
-          <span class="step-title">Readiness & Survey</span>
-          <span class="step-sub">Rosy's Capacity Questions</span>
+          <span class="step-title">Capacity & Alignment</span>
+          <span class="step-sub">Rosy's Survey & Streams</span>
         </span>
       </button>
       <button class="step-node" id="stepNode4" onclick="goToStep(4)" disabled>
@@ -475,10 +484,10 @@
         <span class="badge" style="background: #e0f2fe; color: #0369a1;">SOP-14 Mandate</span>
       </h2>
       <p class="lead">
-        To protect proprietary coalition strategies, confidential RFP intelligence, and sensitive organizational records, all OneNYC Partners execute this binding Mutual NDA <strong>before</strong> confidential records are exchanged.
+        To protect coalition procurement strategy, confidential City Council intelligence, and proprietary methodologies, all prospective partners execute this bilateral Mutual NDA <strong>before</strong> confidential records are exchanged.
       </p>
 
-      <div style="background: #f8fafc; border: 1px solid var(--line); border-radius: 8px; padding: 18px; margin-bottom: 20px;">
+      <div class="callout-box">
         <h4 style="margin: 0 0 12px 0; color: var(--navy); font-size: 0.95rem;">1. Identify Your Organization & Authorized Signatory</h4>
         <div class="grid-2">
           <div class="field">
@@ -547,20 +556,20 @@
 
       <div class="actions">
         <span style="font-size: 0.85rem; color: var(--ink-muted);">Step 1 of 4: Confidentiality Gate</span>
-        <button type="button" class="primary" onclick="executeNDAAndProceed()">Sign Mutual NDA &amp; Continue to Upload Documents &rarr;</button>
+        <button type="button" class="primary" onclick="executeNDAAndProceed()">Sign Mutual NDA &amp; Continue &rarr;</button>
       </div>
     </div>
   </div>
 
 
-  <!-- ==================== STEP 2: DOCUMENT UPLOAD & EXTRACTION ==================== -->
+  <!-- ==================== STEP 2: DOCUMENT UPLOAD & CITY READINESS ==================== -->
   <div id="step2" class="step-panel hidden">
     <div class="card">
-      <h2>Step 2: Upload Documents &amp; Verify Organization Details
+      <h2>Step 2: Upload Documents &amp; City Municipal Readiness
         <span class="nda-signed-pill" id="ndaActiveBadge">✓ Mutual NDA Active</span>
       </h2>
       <p class="lead">
-        With the Mutual NDA executed, please upload your organization's legal records. Our system automatically extracts your EIN, legal name, address, and formation data into your registration.
+        With the Mutual NDA executed, please upload your organization's legal records and verify your NYC municipal contracting status.
       </p>
 
       <div style="margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
@@ -580,10 +589,11 @@
 
       <div class="file-queue" id="fileQueue"></div>
 
+      <!-- Verified Entity Intelligence -->
       <div id="verifySection" style="margin-top: 26px;">
         <div class="verify-banner">
           <h3>Verified Organizational Intelligence Gate</h3>
-          <p>Please review and confirm your extracted entity facts. These will anchor your OneNYC partnership profile.</p>
+          <p>Please review and confirm your extracted entity facts. These anchor your official partnership records.</p>
         </div>
 
         <div class="grid-2">
@@ -630,29 +640,100 @@
             <input type="tel" id="v_phone" placeholder="(XXX) XXX-XXXX">
           </div>
         </div>
+      </div>
 
-        <div class="field">
-          <label for="v_mission">Mission Statement / Core Purpose</label>
-          <textarea id="v_mission" rows="2" placeholder="Brief summary of your organization's mission or services"></textarea>
+      <!-- City Readiness & Municipal Infrastructure (Agreed Working Group Additions) -->
+      <div class="callout-box" style="margin-top: 24px;">
+        <h3>NYC Municipal Readiness &amp; Procurement Status</h3>
+        <p style="font-size: 0.86rem; color: var(--ink-muted); margin-top: 0; margin-bottom: 16px;">
+          To align your organization with City Council discretionary funding and city procurement contracts, confirm your active city accounts.
+        </p>
+
+        <div class="grid-3">
+          <div class="field">
+            <label for="cr_passport">NYC PASSPort Account <span class="req">*</span></label>
+            <select id="cr_passport" required>
+              <option value="yes">Active &amp; Enrolled</option>
+              <option value="in_progress">In Progress / Application Submitted</option>
+              <option value="no">Not Yet Registered</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="cr_passport_admin">PASSPort Vendor Admin Name</label>
+            <input type="text" id="cr_passport_admin" placeholder="e.g. Jane Doe">
+          </div>
+          <div class="field">
+            <label for="cr_charities">NYS Charities Registration <span class="req">*</span></label>
+            <select id="cr_charities" required>
+              <option value="current">Current &amp; Compliant (Char500 on file)</option>
+              <option value="exempt">Religious Exemption</option>
+              <option value="pending">Pending Filing / Under Review</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid-3" style="margin-top: 14px;">
+          <div class="field">
+            <label for="cr_council_dist">Primary City Council District <span class="req">*</span></label>
+            <select id="cr_council_dist" required>
+              <option value="">-- Select Council District (1–51) --</option>
+              <option value="citywide">Citywide Focus</option>
+              <option value="d1">District 1 — Lower Manhattan (Christopher Marte)</option>
+              <option value="d2">District 2 — East Village / LES (Carlina Rivera)</option>
+              <option value="d7">District 7 — West Harlem (Shaun Abreu)</option>
+              <option value="d10">District 10 — Washington Heights (Carmen De La Rosa)</option>
+              <option value="d14">District 14 — Bronx (Pierina Sanchez)</option>
+              <option value="d16">District 16 — Bronx (Althea Stevens)</option>
+              <option value="d26">District 26 — Western Queens (Julie Won)</option>
+              <option value="d29">District 29 — Forest Hills / Kew Gardens (Lynn Schulman)</option>
+              <option value="d33">District 33 — Brooklyn Heights / Greenpoint (Lincoln Restler)</option>
+              <option value="d35">District 35 — Fort Greene / Clinton Hill (Crystal Hudson)</option>
+              <option value="d38">District 38 — Sunset Park / Red Hook (Alexa Avilés)</option>
+              <option value="d39">District 39 — Park Slope / Kensington (Shahana Hanif)</option>
+              <option value="other">Other District (1–51)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="cr_prior_funding">Prior Council Funding Received?</label>
+            <select id="cr_prior_funding">
+              <option value="no">No — First time applicant</option>
+              <option value="yes_past">Yes — Received in past fiscal year</option>
+              <option value="applied_denied">Applied previously but not funded</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="cr_upfront_cost">Upfront Capital Cash-Flow <span class="req">*</span></label>
+            <select id="cr_upfront_cost" required>
+              <option value="yes">Yes — Can float costs for city reimbursement</option>
+              <option value="partial">Partial — Up to $25k float capacity</option>
+              <option value="needs_sponsor">Requires fiscal sponsorship / advance loan</option>
+            </select>
+            <div class="hint">NYC contracts operate on reimbursement models</div>
+          </div>
+        </div>
+
+        <div class="field" style="margin-top: 14px;">
+          <label for="cr_capital_need">Facility, Building, or Capital Equipment Need</label>
+          <input type="text" id="cr_capital_need" placeholder="e.g. Community center HVAC renovation ($75,000) or mobile food pantry van">
         </div>
       </div>
 
       <div class="actions">
         <button type="button" class="secondary" onclick="goToStep(1)">&larr; Back to NDA</button>
-        <button type="button" class="primary" onclick="confirmDocumentsAndProceed()">Confirm Verified Info &amp; Proceed to Survey &rarr;</button>
+        <button type="button" class="primary" onclick="confirmDocumentsAndProceed()">Confirm Verified Info &amp; Continue &rarr;</button>
       </div>
     </div>
   </div>
 
 
-  <!-- ==================== STEP 3: ROSY ISLAM'S CAPACITY & NETWORK SURVEY ==================== -->
+  <!-- ==================== STEP 3: ROSY ISLAM'S CAPACITY SURVEY & MEMBERSHIP ==================== -->
   <div id="step3" class="step-panel hidden">
     <div class="card">
       <h2>Step 3: Partnership Track &amp; Rosy Islam's Capacity Survey
         <span class="badge">Strategic Alignment</span>
       </h2>
       <p class="lead">
-        To bucket your organization into the correct working stream and mobilize coalition resources effectively, please complete this readiness and network assessment.
+        To bucket your organization into the correct working stream and mobilize coalition resources effectively, please complete this readiness assessment.
       </p>
 
       <div class="field">
@@ -669,10 +750,11 @@
         </div>
       </div>
 
-      <div style="background: #f8fafc; border: 1px solid var(--line); border-radius: 8px; padding: 18px; margin-bottom: 22px;">
-        <h3 style="margin: 0 0 12px 0; color: var(--navy); font-size: 1.05rem;">2. Core Strengths Self-Assessment (Rate 1 &ndash; 10)</h3>
+      <!-- Rosy Islam's Strengths Self-Assessment -->
+      <div class="callout-box">
+        <h3>2. Core Strengths Self-Assessment (Rate 1 &ndash; 10)</h3>
         <p style="font-size: 0.85rem; color: var(--ink-muted); margin-top: 0; margin-bottom: 16px;">
-          Proposed by Rosy Islam in working group sessions to map coalition domain strengths.
+          Proposed by Rosy Islam in working group sessions to map coalition domain strengths and avoid duplicate workstream efforts.
         </p>
 
         <div class="strength-item">
@@ -716,8 +798,9 @@
         </div>
       </div>
 
-      <div style="background: #f8fafc; border: 1px solid var(--line); border-radius: 8px; padding: 18px; margin-bottom: 22px;">
-        <h3 style="margin: 0 0 12px 0; color: var(--navy); font-size: 1.05rem;">3. Network Footprint &amp; Community Reach</h3>
+      <!-- Network Reach & Engagement -->
+      <div class="callout-box">
+        <h3>3. Network Reach &amp; Coalition Commitment</h3>
         <div class="grid-2">
           <div class="field">
             <label for="surv_reach">Active Community / Member Base Size <span class="req">*</span></label>
@@ -730,7 +813,7 @@
             </select>
           </div>
           <div class="field">
-            <label for="surv_borough">Primary Geographic Borough(s) Served <span class="req">*</span></label>
+            <label for="surv_borough">Primary Borough(s) Served <span class="req">*</span></label>
             <select id="surv_borough" required>
               <option value="citywide">Citywide (All 5 Boroughs)</option>
               <option value="brooklyn">Brooklyn (Kings County)</option>
@@ -744,7 +827,7 @@
 
         <div class="grid-2" style="margin-top: 14px;">
           <div class="field">
-            <label for="surv_huddle">Daily 11:00 AM EST Zoom Huddle Availability <span class="req">*</span></label>
+            <label for="surv_huddle">Daily 11:00 AM EST Zoom Huddle Commitment <span class="req">*</span></label>
             <select id="surv_huddle" required>
               <option value="yes">Yes &ndash; I or a designated delegate will attend</option>
               <option value="alternate">Alternate days / MWF only</option>
@@ -764,9 +847,41 @@
         </div>
       </div>
 
+      <!-- Agreed Membership Additions (Michael Abraham / Sept 17 Decision Points) -->
+      <div class="callout-box">
+        <h3>4. Membership Tier &amp; Reciprocal Contribution Options</h3>
+        <div class="grid-2">
+          <div class="field">
+            <label for="mem_scholarship">6–12 Month Subsidy / Scholarship Request</label>
+            <select id="mem_scholarship">
+              <option value="standard">Standard Contributing Member</option>
+              <option value="scholarship_needed">Request 6–12 Month Scholarship (Financial support with reciprocal service)</option>
+            </select>
+            <div class="hint">Preserves accessibility while honoring reciprocal contribution</div>
+          </div>
+          <div class="field">
+            <label for="mem_ambassador">OneNYC Ambassador Program Interest</label>
+            <select id="mem_ambassador">
+              <option value="yes">Yes — Interested in serving as a Council District Ambassador</option>
+              <option value="maybe">Interested in learning more</option>
+              <option value="no">Focusing on organization execution only</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-top: 14px; background: #ffffff; border: 1px solid var(--line); border-radius: 6px; padding: 12px;">
+          <div style="display: flex; align-items: flex-start; gap: 8px;">
+            <input type="checkbox" id="legal_advisory_ack" style="margin-top: 3px;" required>
+            <label for="legal_advisory_ack" style="font-size: 0.88rem; font-weight: normal; color: #334155; line-height: 1.4;">
+              <strong>We acknowledge and agree:</strong> OneNYC drafts, advises, convenes, and builds capacity; our organization submits its own municipal applications and RFP proposals under its own legal account.
+            </label>
+          </div>
+        </div>
+      </div>
+
       <div class="actions">
         <button type="button" class="secondary" onclick="goToStep(2)">&larr; Back to Documents</button>
-        <button type="button" class="primary" style="background: var(--ok); color: #ffffff;" onclick="submitSurveyAndComplete()">Submit Survey &amp; Complete Onboarding &rarr;</button>
+        <button type="button" class="primary" style="background: var(--ok); color: #ffffff;" onclick="submitSurveyAndComplete()">Finalize &amp; Provision Workspace Access &rarr;</button>
       </div>
     </div>
   </div>
@@ -779,7 +894,7 @@
         <div style="font-size: 2.8rem; margin-bottom: 8px;">🏛️</div>
         <h2 style="justify-content: center; margin-bottom: 4px;">Onboarding Complete &amp; Site Access Granted!</h2>
         <p style="color: var(--ok); font-weight: 700; margin: 0; font-size: 1.05rem;">
-          Mutual NDA Executed &middot; Documents Verified &middot; Workspace Unlocked
+          Mutual NDA Executed &middot; City Readiness Verified &middot; Workspace Unlocked
         </p>
       </div>
 
@@ -800,6 +915,7 @@
           </div>
           <div>
             <div><strong>Access Role:</strong> <span id="resTrack"></span></div>
+            <div><strong>Council District:</strong> <span id="resDistrict"></span></div>
             <div><strong>NDA Verification ID:</strong> <span id="resNDAID" style="font-family: monospace; font-weight: 700; color: var(--ok);"></span></div>
             <div><strong>Tenant Site:</strong> <a href="https://netorg19167036.sharepoint.com/sites/onenyc.com" target="_blank" style="color: var(--navy); font-weight: 700;">netorg19167036.sharepoint.com</a></div>
           </div>
@@ -953,7 +1069,12 @@
       document.getElementById('v_year').value = '2018';
       document.getElementById('v_address').value = '140 58th St, Building B, Brooklyn, NY 11220';
       document.getElementById('v_phone').value = '(718) 492-3000';
-      document.getElementById('v_mission').value = 'Empowering youth and immigrant families across NYC through education, civic participation, and social safety-net programs.';
+      document.getElementById('cr_passport').value = 'yes';
+      document.getElementById('cr_passport_admin').value = 'Abdus-Salaam Musa';
+      document.getElementById('cr_charities').value = 'current';
+      document.getElementById('cr_council_dist').value = 'd38';
+      document.getElementById('cr_upfront_cost').value = 'yes';
+      document.getElementById('cr_capital_need').value = 'Community Youth Multipurpose Hall Renovation ($65,000)';
       selectTrack('impact');
     } else {
       uploadedFiles = ['NYC_SBS_MWBE_Certification.pdf', 'Articles_of_Incorporation_NYS.pdf', 'W9_Signed_2026.pdf'];
@@ -968,7 +1089,12 @@
       document.getElementById('v_year').value = '2021';
       document.getElementById('v_address').value = '350 5th Avenue, Suite 4400, New York, NY 10118';
       document.getElementById('v_phone').value = '(212) 890-4411';
-      document.getElementById('v_mission').value = 'Certified Minority-Owned business providing workforce training, technology infrastructure, and project management for municipal agencies.';
+      document.getElementById('cr_passport').value = 'yes';
+      document.getElementById('cr_passport_admin').value = 'Niraj Patel';
+      document.getElementById('cr_charities').value = 'exempt';
+      document.getElementById('cr_council_dist').value = 'citywide';
+      document.getElementById('cr_upfront_cost').value = 'yes';
+      document.getElementById('cr_capital_need').value = 'Digital Training Lab Server Fleet ($45,000)';
       selectTrack('commercial');
     }
   }
@@ -981,7 +1107,7 @@
       document.getElementById('v_year').value = '2019';
       document.getElementById('v_address').value = '202 Centre Street, New York, NY 10013';
       document.getElementById('v_phone').value = '(212) 555-0199';
-      document.getElementById('v_mission').value = 'Community-anchored capacity building and coalition advocacy across New York City.';
+      document.getElementById('cr_council_dist').value = 'd1';
     }
   }
 
@@ -990,11 +1116,13 @@
     let ein = document.getElementById('v_ein').value.trim();
     let orgType = document.getElementById('v_org_type').value;
     let addr = document.getElementById('v_address').value.trim();
+    let dist = document.getElementById('cr_council_dist').value;
 
     if (!legalName) { alert('Please confirm your Legal Entity Name.'); return; }
     if (!ein) { alert('Please enter your Federal EIN / TIN.'); return; }
     if (!orgType) { alert('Please select your Entity Classification.'); return; }
     if (!addr) { alert('Please provide your Principal Address.'); return; }
+    if (!dist) { alert('Please select your primary City Council District.'); return; }
 
     document.getElementById('stepNode3').disabled = false;
     goToStep(3);
@@ -1005,25 +1133,29 @@
     let borough = document.getElementById('surv_borough').value;
     let huddle = document.getElementById('surv_huddle').value;
     let stream = document.getElementById('surv_stream').value;
+    let ack = document.getElementById('legal_advisory_ack').checked;
 
     if (!reach) { alert('Please select your active community reach size.'); return; }
     if (!borough) { alert('Please select your primary borough(s).'); return; }
+    if (!ack) { alert('Please acknowledge that OneNYC drafts and advises while your organization submits under its own account.'); return; }
 
     let org = document.getElementById('v_legal_name').value.trim() || document.getElementById('init_org_name').value.trim();
     let signer = document.getElementById('init_signer_name').value.trim();
     let email = document.getElementById('init_signer_email').value.trim();
+    let distSelect = document.getElementById('cr_council_dist');
+    let distText = distSelect.options[distSelect.selectedIndex].text;
 
     document.getElementById('resOrgName').innerText = org;
     document.getElementById('resSignerName').innerText = signer;
     document.getElementById('resEmail').innerText = email;
     document.getElementById('resTrack').innerText = selectedTrack === 'impact' ? 'Impact Partner (Civic / CBO)' : 'Commercial Partner (M/WBE / Tech)';
+    document.getElementById('resDistrict').innerText = distText;
     document.getElementById('resNDAID').innerText = ndaCertificateId || ('NDA-ONENYC-' + Math.random().toString(36).substring(2, 9).toUpperCase());
 
     document.getElementById('stepNode4').disabled = false;
     goToStep(4);
   }
 
-  // Setup drag & drop
   const dz = document.getElementById('dropzone');
   if (dz) {
     ['dragenter', 'dragover'].forEach(name => {
