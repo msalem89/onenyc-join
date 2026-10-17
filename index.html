@@ -531,9 +531,415 @@
     border-radius: 6px;
     font-size: 0.85rem;
   }
+
+  /* ==================== HOMEPAGE & BRIEFING STYLES ==================== */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  .nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav-links a {
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 0.88rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover {
+    color: var(--amber);
+  }
+  .nav-btn {
+    background: var(--amber);
+    color: var(--navy);
+    font-weight: 700;
+    padding: 8px 18px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.88rem;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .nav-btn:hover {
+    background: var(--amber-hover);
+    color: var(--white);
+    transform: translateY(-1px);
+  }
+
+  .home-hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #11294d 100%);
+    color: var(--white);
+    padding: 56px 0 48px 0;
+    position: relative;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--amber);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 20px;
+  }
+  .hero-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1.15;
+    margin: 0 0 16px 0;
+    letter-spacing: -0.02em;
+    max-width: 860px;
+  }
+  .hero-title span.highlight {
+    color: var(--amber);
+  }
+  .hero-lead {
+    font-size: 1.15rem;
+    color: #cbd5e1;
+    line-height: 1.6;
+    margin: 0 0 32px 0;
+    max-width: 780px;
+    font-weight: 400;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+  .stat-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    padding: 18px;
+    backdrop-filter: blur(8px);
+  }
+  .stat-num {
+    font-size: 1.9rem;
+    font-weight: 900;
+    color: var(--amber);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-label {
+    font-size: 0.82rem;
+    color: #94a3b8;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .btn-hero-primary {
+    background: var(--amber);
+    color: var(--navy);
+    font-size: 1.05rem;
+    font-weight: 800;
+    padding: 14px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+  }
+  .btn-hero-primary:hover {
+    background: var(--amber-hover);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+  }
+  .btn-hero-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--white);
+    font-size: 1.02rem;
+    font-weight: 600;
+    padding: 14px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-hero-secondary:hover {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: var(--white);
+  }
+
+  /* Pre-Flight Calculator Section */
+  .calc-section {
+    background: var(--white);
+    border: 2px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 32px;
+    margin: 40px auto 48px auto;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+  }
+  .calc-header {
+    border-bottom: 1px solid #f1f5f9;
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+  }
+  .calc-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+  .calc-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .calc-results-box {
+    background: #f8fafc;
+    border: 2px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .calc-result-metric {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: #0369a1;
+    line-height: 1.1;
+    margin: 8px 0;
+  }
+  .calc-rule-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    background: #e0f2fe;
+    color: #0284c7;
+    margin-bottom: 10px;
+  }
+
+  /* Focus Grid / Rosy's Pillars */
+  .section-title-wrap {
+    text-align: center;
+    max-width: 720px;
+    margin: 48px auto 32px auto;
+  }
+  .section-tag {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--amber);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+  .section-heading {
+    font-size: 1.85rem;
+    font-weight: 900;
+    color: var(--navy);
+    margin: 0 0 10px 0;
+    letter-spacing: -0.01em;
+  }
+  .section-subtext {
+    font-size: 0.98rem;
+    color: var(--ink-muted);
+    margin: 0;
+  }
+
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+  .pillar-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 24px;
+    transition: all 0.2s;
+  }
+  .pillar-card:hover {
+    border-color: var(--amber);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+  }
+  .pillar-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: #eff6ff;
+    color: #2563eb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    margin-bottom: 16px;
+  }
+
+  /* Rules Cards */
+  .rules-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 48px;
+  }
+  .rule-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--amber);
+    border-radius: 10px;
+    padding: 22px;
+  }
+
+  /* Timeline */
+  .timeline-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 48px;
+    position: relative;
+  }
+  .timeline-node {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px;
+    position: relative;
+  }
+  .timeline-phase {
+    font-size: 0.76rem;
+    font-weight: 800;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .timeline-date {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+
+  /* Process Preview Grid */
+  .preview-steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .preview-step-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px;
+    position: relative;
+  }
+  .preview-step-badge {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: var(--amber);
+    font-weight: 800;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+
+  /* FAQ Accordion */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+  .faq-item {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .faq-question {
+    padding: 16px 20px;
+    font-weight: 700;
+    color: var(--navy);
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+  .faq-question::after {
+    content: '+';
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--ink-muted);
+  }
+  details[open] .faq-question::after {
+    content: '−';
+  }
+  .faq-answer {
+    padding: 0 20px 18px 20px;
+    color: #475569;
+    font-size: 0.94rem;
+    line-height: 1.6;
+  }
+
+  .intake-jump-banner {
+    background: linear-gradient(135deg, var(--navy) 0%, #1e3a8a 100%);
+    color: var(--white);
+    padding: 36px;
+    border-radius: 14px;
+    text-align: center;
+    margin: 48px 0 32px 0;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  @media (max-width: 860px) {
+    .hero-title { font-size: 1.85rem; }
+    .stats-grid, .calc-grid, .pillars-grid, .rules-grid, .timeline-grid, .preview-steps-grid {
+      grid-template-columns: 1fr;
+    }
+    .nav-links { display: none; }
+  }
+
 </style>
   <!-- Mozilla PDF.js for automated client-side document extraction -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
   // --- DEEP MUNICIPAL INTELLIGENCE & VERIFICATION ENGINE ---
 
   // Live NYC Open Data Socrata API Query (4d7f-74pe)
@@ -659,19 +1065,432 @@
     return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
   }
 
+
+  // ==================== PRE-FLIGHT CALCULATOR LOGIC ====================
+  function runPreflightCalc() {
+    const orgType = document.getElementById('calc_type').value;
+    const years = document.getElementById('calc_years').value;
+    const budgetRaw = parseFloat(document.getElementById('calc_budget').value) || 0;
+    const history = document.getElementById('calc_history').value;
+
+    let cap = 0;
+    let ruleText = '';
+    let badgeText = '';
+
+    if (orgType === 'mwbe') {
+      badgeText = 'Procurement Track';
+      cap = Math.min(budgetRaw * 0.75, 500000);
+      ruleText = `For M/WBE commercial contractors, awards are scoped based on bonding capacity and discretionary procurement thresholds up to $500,000.`;
+    } else if (years === 'lt1') {
+      badgeText = 'Chapter 9: New Entity (<1 Yr)';
+      cap = Math.min(budgetRaw * 0.50, 20000);
+      ruleText = `New entities operating under 1 year are capped at the lesser of 50% of annual budget or $20,000 per NYC Council Chapter 9 guidelines.`;
+    } else if (years === '1to3' && history === 'first_time') {
+      badgeText = 'Chapter 9: Emerging First-Time (1–3 Yrs)';
+      cap = Math.min(budgetRaw * 0.50, 50000);
+      ruleText = `Emerging organizations operating 1–3 years applying for the first time are capped at the lesser of 50% of operating expenses or $50,000.`;
+    } else {
+      badgeText = 'Chapter 9: Established Recipient (50% Cap)';
+      cap = budgetRaw * 0.50;
+      ruleText = `Established recipients with verified filings qualify for up to 50% of verified operating expenses ($${budgetRaw.toLocaleString()}).`;
+    }
+
+    document.getElementById('calcMetricDisplay').innerText = '$' + Math.round(cap).toLocaleString();
+    document.getElementById('calcRuleBadge').innerText = badgeText;
+    document.getElementById('calcExplanation').innerHTML = `Based on an operating budget of <strong>$${budgetRaw.toLocaleString()}</strong>, your organization qualifies for an estimated cap of <strong>$${Math.round(cap).toLocaleString()}</strong>. ${ruleText}`;
+  }
+
+  function applyCalcToStep1() {
+    const budget = document.getElementById('calc_budget').value;
+    const bInput = document.getElementById('verify_budget');
+    if (bInput) bInput.value = budget;
+    scrollToStepper();
+  }
+
+  function scrollToStepper() {
+    const el = document.getElementById('intake-stepper');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // Auto-run once on load
+  window.addEventListener('DOMContentLoaded', () => {
+    runPreflightCalc();
+  });
+
 </script>
 </head>
 <body>
 
 <header class="top">
   <div class="wrap">
-    <p class="wordmark"><span class="word-one">ONE</span><span class="word-nyc">NYC</span></p>
-    <p class="tagline">Official Partnership & Impact Partner Onboarding Portal</p>
+    <div class="nav-bar">
+      <div>
+        <p class="wordmark"><span class="word-one">ONE</span><span class="word-nyc">NYC</span></p>
+        <p class="tagline">Impact Partnership & Municipal Funding Coalition</p>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#cap-calculator">Cap Calculator</a></li>
+        <li><a href="#capacity-model">Capacity Model</a></li>
+        <li><a href="#rules">Rules</a></li>
+        <li><a href="#timeline">Timeline</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <a href="#intake-flow" class="nav-btn" onclick="scrollToStepper()">Begin Intake →</a>
+    </div>
   </div>
   <div class="stripe"><span class="s1"></span><span class="s2"></span><span class="s3"></span></div>
 </header>
 
-<div class="stepper-nav">
+
+<!-- ==================== HOMEPAGE & PUBLIC PROGRAM BRIEFING ==================== -->
+<section class="home-hero" id="overview">
+  <div class="wrap">
+    <div class="hero-eyebrow">🏛️ NYC City Council Discretionary Funding Initiative — FY 2026/2027 Coalition</div>
+    <h1 class="hero-title">Empowering Community Nonprofits to Secure <span class="highlight">NYC City Council</span> Funding.</h1>
+    <p class="hero-lead">
+      OneNYC partners with 50+ grassroots organizations, masjids, educational groups, and civic charities across New York City's five boroughs. We provide end-to-end technical assistance, automated compliance dossiers, and strategic grant backing — at zero upfront cost.
+    </p>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num">50+</div>
+        <div class="stat-label">Target Partner Nonprofits</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">51</div>
+        <div class="stat-label">NYC Council Districts</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">50%</div>
+        <div class="stat-label">Operating Budget Cap Support</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">1-Click</div>
+        <div class="stat-label">Council Dossier Generation</div>
+      </div>
+    </div>
+
+    <div class="hero-actions">
+      <a href="#intake-flow" class="btn-hero-primary" onclick="scrollToStepper()">
+        <span>🚀 Check Eligibility & Begin Intake</span>
+        <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+      </a>
+      <a href="#cap-calculator" class="btn-hero-secondary">
+        <span>📊 Pre-Flight Cap Calculator</span>
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M14.707 12.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+
+  <!-- ==================== INTERACTIVE PRE-FLIGHT CAP CALCULATOR ==================== -->
+  <section class="calc-section" id="cap-calculator">
+    <div class="calc-header">
+      <span class="section-tag">Interactive Planning Tool</span>
+      <h3 style="margin: 4px 0 6px 0; font-size: 1.45rem; color: var(--navy); font-weight: 800;">
+        Pre-Flight Statutory Cap & Eligibility Estimator
+      </h3>
+      <p style="margin: 0; color: var(--ink-muted); font-size: 0.92rem;">
+        Test your organization's maximum funding cap under NYC City Council Chapter 9 rules <strong>before</strong> entering intake or uploading documents.
+      </p>
+    </div>
+
+    <div class="calc-grid">
+      <div class="calc-inputs">
+        <div class="field">
+          <label for="calc_type" style="font-weight: 700; font-size: 0.88rem;">1. Organization Entity Type</label>
+          <select id="calc_type" onchange="runPreflightCalc()" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--line); font-size: 0.95rem;">
+            <option value="501c3">501(c)(3) Tax-Exempt Nonprofit / Public Charity</option>
+            <option value="grassroots">Emerging Grassroots Community Organization</option>
+            <option value="mwbe">M/WBE Commercial Firm (Procurement Track)</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="calc_years" style="font-weight: 700; font-size: 0.88rem;">2. Years in Active Operation</label>
+          <select id="calc_years" onchange="runPreflightCalc()" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--line); font-size: 0.95rem;">
+            <option value="gt3">More than 3 Years (Established)</option>
+            <option value="1to3">1 to 3 Years (Emerging)</option>
+            <option value="lt1">Under 1 Year (New Entity)</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="calc_budget" style="font-weight: 700; font-size: 0.88rem;">3. Prior Fiscal Year Operating Budget / Expenses ($)</label>
+          <input type="number" id="calc_budget" value="120000" min="5000" step="5000" oninput="runPreflightCalc()" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--line); font-size: 1rem; font-weight: 700;">
+          <small style="color: var(--ink-muted); font-size: 0.78rem;">Verified from IRS Form 990 Part I Line 18 or certified financial statement.</small>
+        </div>
+
+        <div class="field">
+          <label for="calc_history" style="font-weight: 700; font-size: 0.88rem;">4. Prior City Council Funding History</label>
+          <select id="calc_history" onchange="runPreflightCalc()" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--line); font-size: 0.95rem;">
+            <option value="returning">Prior Recipient (Verified in NYC Open Data)</option>
+            <option value="first_time">First-Time Discretionary Applicant</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="calc-results-box">
+        <div>
+          <span class="calc-rule-badge" id="calcRuleBadge">Chapter 9 Statutory Rule</span>
+          <div style="font-size: 0.85rem; color: var(--ink-muted); font-weight: 600;">Estimated Maximum City Council Award Cap:</div>
+          <div class="calc-result-metric" id="calcMetricDisplay">$60,000</div>
+          <p id="calcExplanation" style="font-size: 0.88rem; color: #475569; margin: 8px 0 16px 0; line-height: 1.45;">
+            Based on an operating budget of $120,000, your organization qualifies for up to <strong>50%</strong> in discretionary awards ($60,000 max).
+          </p>
+
+          <div style="border-top: 1px solid #e2e8f0; padding-top: 12px; margin-top: 12px;">
+            <div style="font-size: 0.82rem; font-weight: 700; color: var(--navy); margin-bottom: 6px;">Pre-Flight Prerequisites:</div>
+            <div style="display: flex; flex-direction: column; gap: 4px; font-size: 0.8rem; color: #334155;">
+              <span id="chkPassport">✓ NYC PASSPort Account (Admin Enrolled)</span>
+              <span id="chkCharities">✓ NYS Charities Bureau (CHAR500 or Exemption)</span>
+              <span id="chkSecular">✓ Secular Public Purpose Benefit Only (NYC Charter § 9)</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 20px;">
+          <a href="#intake-flow" class="btn" style="width: 100%; text-align: center; box-sizing: border-box; justify-content: center; background: var(--navy);" onclick="applyCalcToStep1()">
+            <span>Apply with This Profile in Step 1 →</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ROSY'S CAPACITY & TEAM COLLABORATION ==================== -->
+  <section id="capacity-model">
+    <div class="section-title-wrap">
+      <span class="section-tag">Collaborative Capacity Model</span>
+      <h2 class="section-heading">How the OneNYC Impact Coalition Works</h2>
+      <p class="section-subtext">
+        Inspired by Sister Rosy Islam's capacity survey initiative, we assess collective strengths and match partners into dedicated support teams:
+      </p>
+    </div>
+
+    <div class="pillars-grid">
+      <div class="pillar-card">
+        <div class="pillar-icon">📊</div>
+        <h4 style="margin: 0 0 8px 0; font-size: 1.1rem; color: var(--navy);">Self-Assessment & Capability Mapping</h4>
+        <p style="margin: 0; font-size: 0.9rem; color: var(--ink-muted); line-height: 1.55;">
+          Every partner completes a targeted evaluation covering project management, community reach, government relations, and grant reporting capacity to identify where OneNYC can provide direct technical backing.
+        </p>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pillar-icon">🤝</div>
+        <h4 style="margin: 0 0 8px 0; font-size: 1.1rem; color: var(--navy);">Coalition & Grassroots Network Reach</h4>
+        <p style="margin: 0; font-size: 0.9rem; color: var(--ink-muted); line-height: 1.55;">
+          We connect partner programs with active grassroots networks across New York City masjids, educational academies, youth organizations, and merchant associations to maximize community impact.
+        </p>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pillar-icon">🛡️</div>
+        <h4 style="margin: 0 0 8px 0; font-size: 1.1rem; color: var(--navy);">6–12 Month Technical Assistance Subsidies</h4>
+        <p style="margin: 0; font-size: 0.9rem; color: var(--ink-muted); line-height: 1.55;">
+          Under-resourced grassroots masjids and community initiatives can apply for subsidized technical assistance scholarships covering document prep, municipal filings, and automated compliance.
+        </p>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pillar-icon">⚡</div>
+        <h4 style="margin: 0 0 8px 0; font-size: 1.1rem; color: var(--navy);">Daily 11:00 AM Strategic Huddle</h4>
+        <p style="margin: 0; font-size: 0.9rem; color: var(--ink-muted); line-height: 1.55;">
+          A daily 15-minute operational sync connects partners with OneNYC leadership, senior advisors, and accounting partners (e.g. Br. Arman CPA) to keep application deadlines moving without delay.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== THE 3 HARD RULES OF CITY COUNCIL FUNDING ==================== -->
+  <section id="rules">
+    <div class="section-title-wrap">
+      <span class="section-tag">Statutory Requirements</span>
+      <h2 class="section-heading">The 3 Hard Rules of NYC Discretionary Grants</h2>
+      <p class="section-subtext">Every application must clear strict municipal guidelines established by the New York City Council and NYC Charter:</p>
+    </div>
+
+    <div class="rules-grid">
+      <div class="rule-card">
+        <div style="font-size: 1.6rem; margin-bottom: 12px;">⚖️</div>
+        <h4 style="margin: 0 0 8px 0; font-size: 1.05rem; color: var(--navy);">1. The 50% Statutory Cap</h4>
+        <p style="margin: 0; font-size: 0.88rem; color: #475569; line-height: 1.5;">
+          Per City Council Chapter 9 rules, an organization cannot receive total discretionary funding exceeding <strong>50% of its operating budget</strong>. New entities under 1 year are capped at $20,000; emerging groups (1–3 years, first-time) are capped at $50,000.
+        </p>
+      </div>
+
+      <div class="rule-card">
+        <div style="font-size: 1.6rem; margin-bottom: 12px;">🏛️</div>
+        <h4 style="margin: 0 0 8px 0; font-size: 1.05rem; color: var(--navy);">2. Secular Public Purpose</h4>
+        <p style="margin: 0; font-size: 0.88rem; color: #475569; line-height: 1.5;">
+          Under <strong>NYC Charter § 9</strong>, public funds cannot support religious worship, sectarian instruction, or religious proselytizing. Faith-based groups are eligible exclusively for distinct, secular public programs (food pantries, tutoring, senior services).
+        </p>
+      </div>
+
+      <div class="rule-card">
+        <div style="font-size: 1.6rem; margin-bottom: 12px;">📋</div>
+        <h4 style="margin: 0 0 8px 0; font-size: 1.05rem; color: var(--navy);">3. Municipal Clearance</h4>
+        <p style="margin: 0; font-size: 0.88rem; color: #475569; line-height: 1.5;">
+          All applicants must maintain an active <strong>NYC PASSPort</strong> vendor account in good standing and valid registration with the <strong>NYS Attorney General Charities Bureau</strong> (CHAR500 or certificate of exemption).
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== TIMELINE & MILESTONES ==================== -->
+  <section id="timeline">
+    <div class="section-title-wrap">
+      <span class="section-tag">FY2026–2027 Roadmap</span>
+      <h2 class="section-heading">Campaign Milestones & Deadlines</h2>
+      <p class="section-subtext">Navigating the municipal budget lifecycle requires precise timing to secure member allocations:</p>
+    </div>
+
+    <div class="timeline-grid">
+      <div class="timeline-node">
+        <div class="timeline-phase">Phase 1</div>
+        <div class="timeline-date">Oct – Nov 2026</div>
+        <h4 style="margin: 0 0 6px 0; font-size: 0.98rem; color: var(--navy);">Intake & Dossier Build</h4>
+        <p style="margin: 0; font-size: 0.84rem; color: var(--ink-muted); line-height: 1.45;">
+          Partner onboarding, document OCR parsing, 50% cap audit, and compiling complete City Council Discretionary Schedules A, B, and C.
+        </p>
+      </div>
+
+      <div class="timeline-node">
+        <div class="timeline-phase">Phase 2</div>
+        <div class="timeline-date">Dec – Jan 2027</div>
+        <h4 style="margin: 0 0 6px 0; font-size: 0.98rem; color: var(--navy);">Application Filing</h4>
+        <p style="margin: 0; font-size: 0.84rem; color: var(--ink-muted); line-height: 1.45;">
+          Final submission in the official NYC Council Discretionary Application Portal ahead of the strict January statutory deadline.
+        </p>
+      </div>
+
+      <div class="timeline-node">
+        <div class="timeline-phase">Phase 3</div>
+        <div class="timeline-date">Feb – Apr 2027</div>
+        <h4 style="margin: 0 0 6px 0; font-size: 0.98rem; color: var(--navy);">Hearings & Advocacy</h4>
+        <p style="margin: 0; font-size: 0.84rem; color: var(--ink-muted); line-height: 1.45;">
+          Direct meetings with Council Members across target districts, coalition delegations, and committee public testimony.
+        </p>
+      </div>
+
+      <div class="timeline-node">
+        <div class="timeline-phase">Phase 4</div>
+        <div class="timeline-date">June 2027</div>
+        <h4 style="margin: 0 0 6px 0; font-size: 0.98rem; color: var(--navy);">Budget Adoption</h4>
+        <p style="margin: 0; font-size: 0.84rem; color: var(--ink-muted); line-height: 1.45;">
+          City Council passes the FY2027 New York City Budget; Schedule C discretionary award allocations published and contracting initiated.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== INTAKE PROCESS PREVIEW ==================== -->
+  <section id="process">
+    <div class="section-title-wrap">
+      <span class="section-tag">Step-by-Step Pathway</span>
+      <h2 class="section-heading">How the Gated Intake Portal Works</h2>
+      <p class="section-subtext">A secure 4-step workflow engineered to protect your organizational records and automate municipal filing:</p>
+    </div>
+
+    <div class="preview-steps-grid">
+      <div class="preview-step-card">
+        <div class="preview-step-badge">1</div>
+        <h4 style="margin: 0 0 6px 0; font-size: 1rem; color: var(--navy);">Mutual NDA First</h4>
+        <p style="margin: 0; font-size: 0.85rem; color: var(--ink-muted); line-height: 1.5;">
+          Bilateral cryptographic agreement (SOP-14) protecting shared proposal narratives, strategy, and introductions before files are exchanged.
+        </p>
+      </div>
+
+      <div class="preview-step-card">
+        <div class="preview-step-badge">2</div>
+        <h4 style="margin: 0 0 6px 0; font-size: 1rem; color: var(--navy);">Document OCR & OpenData</h4>
+        <p style="margin: 0; font-size: 0.85rem; color: var(--ink-muted); line-height: 1.5;">
+          Upload IRS 990 / CHAR500 for automated text parsing, alongside live query verification against the NYC OpenData Discretionary award database.
+        </p>
+      </div>
+
+      <div class="preview-step-card">
+        <div class="preview-step-badge">3</div>
+        <h4 style="margin: 0 0 6px 0; font-size: 1rem; color: var(--navy);">Capacity Survey</h4>
+        <p style="margin: 0; font-size: 0.85rem; color: var(--ink-muted); line-height: 1.5;">
+          Complete Rosy's self-assessment matrix and screen your program narrative through our real-time Secular Public Purpose compliance firewall.
+        </p>
+      </div>
+
+      <div class="preview-step-card">
+        <div class="preview-step-badge">4</div>
+        <h4 style="margin: 0 0 6px 0; font-size: 1rem; color: var(--navy);">Dossier Export</h4>
+        <p style="margin: 0; font-size: 0.85rem; color: var(--ink-muted); line-height: 1.5;">
+          Export a complete, audit-ready City Council Discretionary Application Package (Schedules A, B, and C) with direct SharePoint sync.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FAQ ACCORDION ==================== -->
+  <section id="faq">
+    <div class="section-title-wrap">
+      <span class="section-tag">Frequently Asked Questions</span>
+      <h2 class="section-heading">Clear Answers for Prospective Partners</h2>
+    </div>
+
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary class="faq-question">Does OneNYC charge an upfront fee to partner organizations?</summary>
+        <div class="faq-answer">
+          No. OneNYC is a nonprofit impact convener and coalition anchor. We provide our intake platform, technical document extraction, and strategic application advisory at zero upfront cost. For emerging grassroots groups, 6–12 month technical assistance subsidies are available.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">Can masjids and religious organizations apply for City Council Discretionary Funding?</summary>
+        <div class="faq-answer">
+          Yes, provided the grant funds a separate, distinct secular public service program open to all community members regardless of religion (such as food distribution, youth academic enrichment, soup kitchens, or senior assistance). Under NYC Charter § 9, city dollars cannot subsidize religious instruction, worship spaces, or religious publications.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">What if our organization is new (under 1 year in operation)?</summary>
+        <div class="faq-answer">
+          Organizations under one year old are eligible for funding under the City Council's new organization rules, subject to a statutory cap of the lesser of 50% of your operating budget or $20,000. Our platform automatically audits and configures your application within this threshold.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">Why must we sign a Mutual NDA before document upload?</summary>
+        <div class="faq-answer">
+          The bilateral Mutual NDA (SOP-14) protects both sides. It legally protects your confidential governance, financial, and constituent data while safeguarding OneNYC's proprietary municipal strategies, automated dossier templates, and partner introductions.
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary class="faq-question">How does reimbursement and city contract payout work?</summary>
+        <div class="faq-answer">
+          City Council discretionary grants operate on an expense-reimbursement basis managed by assigned City administering agencies (e.g. DYCD, DFTA, SBS). Once the Council adopts the budget in June, organizations submit payment requisitions for approved program expenses.
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ==================== TRANSITION CALL TO ACTION ==================== -->
+  <div class="intake-jump-banner" id="intake-flow">
+    <h3 style="margin: 0 0 10px 0; font-size: 1.7rem; font-weight: 900;">Ready to Secure Your Council Discretionary Dossier?</h3>
+    <p style="margin: 0 0 24px 0; color: #cbd5e1; font-size: 1.05rem; max-width: 680px; margin-left: auto; margin-right: auto;">
+      Begin the secure intake process below. Step 1 executes the bilateral Mutual NDA so our automated platform can ingest your filings and assemble your application.
+    </p>
+    <a href="#intake-stepper" class="btn-hero-primary" style="background: var(--amber); color: var(--navy); margin: 0 auto; display: inline-flex;" onclick="scrollToStepper()">
+      <span>Continue to Step 1: Mutual NDA →</span>
+    </a>
+  </div>
+
+</div>
+<!-- ==================== END HOMEPAGE & PUBLIC PROGRAM BRIEFING ==================== -->
+
+<div class="stepper-nav" id="intake-stepper">
   <div class="wrap">
     <div class="stepper-track">
       <button class="step-node active" id="stepNode1" onclick="goToStep(1)">
