@@ -2955,7 +2955,7 @@
 <!-- Q&A ASSISTANT — teaching-friendly, grounded ONLY in #faq (answers read live from the page) -->
 <div id="qaFab" aria-label="Ask a question" title="Ask a question">?</div>
 <div id="qaPanel" hidden>
-  <div id="qaHead"><span class="qa-dot"></span>OneNYC Assistant<button id="qaClose" aria-label="Close">×</button></div>
+  <div id="qaHead"><span class="qa-dot"></span>OneNYC Assistant<button id="qaTeachBtn" title="Email this conversation to info@onenyc.com so we can teach the assistant">✉ teach</button><button id="qaClose" aria-label="Close">×</button></div>
   <div id="qaLog"></div>
   <div id="qaChips"></div>
   <form id="qaForm"><input id="qaInput" type="text" placeholder="Ask about eligibility, funding, deadlines…" autocomplete="off"><button type="submit" aria-label="Send">➤</button></form>
@@ -2987,6 +2987,12 @@
   #qaInput:focus { outline: none; border-color: var(--amber); box-shadow: 0 0 0 3px rgba(241,163,60,0.18); }
   #qaForm button { border: 0; border-radius: 10px; padding: 0 14px; cursor: pointer;
     background: linear-gradient(180deg, var(--amber), var(--amber-hover)); color: var(--navy-dark); font-size: 15px; }
+  .qa-teach { align-self: flex-start; max-width: 85%; font-size: 12px; color: var(--navy); background: #fff;
+    border: 1px dashed var(--line-active); border-radius: 10px; padding: 7px 10px; }
+  .qa-teach a { color: var(--navy); font-weight: 600; text-decoration: underline; cursor: pointer; }
+  #qaTeachBtn { margin-left: auto; background: none;  border: 1px solid var(--line-active); border-radius: 8px;
+    color: var(--navy); font-size: 11.5px; padding: 3px 9px; cursor: pointer; opacity: .85; }
+  #qaTeachBtn:hover { background: #eef3fa; }
 </style>
 <script>
 (function () {
@@ -3000,6 +3006,26 @@
                a: Array.prototype.map.call(d.querySelectorAll('p'), function (p) { return p.textContent.trim().replace(/\s+/g, ' '); }).join('\n\n') };
     });
   }
+  /* ONENYC_QA_CONFIG — first-run: pending-review (WO-d983ea91). Do NOT set apiEndpoint
+     until the owner reviews this build. Empty apiEndpoint = pure static mode:
+     zero external calls, zero keys, zero tracking. Static answers are ALWAYS the
+     fallback if the API lane is down or slow. Teach-log routes to info@onenyc.com
+     via user-initiated mailto only (no background send, no PII kept). */
+  var CFG = { apiEndpoint: '', teachEmail: 'info@onenyc.com', timeoutMs: 2500 };
+  /* Extra grounding from the OneNYC Impact Partners 2-pager (program brief, Oct 2026).
+     Facts that complement the on-page FAQ. No promises beyond process facts. */
+  var PAGER = [
+    { q: 'free cost charge fee price pay paying expensive',
+      a: 'OneNYC is free of charge to your organization. We check eligibility, fix compliance gaps, design a fundable program, build the line-item budget, and prepare the full application. Your organization stays the applicant and keeps control of every submission.', src: '2-pager' },
+    { q: 'included services partners get workshops budget application support help',
+      a: 'Partners get: program design to City rules, a budget built to Council line-item standards, the application and forms prepared and ready for officer signature, plus workshops and one-on-one support — all free.', src: '2-pager' },
+    { q: 'boroughs citywide serve location areas bronx brooklyn queens manhattan staten',
+      a: 'OneNYC serves community nonprofits and faith-based organizations across all five boroughs — tutoring/ESL, youth sports, food access, senior services, and arts open to everyone.', src: '2-pager' },
+    { q: 'after intake happens call timeline response waiting process long',
+      a: 'After you submit the intake form by November 15: a 15-minute call within 3 business days, then a written answer within 2 more business days. Then the NDA gate, readiness check, and application prep before the Council window opens (early January to mid-February expected).', src: '2-pager' },
+    { q: 'contact person who dr abdusalam musa address office phone reach',
+      a: 'Contact Dr. Abdusalam Musa at info@onenyc.com or through this site. OneNYC Inc., 202 Centre Street, New York, NY 10013.', src: '2-pager' }
+  ];
   var STOP = { the:1,a:1,an:1,is:1,are:1,do:1,does:1,did:1,i:1,my:1,me:1,we:1,our:1,of:1,to:1,for:1,in:1,on:1,and:1,or:1,what:1,can:1,could:1,should:1,would:1,you:1,your:1,it:1,this:1,that:1,how:1,about:1,with:1,be:1,been:1,will:1,would:1,there:1,need:1,want:1,looking:1,know:1,help:1,get:1,got:1,us:1,if:1,when:1,where:1,who:1,much:1,many:1,any:1,some:1 };
   var SYN = { mosque:'faith-based', mosques:'faith-based', masjid:'faith-based', church:'faith-based', synagogue:'faith-based', imam:'faith-based', religious:'religious', religion:'religious', guarantee:'funding', approved:'funding', approve:'funding', award:'funding', money:'funding', dollars:'funding', dollar:'funding', paid:'funding', caps:'limits', cap:'limits', due:'deadline', date:'deadline', dates:'deadline', nda:'non-disclosure', disclosure:'non-disclosure', notary:'notarized', notarize:'notarized', notarization:'notarized', sign:'sign', signature:'sign', signed:'sign', esl:'esl', tutoring:'tutoring', youth:'youth', sports:'sports', seniors:'senior', food:'food', docs:'documents', document:'documents', paperwork:'documents', filing:'filings', filings:'filings', ein:'ein', '501c3':'501(c)(3)', nonprofit:'nonprofit', steps:'steps', step:'steps', intake:'intake', start:'intake', begin:'intake', apply:'apply', eligible:'apply', eligibility:'apply', qualify:'qualify', qualifying:'qualify' };
   var RE_FAITH = /mosque|masjid|faith|religio|church|synagogue|imam/i;
@@ -3013,36 +3039,93 @@
     });
     return Object.keys(out);
   }
+  function score(tokens_, entry) {
+    var ql = entry.q.toLowerCase(), al = entry.a.toLowerCase(), s = 0;
+    tokens_.forEach(function (t) {
+      if (ql.indexOf(t) >= 0) s += 3;
+      else if (al.indexOf(t) >= 0) s += 2;
+    });
+    return s;
+  }
   function answer(text) {
     var c = corpus();
     if (!c.length) return 'Please email info@onenyc.com.';
-    if (RE_GUARANTEE.test(text)) return c[c.length - 1].a;
+    if (RE_GUARANTEE.test(text)) {
+      var dis = document.querySelector('.flyer-disclaimer-text');
+      if (dis) return { a: dis.textContent.trim(), hit: 'faq:guardrail-guarantee' };
+    }
     if (RE_FAITH.test(text)) {
       var f = c.filter(function (e) { return /who can apply/i.test(e.q); })[0];
-      if (f) return f.a;
+      if (f) return { a: f.a, hit: 'guardrail-faith' };
     }
     var ts = tokens(text), best = null, top = 0;
-    c.forEach(function (e) {
-      var ql = e.q.toLowerCase(), al = e.a.toLowerCase(), s = 0;
-      ts.forEach(function (t) { if (ql.indexOf(t) >= 0) s += 3; else if (al.indexOf(t) >= 0) s += 2; });
-      if (s > top) { top = s; best = e; }
-    });
-    if (best && top >= 2) return best.a;
-    return c[c.length - 1].a;
+    c.forEach(function (e) { var s = score(ts, e); if (s > top) { top = s; best = e; } });
+    var pb = null, ptop = 0;
+    PAGER.forEach(function (e) { var s = score(ts, e); if (s > ptop) { ptop = s; pb = e; } });
+    /* 2-pager entries carry tuned keyword lists; a keyword hit (score ≥ FAQ top) routes
+       to the 2-pager answer, so "is this free" hits the cost card, not the program list. */
+    if (best && top >= 2 && top > ptop + 1) return { a: best.a, hit: 'faq', src: 'On-page FAQ' };
+    if (pb && ptop >= 2) return { a: pb.a, hit: '2-pager', src: 'Program brief (2-pager)' };
+    if (best && top >= 2) return { a: best.a, hit: 'faq', src: 'On-page FAQ' };
+    return { a: c[c.length - 1].a, hit: 'fallback' };
+  }
+  /* ---- answer log (teach loop) — user-initiated mailto only, no PII stored ---- */
+  var QA_LOG = [];
+  function mailtoLog() {
+    var body = QA_LOG.map(function (e, i) {
+      return (i + 1) + '. Q: ' + e.q + '\n   A: (' + e.hit + ') ' + e.a.slice(0, 160) + (e.a.length > 160 ? '…' : '');
+    }).join('\n\n');
+    var href = 'mailto:' + CFG.teachEmail +
+      '?subject=' + encodeURIComponent('OneNYC Assistant — question log (teach me)') +
+      '&body=' + encodeURIComponent('These questions were asked on join.onenyc.org. Please teach the assistant:\n\n' + body + '\n\n— Sent from the OneNYC Assistant teach button (no personal information attached).');
+    window.location.href = href;
   }
   function bubble(txt, who) {
     var d = document.createElement('div'); d.className = 'qa-msg ' + who; d.textContent = txt;
     log.appendChild(d); log.scrollTop = log.scrollHeight; return d;
   }
+  function answerBubble(res) {
+    if (QA_LOG.pendingQ) { QA_LOG.push({ q: QA_LOG.pendingQ, a: res.a, hit: res.hit }); QA_LOG.pendingQ = null; }
+    var d = bubble(res.a, 'qa-bot');
+    if (res.hit === 'fallback') {
+      var t = document.createElement('div'); t.className = 'qa-teach';
+      t.innerHTML = 'Not covered yet — <a href="#">email this question</a> so we can teach the assistant.';
+      t.querySelector('a').addEventListener('click', function (ev) {
+        ev.preventDefault(); mailtoLog();
+      });
+      log.appendChild(t); log.scrollTop = log.scrollHeight;
+    }
+    return d;
+  }
   function ask(text) {
     if (!text.trim()) return;
     bubble(text, 'qa-user');
-    setTimeout(function () { bubble(answer(text), 'qa-bot'); }, 350);
+    QA_LOG.pendingQ = text.trim();
+    if (CFG.apiEndpoint) {
+      var done = false;
+      var ctl = setTimeout(function () { if (!done) { done = true; answerBubble(answer(text)); } }, CFG.timeoutMs);
+      try {
+        fetch(CFG.apiEndpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question: text.trim(), source: location.pathname }) })
+          .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+          .then(function (j) { if (done) return; done = true; clearTimeout(ctl);
+            answerBubble({ a: String(j.answer || ''), hit: 'api' }); })
+          .catch(function () { if (!done) { done = true; clearTimeout(ctl); answerBubble(answer(text)); } });
+      } catch (e) { if (!done) { done = true; clearTimeout(ctl); answerBubble(answer(text)); } }
+      return;
+    }
+    var res = answer(text);
+    setTimeout(function () { answerBubble(res); }, 350);
   }
   function greet() {
     log.innerHTML = '';
-    bubble('Salam! I answer from the OneNYC page itself — try a question below.', 'qa-bot');
+    bubble('Salam! I answer from the OneNYC page itself — try a question below. If I miss, tap "✉ teach" to send us the question so I get smarter.', 'qa-bot');
   }
+  var teachBtn = document.getElementById('qaTeachBtn');
+  if (teachBtn) teachBtn.addEventListener('click', function () {
+    if (!QA_LOG.length) { bubble('Nothing to send yet — ask me something first.', 'qa-bot'); return; }
+    mailtoLog();
+  });
   ['Who can apply?', 'What are the funding limits?', 'What is the deadline?', 'What are the intake steps?'].forEach(function (q) {
     var b = document.createElement('button'); b.type = 'button'; b.className = 'qa-chip'; b.textContent = q;
     b.addEventListener('click', function () { ask(q); });
