@@ -705,6 +705,15 @@
     box-shadow: 0 0 0 3px rgba(12,31,57,0.12);
   }
   .hint { font-size: 0.78rem; color: var(--ink-muted); margin-top: 5px; }
+  .extracted-tag.review {
+    color: #9a3412;
+    background: #ffedd5;
+    border-color: #fed7aa;
+  }
+  .field-extracted.review {
+    border-color: #f97316 !important;
+    background-color: #fff7ed !important;
+  }
   .field-extracted { border-color: var(--ok) !important; background-color: #f4fdf7 !important; }
   .extracted-tag {
     display: inline-block;
@@ -1588,7 +1597,7 @@
   <div class="flyer-contact-banner">
     <div class="flyer-contact-line">
       <span>Contact: <strong>Dr. Abdusalam Musa</strong> or your OneNYC contact</span>
-      <span class="email-tag">intake@onenyc.com — to confirm</span>
+      <span class="email-tag">info@onenyc.com — to confirm</span>
     </div>
     <div class="flyer-disclaimer-text">
       Only the NYC Council and City agencies decide who gets funded; OneNYC cannot guarantee funding, eligibility or meetings with officials. We describe organizations by name and mission only, and never ask about anyone's religion.
@@ -2310,6 +2319,10 @@
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
   }
 
+  // Local on-demand OCR intake on the operator Mac (not public). Override before go-live:
+  //   window.NAFS_OCR_INTAKE_URL = 'https://your-approved-tunnel.example';
+  const NAFS_OCR_INTAKE_URL = (window.NAFS_OCR_INTAKE_URL || 'http://127.0.0.1:8890').replace(/\/$/, '');
+
   function handleFileSelect(e) {
     const files = e.target.files;
     processFiles(files);
@@ -2320,23 +2333,24 @@
       uploadedFiles.push(f.name);
       addFileToQueue(f.name, true);
     }
-    
-    // Parse each uploaded file
     for (let f of files) {
-      if (f.type === 'application/pdf' || f.name.toLowerCase().endsWith('.pdf')) {
+      const isPdf = f.type === 'application/pdf' || f.name.toLowerCase().endsWith('.pdf');
+      const isImg = /\.(png|jpe?g|tif{1,2}|webp)$/i.test(f.name) || (f.type || '').startsWith('image/');
+      if (isPdf) {
         await extractTextFromPDF(f);
+      } else if (isImg) {
+        await extractViaServerOcr(f, 'image');
       } else {
-        updateFileStatus(f.name, 'Uploaded (Image/Document)');
+        updateFileStatus(f.name, 'Uploaded (Document)');
       }
     }
   }
 
   async function extractTextFromPDF(file) {
     if (typeof pdfjsLib === 'undefined') {
-      updateFileStatus(file.name, 'Uploaded');
+      await extractViaServerOcr(file, 'pdf-no-pdfjs');
       return;
     }
-
     try {
       updateFileStatus(file.name, '<span class="parse-spinner"></span> Scanning document text layer...');
       const arrayBuffer = await file.arrayBuffer();
@@ -2352,20 +2366,76 @@
       }
 
       if (fullText.trim().length > 30) {
-        parseAndPopulateExtractedData(fullText, file.name);
-        updateFileStatus(file.name, '✓ Text Layer Parsed & Entities Extracted');
+        parseAndPopulateExtractedData(fullText, file.name, false);
+        updateFileStatus(file.name, '✓ Text layer parsed — please review fields');
+        extractViaServerOcr(file, 'pdf-text-plus-store', { fillFields: false }).catch(() => {});
       } else {
-        updateFileStatus(file.name, '⚠️ Scanned/Image PDF (No text layer) — Manual entry enabled');
+        updateFileStatus(file.name, '<span class="parse-spinner"></span> Scanned PDF — uploading for OCR...');
+        await extractViaServerOcr(file, 'pdf-scan');
       }
     } catch (err) {
       console.warn('PDF parse error for ' + file.name + ':', err);
-      updateFileStatus(file.name, 'Uploaded (Review fields below)');
+      await extractViaServerOcr(file, 'pdf-error-fallback');
     }
   }
 
-  function parseAndPopulateExtractedData(text, filename) {
-    // 1. EIN / Tax ID (XX-XXXXXXX or 9 digits)
-    let einMatch = text.match(/\b\d{2}-\d{7}\b/) || 
+  async function extractViaServerOcr(file, reason, opts) {
+    const fillFields = !opts || opts.fillFields !== false;
+    try {
+      updateFileStatus(file.name, '<span class="parse-spinner"></span> Read from scan (secure OCR)...');
+      const form = new FormData();
+      form.append('file', file, file.name);
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), 180000);
+      const resp = await fetch(NAFS_OCR_INTAKE_URL + '/ocr', {
+        method: 'POST',
+        body: form,
+        signal: ctrl.signal,
+      });
+      clearTimeout(timer);
+      if (!resp.ok) {
+        throw new Error('intake HTTP ' + resp.status);
+      }
+      const data = await resp.json();
+      if (fillFields && data && data.fields) {
+        applyServerFields(data.fields, file.name);
+        updateFileStatus(file.name, '✓ Read from scan — please check each field');
+      } else if (!fillFields) {
+        updateFileStatus(file.name, '✓ Text layer parsed; copy stored for review');
+      } else {
+        updateFileStatus(file.name, 'Uploaded (OCR returned no fields) — enter manually');
+      }
+    } catch (err) {
+      console.warn('Server OCR unavailable (' + reason + '):', err);
+      if (fillFields) {
+        updateFileStatus(file.name, '⚠️ OCR service offline — manual entry enabled');
+      }
+    }
+  }
+
+  function applyServerFields(fields, filename) {
+    const map = [
+      ['org_name', 'v_legal_name', 'Read from scan'],
+      ['ein', 'v_ein', 'Read from scan'],
+      ['address', 'v_address', 'Read from scan'],
+      ['phone', 'v_phone', 'Read from scan'],
+      ['year_formed', 'v_year', 'Read from scan'],
+    ];
+    map.forEach(([key, id, label]) => {
+      const val = fields[key];
+      if (!val) return;
+      const el = document.getElementById(id);
+      if (!el) return;
+      if (!el.value || el.classList.contains('field-extracted')) {
+        if (key === 'phone' && /(?:800|888|877|866|855|844|833)/.test(String(val))) return;
+        el.value = String(val).trim();
+        markFieldExtracted(id, label, true);
+      }
+    });
+  }
+
+  function parseAndPopulateExtractedData(text, filename, asReview) {
+    let einMatch = text.match(/\b\d{2}-\d{7}\b/) ||
                    text.match(/(?:EIN|TIN|Employer Identification Number|Taxpayer Identification Number)[^\d]{0,25}(\d{2}-\d{7}|\d{9})/i);
     if (einMatch) {
       let rawEin = einMatch[1] || einMatch[0];
@@ -2375,109 +2445,100 @@
       const einEl = document.getElementById('v_ein');
       if (einEl) {
         einEl.value = rawEin;
-        markFieldExtracted('v_ein', 'EIN');
-        queryNYCOpenData(rawEin);
+        markFieldExtracted('v_ein', 'EIN', !!asReview);
       }
     }
 
-    // 2. Entity Classification
     const orgTypeEl = document.getElementById('v_org_type');
     if (orgTypeEl) {
       if (/501\s*\([cC]\)\s*\(3\)|501\s*\(c\)\s*3|Section 501\(c\)\(3\)/i.test(text)) {
         orgTypeEl.value = '501c3';
-        markFieldExtracted('v_org_type', '501(c)(3) Letter');
-        selectTrack('impact');
+        markFieldExtracted('v_org_type', '501(c)(3) Letter', !!asReview);
+        if (typeof selectTrack === 'function') selectTrack('impact');
       } else if (/501\s*\([cC]\)\s*\(4\)/i.test(text)) {
         orgTypeEl.value = '501c4';
-        markFieldExtracted('v_org_type', '501(c)(4)');
-        selectTrack('impact');
+        markFieldExtracted('v_org_type', '501(c)(4)', !!asReview);
+        if (typeof selectTrack === 'function') selectTrack('impact');
       } else if (/M\/WBE|Minority\s*and\s*Women|WBE|MBE|Small Business Services/i.test(text)) {
         orgTypeEl.value = 'mwbe_llc';
-        markFieldExtracted('v_org_type', 'M/WBE Certification');
-        selectTrack('commercial');
+        markFieldExtracted('v_org_type', 'M/WBE Certification', !!asReview);
+        if (typeof selectTrack === 'function') selectTrack('commercial');
       } else if (/Mosque|Masjid|Islamic Center|Church|Synagogue|Religious/i.test(text)) {
         orgTypeEl.value = 'faith_based';
-        markFieldExtracted('v_org_type', 'Faith-Based');
-        selectTrack('impact');
+        markFieldExtracted('v_org_type', 'Faith-Based', !!asReview);
+        if (typeof selectTrack === 'function') selectTrack('impact');
       }
     }
 
-    // 3. Organization Name
     let nameEl = document.getElementById('v_legal_name');
     if (nameEl) {
       let nameMatch = null;
       let m = text.match(/Dear Applicant:\s*([A-Za-z0-9\s,\.\-&]{4,60}?)(?=\s+(?:We are pleased|Our records|PO BOX|[0-9]{1,5}\s+[A-Z]))/i);
       if (m) nameMatch = m[1];
-      
       if (!nameMatch) {
         let w9m = text.match(/1\s*Name\s*\([^)]*\)\s*([A-Za-z0-9\s,\.\-&]{4,60}?)(?=\s+(?:2\s*Business|3\s*Check))/i);
         if (w9m) nameMatch = w9m[1];
       }
-
       if (!nameMatch) {
         let dosm = text.match(/Entity Name:\s*([A-Za-z0-9\s,\.\-&]{4,60}?)(?=\s+(?:DOS ID|Selected Name))/i);
         if (dosm) nameMatch = dosm[1];
       }
-
       if (!nameMatch) {
         let incm = text.match(/\b([A-Z][A-Za-z0-9\s,\-&]{3,50}?\b(?:INC(?:ORPORATED|\.)?|LLC|CORP(?:ORATION|\.)?|FOUNDATION|ASSOCIATION|CENTER|INSTITUTE))\b/);
         if (incm && !/TREASURY|INTERNAL REVENUE|DEPARTMENT/i.test(incm[1])) {
           nameMatch = incm[1];
         }
       }
-
       if (nameMatch) {
         let cleanName = nameMatch.trim().replace(/\s{2,}/g, ' ');
         nameEl.value = cleanName;
-        markFieldExtracted('v_legal_name', 'Doc Header');
+        markFieldExtracted('v_legal_name', 'Doc Header', !!asReview);
       }
     }
 
-    // 4. Address & State / Zip
     const addrEl = document.getElementById('v_address');
-    if (addrEl && (!addrEl.value || addrEl.value.includes('Centre Street'))) {
+    if (addrEl && (!addrEl.value || addrEl.value.includes('Centre Street') || addrEl.classList.contains('field-extracted'))) {
       let addrMatch = text.match(/\b(\d{1,5}\s+[A-Za-z0-9\.\s]{3,35}\b(?:Street|St|Avenue|Ave|Boulevard|Blvd|Road|Rd|Drive|Dr|Way|Place|Pl|Broadway)[^\n\r,]{0,25},\s*(?:[A-Za-z\s]{3,20},\s*)?NY\s*1\d{4})\b/i);
       if (addrMatch) {
         addrEl.value = addrMatch[1].trim().replace(/\s{2,}/g, ' ');
-        markFieldExtracted('v_address', 'Address');
+        markFieldExtracted('v_address', 'Address', !!asReview);
       }
     }
 
-    // 5. Year Incorporated / Effective Exemption Date
     const yearEl = document.getElementById('v_year');
     if (yearEl) {
       let yearMatch = text.match(/(?:Effective date of exemption|incorporated|formation|dated|filed on)[^\d]{1,30}\b(19\d{2}|20\d{2})\b/i);
       if (yearMatch) {
         yearEl.value = yearMatch[1];
-        markFieldExtracted('v_year', 'Year');
+        markFieldExtracted('v_year', 'Year', !!asReview);
       }
     }
 
-    // 6. Phone number
     const phoneEl = document.getElementById('v_phone');
-    if (phoneEl && (!phoneEl.value || phoneEl.value.includes('555-0199'))) {
+    if (phoneEl && (!phoneEl.value || phoneEl.value.includes('555-0199') || phoneEl.classList.contains('field-extracted'))) {
       let phoneMatch = text.match(/\b(?:\+?1[-.\s]?)?\(?([2-9][0-9]{2})\)?[-.\s]?([0-9]{3})[-.\s]?([0-9]{4})\b/);
-      if (phoneMatch && !phoneMatch[0].includes('800-') && !phoneMatch[0].includes('877-')) {
+      if (phoneMatch && !/(?:800|888|877|866|855|844|833)/.test(phoneMatch[0])) {
         phoneEl.value = phoneMatch[0];
-        markFieldExtracted('v_phone', 'Phone');
+        markFieldExtracted('v_phone', 'Phone', !!asReview);
       }
     }
 
-    // 7. Charities Bureau status
     if (/CHAR410|CHAR500|Charities Bureau/i.test(text)) {
       const charEl = document.getElementById('cr_charities');
       if (charEl) {
         charEl.value = 'current';
-        markFieldExtracted('cr_charities', 'Charities Filing');
+        markFieldExtracted('cr_charities', 'Charities Filing', !!asReview);
       }
     }
   }
 
-  function markFieldExtracted(fieldId, labelText) {
+  function markFieldExtracted(fieldId, labelText, asReview) {
     const el = document.getElementById(fieldId);
     if (!el) return;
     el.classList.add('field-extracted');
-    
+    if (asReview) el.classList.add('review');
+    else el.classList.remove('review');
+
     const parent = el.closest('.field');
     if (parent) {
       let badge = parent.querySelector('.extracted-tag');
@@ -2490,7 +2551,10 @@
         }
       }
       if (badge) {
-        badge.innerHTML = '⚡ Auto-Extracted (' + labelText + ')';
+        badge.className = 'extracted-tag' + (asReview ? ' review' : '');
+        badge.innerHTML = asReview
+          ? ('✎ ' + labelText + ' — please check')
+          : ('⚡ Auto-Extracted (' + labelText + ')');
       }
     }
   }
@@ -2502,7 +2566,7 @@
     item.id = 'file_item_' + filename.replace(/[^a-zA-Z0-9]/g, '_');
     item.innerHTML = `
       <span class="file-name">📄 ${filename}</span>
-      <span class="file-status">${isProcessing ? '<span class="parse-spinner"></span> Scanning document text...' : 'Uploaded'}</span>
+      <span class="file-status">${isProcessing ? '<span class="parse-spinner"></span> Scanning document...' : 'Uploaded'}</span>
     `;
     q.appendChild(item);
   }
@@ -2515,6 +2579,7 @@
       if (statusSpan) statusSpan.innerHTML = statusHtml;
     }
   }
+
 
   function simulateUpload(type) {
     document.getElementById('fileQueue').innerHTML = '';
