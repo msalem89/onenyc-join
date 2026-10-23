@@ -1473,7 +1473,7 @@
 
     <div class="readiness-meter-container">
       <div class="readiness-meter-header">
-        <span id="readinessText">0 of 8 Essential Filings Ready (0%)</span>
+        <span id="readinessText">0 of 13 Essential Filings Ready (0%)</span>
         <span id="readinessBadge" style="font-size: 0.75rem; padding: 2px 8px; border-radius: 10px; background: #fef3c7; color: #b45309; font-weight: 800;">IN PROGRESS</span>
       </div>
       <div class="readiness-meter-bar">
@@ -1514,6 +1514,30 @@
         <input type="checkbox" onchange="updateDocReadiness()">
         <span class="doc-check-label">Recent financial statements or Form 990</span>
       </label>
+      <label class="doc-check-item" onclick="toggleDocCheck(this)">
+        <input type="checkbox" onchange="updateDocReadiness()">
+        <span class="doc-check-label">General liability insurance certificate</span>
+      </label>
+      <label class="doc-check-item" onclick="toggleDocCheck(this)">
+        <input type="checkbox" onchange="updateDocReadiness()">
+        <span class="doc-check-label">Board resolution authorizing the application (signed)</span>
+      </label>
+      <label class="doc-check-item" onclick="toggleDocCheck(this)">
+        <input type="checkbox" onchange="updateDocReadiness()">
+        <span class="doc-check-label">Council conflict-of-interest disclosure form (ties to elected officials)</span>
+      </label>
+      <label class="doc-check-item" onclick="toggleDocCheck(this)">
+        <input type="checkbox" onchange="updateDocReadiness()">
+        <span class="doc-check-label">Latest Charities Bureau filing receipt (Char500)</span>
+      </label>
+      <label class="doc-check-item" onclick="toggleDocCheck(this)">
+        <input type="checkbox" onchange="updateDocReadiness()">
+        <span class="doc-check-label">Program budget (line-item, for the program you propose)</span>
+      </label>
+    </div>
+
+    <div style="background: #eff6ff; border: 1px solid #bfdbfe; padding: 12px 16px; border-radius: 8px; font-size: 0.85rem; color: #1e40af;">
+      <strong>Every requirement is per organization.</strong> Each partner is its own applicant — the Council vets and contracts with your organization directly. OneNYC guides you and prepares your paperwork, but OneNYC's own documents cannot substitute for yours: each of the 13 filings must exist for <em>every</em> organization that onboards. A related group (for example, a school under a masjid) is a separate organization and needs its own complete set.
     </div>
 
     <div style="background: #fefce8; border: 1px solid #fef08a; padding: 12px 16px; border-radius: 8px; font-size: 0.85rem; color: #854d0e;">
@@ -1682,7 +1706,7 @@
     </details>
     <details>
       <summary>What documents do I need?</summary>
-      <p>Eight essential filings are listed in the Documents section above — use the interactive readiness checklist to see where you stand before you begin intake.</p>
+      <p>Thirteen essential filings are listed in the Documents section above — use the interactive readiness checklist to see where you stand before you begin intake. Every item is required <strong>per organization</strong>: if two related groups apply (for example, a masjid and its school), each needs its own complete set.</p>
     </details>
     <details>
       <summary>Are there funding limits for newer organizations?</summary>
