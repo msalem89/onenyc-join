@@ -1314,10 +1314,11 @@
       <ul class="nav-links">
         <li><a href="#strategic-pillars">Our Pillars</a></li>
         <li><a href="#org-requirements">Eligibility</a></li>
-        <li><a href="#documents-ready">Documents</a></li>
+        <li><a href="#readiness-diagnostic">Diagnostic</a></li>
         <li><a href="#funding-limits">Funding Caps</a></li>
+        <li><a href="#district-explorer">District Explorer</a></li>
+        <li><a href="#case-study-believeny">Case Study</a></li>
         <li><a href="#division-of-work">How We Help</a></li>
-        <li><a href="#next-steps">Next Steps</a></li>
         <li><a href="#faq">FAQ</a></li>
       </ul>
       <a href="#intake-flow" class="nav-btn" onclick="scrollToStepper()">Begin Intake →</a>
@@ -1610,6 +1611,87 @@
     </div>
   </div>
 
+  <!-- ==================== INTERACTIVE TOOL: READINESS DIAGNOSTIC ==================== -->
+  <div class="req-section-card" id="readiness-diagnostic" style="border-top: 4px solid var(--ok); margin-top: 32px;">
+    <div class="req-header-banner">
+      <div class="req-num-badge" style="background: var(--ok); color: var(--white);">★</div>
+      <h3 class="req-header-title">Interactive Tool: Non-Profit Readiness Diagnostic</h3>
+    </div>
+    <p style="color: var(--ink-body); margin: 6px 0 18px 0; font-size: 0.95rem;">
+      Check the items your organization currently possesses to calculate your real-time <strong>Application Readiness Score</strong> and view an immediate remediation plan for the <strong>November 15</strong> intake deadline.
+    </p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; align-items: start;">
+      <!-- Diagnostic Checkboxes -->
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <label class="doc-check-item" style="cursor: pointer; padding: 12px 14px; border-radius: 8px; border: 1px solid var(--line); background: #ffffff; display: flex; align-items: flex-start; gap: 12px; transition: all 0.2s ease;">
+          <input type="checkbox" id="diag_501c3" checked style="margin-top: 4px; accent-color: var(--ok); transform: scale(1.15);" onchange="runReadinessDiagnostic()">
+          <div>
+            <strong style="color: var(--navy); font-size: 0.95rem; display: block;">1. IRS 501(c)(3) Determination Letter</strong>
+            <span style="font-size: 0.84rem; color: var(--ink-muted); line-height: 1.4; display: block;">Official IRS tax-exempt determination under Section 501(c)(3) as a public charity.</span>
+          </div>
+        </label>
+
+        <label class="doc-check-item" style="cursor: pointer; padding: 12px 14px; border-radius: 8px; border: 1px solid var(--line); background: #ffffff; display: flex; align-items: flex-start; gap: 12px; transition: all 0.2s ease;">
+          <input type="checkbox" id="diag_char500" checked style="margin-top: 4px; accent-color: var(--ok); transform: scale(1.15);" onchange="runReadinessDiagnostic()">
+          <div>
+            <strong style="color: var(--navy); font-size: 0.95rem; display: block;">2. NYS Charities Bureau (CHAR500 / Exemption)</strong>
+            <span style="font-size: 0.84rem; color: var(--ink-muted); line-height: 1.4; display: block;">Current active registration with the NY Attorney General Charities Bureau (or formal religious/school exemption).</span>
+          </div>
+        </label>
+
+        <label class="doc-check-item" style="cursor: pointer; padding: 12px 14px; border-radius: 8px; border: 1px solid var(--line); background: #ffffff; display: flex; align-items: flex-start; gap: 12px; transition: all 0.2s ease;">
+          <input type="checkbox" id="diag_passport" style="margin-top: 4px; accent-color: var(--ok); transform: scale(1.15);" onchange="runReadinessDiagnostic()">
+          <div>
+            <strong style="color: var(--navy); font-size: 0.95rem; display: block;">3. NYC PASSPort Vendor Account</strong>
+            <span style="font-size: 0.84rem; color: var(--ink-muted); line-height: 1.4; display: block;">Enrolled in Mayor's Office of Contract Services (MOCS) PASSPort procurement system with active FMS vendor code.</span>
+          </div>
+        </label>
+
+        <label class="doc-check-item" style="cursor: pointer; padding: 12px 14px; border-radius: 8px; border: 1px solid var(--line); background: #ffffff; display: flex; align-items: flex-start; gap: 12px; transition: all 0.2s ease;">
+          <input type="checkbox" id="diag_990" checked style="margin-top: 4px; accent-color: var(--ok); transform: scale(1.15);" onchange="runReadinessDiagnostic()">
+          <div>
+            <strong style="color: var(--navy); font-size: 0.95rem; display: block;">4. Most Recent Form 990 / 990-EZ / 990-N</strong>
+            <span style="font-size: 0.84rem; color: var(--ink-muted); line-height: 1.4; display: block;">Latest annual federal informational tax return (or CPA-reviewed financial statement).</span>
+          </div>
+        </label>
+
+        <label class="doc-check-item" style="cursor: pointer; padding: 12px 14px; border-radius: 8px; border: 1px solid var(--line); background: #ffffff; display: flex; align-items: flex-start; gap: 12px; transition: all 0.2s ease;">
+          <input type="checkbox" id="diag_board" checked style="margin-top: 4px; accent-color: var(--ok); transform: scale(1.15);" onchange="runReadinessDiagnostic()">
+          <div>
+            <strong style="color: var(--navy); font-size: 0.95rem; display: block;">5. Board of Directors Roster &amp; Bylaws</strong>
+            <span style="font-size: 0.84rem; color: var(--ink-muted); line-height: 1.4; display: block;">List of active officers/directors (minimum 3 unrelated individuals required by NYS law) and current bylaws.</span>
+          </div>
+        </label>
+      </div>
+
+      <!-- Live Score & Remediation Card -->
+      <div style="background: #f8fafc; border: 1px solid var(--line-active); border-radius: 12px; padding: 22px 20px; box-shadow: var(--shadow-sm);">
+        <div style="font-size: 0.72rem; font-weight: 700; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Dynamic Assessment</div>
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+          <h4 style="margin: 0; font-size: 1.3rem; color: var(--navy); font-weight: 700;">Readiness Score</h4>
+          <span id="diagScorePill" style="padding: 4px 12px; border-radius: 20px; font-weight: 700; font-size: 0.88rem; background: #dcfce7; color: var(--ok-text);">80% &middot; High</span>
+        </div>
+
+        <!-- Meter Bar -->
+        <div style="background: #e2e8f0; height: 10px; border-radius: 5px; overflow: hidden; margin-bottom: 16px;">
+          <div id="diagProgressBar" style="height: 100%; width: 80%; background: var(--ok); transition: width 0.3s ease, background 0.3s ease;"></div>
+        </div>
+
+        <p id="diagSummaryText" style="font-size: 0.92rem; color: var(--ink-body); line-height: 1.5; margin: 0 0 16px 0;">
+          <strong>Strong Foundation:</strong> Your organization has the core legal structure in place. The remaining gap can be resolved during our 6-week onboarding runway before City Council applications open in January.
+        </p>
+
+        <div id="diagGapsContainer" style="border-top: 1px solid #e2e8f0; padding-top: 14px;">
+          <div style="font-size: 0.8rem; font-weight: 700; color: var(--navy); text-transform: uppercase; margin-bottom: 8px;">Action Plan to Reach 100%:</div>
+          <ul id="diagGapsList" style="margin: 0; padding-left: 18px; font-size: 0.86rem; color: var(--ink-body); line-height: 1.5;">
+            <!-- Dynamically generated gap items -->
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ==================== SECTION 4: FUNDING LIMITS FOR NEWER ORGANIZATIONS ==================== -->
   <div class="req-section-card" id="funding-limits">
     <div class="req-header-banner">
@@ -1672,6 +1754,83 @@
     </div>
   </div>
 
+  <!-- ==================== INTERACTIVE TOOL: COUNCIL DISTRICT & INITIATIVE EXPLORER ==================== -->
+  <div class="req-section-card" id="district-explorer" style="border-top: 4px solid var(--sky); margin-top: 32px;">
+    <div class="req-header-banner">
+      <div class="req-num-badge" style="background: var(--sky); color: var(--white);">★</div>
+      <h3 class="req-header-title">Interactive Tool: Council District &amp; Funding Initiative Explorer</h3>
+    </div>
+    <p style="color: var(--ink-body); margin: 6px 0 18px 0; font-size: 0.95rem;">
+      Select your <strong>Borough</strong>, <strong>Council District</strong>, and <strong>Program Category</strong> to see which citywide funding initiatives, administering agencies, and award ranges align with your community work.
+    </p>
+
+    <!-- Controls Grid -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 24px; background: #f8fafc; padding: 18px; border-radius: 10px; border: 1px solid var(--line);">
+      <div>
+        <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--label); text-transform: uppercase; margin-bottom: 6px;">1. Borough</label>
+        <select id="explorerBorough" onchange="updateDistrictOptions()" style="width: 100%; padding: 10px 12px; border-radius: 6px; border: 1px solid var(--line-active); font-size: 0.92rem; color: var(--navy); background: #ffffff; font-weight: 600;">
+          <option value="brooklyn">Brooklyn (Kings County)</option>
+          <option value="manhattan">Manhattan (New York County)</option>
+          <option value="queens">Queens (Queens County)</option>
+          <option value="bronx">Bronx (Bronx County)</option>
+          <option value="statenisland">Staten Island (Richmond County)</option>
+        </select>
+      </div>
+
+      <div>
+        <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--label); text-transform: uppercase; margin-bottom: 6px;">2. Council District</label>
+        <select id="explorerDistrict" onchange="runDistrictExplorer()" style="width: 100%; padding: 10px 12px; border-radius: 6px; border: 1px solid var(--line-active); font-size: 0.92rem; color: var(--navy); background: #ffffff; font-weight: 600;">
+          <!-- Dynamically populated -->
+        </select>
+      </div>
+
+      <div>
+        <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--label); text-transform: uppercase; margin-bottom: 6px;">3. Program Area</label>
+        <select id="explorerCategory" onchange="runDistrictExplorer()" style="width: 100%; padding: 10px 12px; border-radius: 6px; border: 1px solid var(--line-active); font-size: 0.92rem; color: var(--navy); background: #ffffff; font-weight: 600;">
+          <option value="youth">Youth Education, Sports &amp; Tutoring</option>
+          <option value="seniors">Senior Care, Wellness &amp; Nutrition</option>
+          <option value="food">Food Security &amp; Community Pantry</option>
+          <option value="immigrant">Cultural Immigrant &amp; Language Services</option>
+          <option value="workforce">Adult Workforce, ESL &amp; Tech Skills</option>
+          <option value="health">Neighborhood Health &amp; Family Stabilization</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Dynamic Result Showcase -->
+    <div id="explorerResultCard" style="background: #ffffff; border: 1px solid #bfdbfe; border-left: 5px solid var(--sky); border-radius: 10px; padding: 22px 24px; box-shadow: var(--shadow-sm);">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 12px;">
+        <div>
+          <span id="resDistrictHeader" style="font-size: 0.78rem; font-weight: 700; color: var(--sky); text-transform: uppercase; letter-spacing: 0.05em;">District 33 &middot; North Brooklyn</span>
+          <h4 id="resInitiativeTitle" style="margin: 2px 0 0 0; font-size: 1.25rem; color: var(--navy); font-weight: 700;">Youth Development &amp; Afterschool Initiative</h4>
+        </div>
+        <div style="text-align: right;">
+          <span style="font-size: 0.72rem; color: var(--ink-muted); text-transform: uppercase; display: block;">Expected Funding Range</span>
+          <span id="resAwardRange" style="font-size: 1.15rem; font-weight: 700; color: var(--ok-text);">$10,000 &ndash; $25,000 (Base) | up to $75,000 (Initiative)</span>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px; padding-top: 14px; border-top: 1px solid #e2e8f0;">
+        <div>
+          <strong style="font-size: 0.82rem; text-transform: uppercase; color: var(--label); display: block;">Administering City Agency</strong>
+          <span id="resAgency" style="font-size: 0.95rem; color: var(--navy); font-weight: 600;">DYCD (Department of Youth &amp; Community Development)</span>
+        </div>
+        <div>
+          <strong style="font-size: 0.82rem; text-transform: uppercase; color: var(--label); display: block;">Statutory Service Mandate</strong>
+          <span id="resMandate" style="font-size: 0.95rem; color: var(--navy); font-weight: 600;">Free &amp; open to public; secular content; defined schedule</span>
+        </div>
+      </div>
+
+      <div style="margin-top: 16px; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 12px 16px; border-radius: 8px;">
+        <strong style="color: #166534; font-size: 0.88rem;">OneNYC Coalition Strategy:</strong>
+        <p id="resStrategyTip" style="margin: 4px 0 0 0; font-size: 0.86rem; color: #14532d; line-height: 1.45;">
+          We advise applying to your primary district member while co-filing with adjacent districts. OneNYC builds the required line-item personnel and supplies budget so reviewers see compliant program execution from Day 1.
+        </p>
+      </div>
+    </div>
+  </div>
+
+
   <!-- ==================== SECTION 5: WHAT ONENYC DOES, AND WHAT STAYS WITH YOU ==================== -->
   <div class="req-section-card" id="division-of-work">
     <div class="req-header-banner">
@@ -1705,6 +1864,48 @@
       </div>
     </div>
   </div>
+
+  <!-- ==================== REAL-WORLD CASE STUDY: BELIEVENY PILOT ==================== -->
+  <div class="req-section-card" id="case-study-believeny" style="border-top: 4px solid var(--amber); margin-top: 32px;">
+    <div class="req-header-banner">
+      <div class="req-num-badge" style="background: var(--navy); color: var(--amber);">★</div>
+      <h3 class="req-header-title">Case Study: Overcoming the Grassroots Funding Barrier (BelieveNY Pilot)</h3>
+    </div>
+    <p style="color: var(--ink-body); margin: 6px 0 20px 0; font-size: 0.95rem; line-height: 1.55;">
+      Why grassroots community organizations struggle alone with traditional municipal grants &mdash; and how the OneNYC Impact Coalition solves it.
+    </p>
+
+    <div class="grid-2" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+      <!-- The Traditional Struggle -->
+      <div style="background: #fff5f5; border: 1px solid #fed7d7; border-left: 4px solid var(--error); border-radius: 10px; padding: 20px;">
+        <div style="font-size: 0.75rem; font-weight: 700; color: var(--error); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Before OneNYC &middot; Grassroots Friction</div>
+        <h4 style="margin: 0 0 10px 0; font-size: 1.15rem; color: #9b1c1c; font-weight: 700;">The Solo Non-Profit Burden</h4>
+        <ul style="margin: 0; padding-left: 18px; font-size: 0.88rem; color: #771d1d; line-height: 1.55;">
+          <li style="margin-bottom: 8px;"><strong>The Pitching Tax:</strong> Separate manual applications to every individual Council Member; booking dozens of meetings with zero dedicated grant staff.</li>
+          <li style="margin-bottom: 8px;"><strong>The Holistic Trap:</strong> Funders want narrow, single-issue projects with rigid start/end dates. Holistic organizations providing housing, job support, and mental health get excluded.</li>
+          <li style="margin-bottom: 8px;"><strong>Retracted Commitments:</strong> Council members verbally promised funding, met twice, and later pulled it ("no more money available"). Core services paused in May.</li>
+          <li><strong>Disillusionment:</strong> Small grassroots orgs give up entirely on municipal funding cycles due to administrative burnout.</li>
+        </ul>
+      </div>
+
+      <!-- The OneNYC Advantage -->
+      <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid var(--ok); border-radius: 10px; padding: 20px;">
+        <div style="font-size: 0.75rem; font-weight: 700; color: var(--ok-text); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">With OneNYC &middot; Coalition Model</div>
+        <h4 style="margin: 0 0 10px 0; font-size: 1.15rem; color: #166534; font-weight: 700;">The Collective Coalition Solution</h4>
+        <ul style="margin: 0; padding-left: 18px; font-size: 0.88rem; color: #14532d; line-height: 1.55;">
+          <li style="margin-bottom: 8px;"><strong>Zero Pitching Tax:</strong> OneNYC takes over the application assembly, compliance packaging, and portal coordination completely free of charge.</li>
+          <li style="margin-bottom: 8px;"><strong>Modular Program Packaging:</strong> Translates holistic community services into compliant, fundable City Council program modules without altering your mission.</li>
+          <li style="margin-bottom: 8px;"><strong>Citywide Slate Representation:</strong> Applying as part of an organized multi-borough coalition provides collective legislative standing and prevents single-member cuts.</li>
+          <li><strong>Full Non-Profit Autonomy:</strong> Your organization remains the direct applicant and contract holder, retaining 100% of awarded grant funds.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top: 16px; background: #f8fafc; border: 1px solid var(--line); border-radius: 8px; padding: 14px 18px; font-size: 0.88rem; color: var(--ink-body);">
+      <strong>Pilot Partner Milestone:</strong> Nicole, Founder &amp; President of <strong>BelieveNY</strong>, agreed to serve as OneNYC's flagship pilot partner &mdash; testing our portal, intake workflows, and line-item budgeting to ensure every grassroots barrier is dismantled ahead of her November 13 Affordable Housing Conference.
+    </div>
+  </div>
+
 
   <!-- ==================== SECTION 6: READY? HERE'S WHAT HAPPENS NEXT ==================== -->
   <div class="req-section-card" id="next-steps">
@@ -3118,7 +3319,15 @@
     { q: 'after intake happens call timeline response waiting process long',
       a: 'After you submit the intake form by November 15: a 15-minute call within 3 business days, then a written answer within 2 more business days. Then the NDA gate, readiness check, and application prep before the Council window opens (early January to mid-February expected).', src: '2-pager' },
     { q: 'contact person who dr abdusalam musa address office phone reach',
-      a: 'Contact Dr. Abdusalam Musa at info@onenyc.com or through this site. OneNYC Inc., 202 Centre Street, New York, NY 10013.', src: '2-pager' }
+      a: 'Contact Dr. Abdusalam Musa at info@onenyc.com or through this site. OneNYC Inc., 202 Centre Street, New York, NY 10013.', src: '2-pager' },
+    { q: 'believeny pilot nicole case study burned past experience',
+      a: 'BelieveNY is OneNYC\'s flagship pilot partner. Nicole (Founder/President) previously faced burnout from submitting separate applications to individual council members and suffering sudden funding cuts. OneNYC\'s coalition model eliminates the pitching burden by handling intake, standardized line-item budgets, and multi-district slate representation for free.', src: 'Case Study' },
+    { q: 'district explorer council member borough initiative grants awards',
+      a: 'Use our District Explorer tool on this page to select your borough, council district (1-51), and program area. It estimates award bands ($10k-$25k local, up to $85k initiative) and identifies your administering agency (DYCD, DFTA, DCLA, DOHMH).', src: 'District Explorer' },
+    { q: 'readiness diagnostic score gaps checklist assessment passport char500',
+      a: 'Our Interactive Readiness Diagnostic calculates your score across 5 statutory requirements: 501(c)(3) determination, CHAR500 registration, PASSPort vendor account, Form 990 financials, and Board of Directors list. Missing items can be cured before the November 15 intake deadline.', src: 'Diagnostic Tool' },
+    { q: 'fiscal sponsorship unregistered emerging initiative no 501c3',
+      a: 'If your community program does not yet have an independent 501(c)(3) tax exemption, talk to OneNYC about capacity acceleration and Model C fiscal sponsorship so you can still participate in the upcoming municipal cycle.', src: 'Fiscal Sponsorship' }
   ];
   var STOP = { the:1,a:1,an:1,is:1,are:1,do:1,does:1,did:1,i:1,my:1,me:1,we:1,our:1,of:1,to:1,for:1,in:1,on:1,and:1,or:1,what:1,can:1,could:1,should:1,would:1,you:1,your:1,it:1,this:1,that:1,how:1,about:1,with:1,be:1,been:1,will:1,would:1,there:1,need:1,want:1,looking:1,know:1,help:1,get:1,got:1,us:1,if:1,when:1,where:1,who:1,much:1,many:1,any:1,some:1 };
   var SYN = { mosque:'faith-based', mosques:'faith-based', masjid:'faith-based', church:'faith-based', synagogue:'faith-based', imam:'faith-based', religious:'religious', religion:'religious', guarantee:'funding', approved:'funding', approve:'funding', award:'funding', money:'funding', dollars:'funding', dollar:'funding', paid:'funding', caps:'limits', cap:'limits', due:'deadline', date:'deadline', dates:'deadline', nda:'non-disclosure', disclosure:'non-disclosure', notary:'notarized', notarize:'notarized', notarization:'notarized', sign:'sign', signature:'sign', signed:'sign', esl:'esl', tutoring:'tutoring', youth:'youth', sports:'sports', seniors:'senior', food:'food', docs:'documents', document:'documents', paperwork:'documents', filing:'filings', filings:'filings', ein:'ein', '501c3':'501(c)(3)', nonprofit:'nonprofit', steps:'steps', step:'steps', intake:'intake', start:'intake', begin:'intake', apply:'apply', eligible:'apply', eligibility:'apply', qualify:'qualify', qualifying:'qualify' };
@@ -3229,6 +3438,193 @@
   close.addEventListener('click', function () { panel.hidden = true; fab.style.display = ''; });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !panel.hidden) { panel.hidden = true; fab.style.display = ''; } });
   form.addEventListener('submit', function (e) { e.preventDefault(); ask(input.value); input.value = ''; });
+
+  /* ==================== READINESS DIAGNOSTIC CONTROLLER ==================== */
+  window.runReadinessDiagnostic = function () {
+    var c501 = document.getElementById('diag_501c3').checked;
+    var cChar = document.getElementById('diag_char500').checked;
+    var cPass = document.getElementById('diag_passport').checked;
+    var c990 = document.getElementById('diag_990').checked;
+    var cBoard = document.getElementById('diag_board').checked;
+
+    var count = (c501?1:0) + (cChar?1:0) + (cPass?1:0) + (c990?1:0) + (cBoard?1:0);
+    var pct = count * 20;
+
+    var bar = document.getElementById('diagProgressBar');
+    var pill = document.getElementById('diagScorePill');
+    var summary = document.getElementById('diagSummaryText');
+    var list = document.getElementById('diagGapsList');
+
+    bar.style.width = pct + '%';
+
+    var gaps = [];
+    if (!c501) gaps.push('<strong>IRS 501(c)(3):</strong> If you do not have standalone tax-exemption, ask us about OneNYC fiscal sponsorship or expedited determination.');
+    if (!cChar) gaps.push('<strong>NYS Charities Bureau:</strong> Submit registration or CHAR500 via <a href="https://ag.ny.gov/resources/government-organizations/charities-nonprofits-fundraisers/charities-registration" target="_blank" style="color:var(--sky);text-decoration:underline;">ag.ny.gov/charities</a>.');
+    if (!cPass) gaps.push('<strong>NYC PASSPort:</strong> Create account on <a href="https://passport.cityofnewyork.us/" target="_blank" style="color:var(--sky);text-decoration:underline;">passport.cityofnewyork.us</a> (takes ~10 days for MOCS review).');
+    if (!c990) gaps.push('<strong>IRS Form 990:</strong> File Form 990-N (e-Postcard if gross receipts &le; $50k) or 990-EZ before Council deadline.');
+    if (!cBoard) gaps.push('<strong>Board of Directors:</strong> NYS Not-for-Profit Law requires at least 3 unrelated individuals on your active governing board.');
+
+    if (pct === 100) {
+      pill.textContent = '100% · Fully Ready';
+      pill.style.background = '#dcfce7'; pill.style.color = 'var(--ok-text)';
+      bar.style.background = 'var(--ok)';
+      summary.innerHTML = '<strong>Outstanding!</strong> Your organization satisfies all statutory pre-qualifications. You are ready to complete the intake form and proceed immediately to program design.';
+      list.innerHTML = '<li style="color:var(--ok-text); font-weight:600;">All statutory pre-qualifications satisfied. Proceed to Intake Stepper below.</li>';
+    } else if (pct >= 60) {
+      pill.textContent = pct + '% · Moderate';
+      pill.style.background = '#fef3c7'; pill.style.color = '#b45309';
+      bar.style.background = 'var(--amber)';
+      summary.innerHTML = '<strong>Good Foundation:</strong> You have the primary legal structure in place. Missing items can be cured within 2-3 weeks before the Council opens in January.';
+      list.innerHTML = gaps.map(function(g){ return '<li style="margin-bottom:6px;">' + g + '</li>'; }).join('');
+    } else {
+      pill.textContent = pct + '% · Foundational';
+      pill.style.background = '#fee2e2'; pill.style.color = 'var(--error)';
+      bar.style.background = 'var(--error)';
+      summary.innerHTML = '<strong>Early-Stage Non-Profit:</strong> You need foundational setup. You are eligible for OneNYC capacity acceleration or Model C fiscal sponsorship to participate in FY2028.';
+      list.innerHTML = gaps.map(function(g){ return '<li style="margin-bottom:6px;">' + g + '</li>'; }).join('');
+    }
+  };
+
+  /* ==================== DISTRICT EXPLORER CONTROLLER ==================== */
+  var DISTRICT_DATA = {
+    brooklyn: [
+      { id: 33, name: 'District 33: Brooklyn Heights, DUMBO, Williamsburg, Greenpoint' },
+      { id: 34, name: 'District 34: Bushwick, Ridgewood, East Williamsburg' },
+      { id: 35, name: 'District 35: Fort Greene, Clinton Hill, Crown Heights, Prospect Heights' },
+      { id: 36, name: 'District 36: Bedford-Stuyvesant, Northern Crown Heights' },
+      { id: 37, name: 'District 37: East New York, Ocean Hill, Brownsville, Bushwick' },
+      { id: 38, name: 'District 38: Sunset Park, Red Hook, Greenwood Heights' },
+      { id: 39, name: 'District 39: Park Slope, Windsor Terrace, Borough Park' },
+      { id: 40, name: 'District 40: Flatbush, Ditmas Park, Kensington, Midwood' },
+      { id: 41, name: 'District 41: Brownsville, Ocean Hill, East Flatbush' },
+      { id: 42, name: 'District 42: East New York, Starrett City, Canarsie' },
+      { id: 43, name: 'District 43: Bay Ridge, Dyker Heights, Bensonhurst' },
+      { id: 44, name: 'District 44: Borough Park, Midwood, Bensonhurst' },
+      { id: 45, name: 'District 45: Flatbush, East Flatbush, Midwood, Marine Park' },
+      { id: 46, name: 'District 46: Canarsie, Flatlands, Bergen Beach, Marine Park' },
+      { id: 47, name: 'District 47: Coney Island, Gravesend, Sea Gate, Bath Beach' },
+      { id: 48, name: 'District 48: Brighton Beach, Manhattan Beach, Sheepshead Bay' }
+    ],
+    manhattan: [
+      { id: 1, name: 'District 1: Lower Manhattan, Chinatown, FiDi, Tribeca, SoHo' },
+      { id: 2, name: 'District 2: Lower East Side, East Village, Gramercy' },
+      { id: 3, name: 'District 3: Chelsea, Hell\'s Kitchen, Greenwich Village' },
+      { id: 4, name: 'District 4: Upper West Side, Central Park' },
+      { id: 5, name: 'District 5: Upper East Side, Yorkville, Roosevelt Island' },
+      { id: 6, name: 'District 6: Upper West Side, Clinton' },
+      { id: 7, name: 'District 7: Morningside Heights, West Harlem, Manhattan Valley' },
+      { id: 8, name: 'District 8: East Harlem, Randall\'s Island, South Bronx' },
+      { id: 9, name: 'District 9: Central Harlem, Hamilton Heights' },
+      { id: 10, name: 'District 10: Washington Heights, Inwood, Marble Hill' }
+    ],
+    queens: [
+      { id: 19, name: 'District 19: Bayside, College Point, Whitestone, Little Neck' },
+      { id: 20, name: 'District 20: Flushing, Queensboro Hill, Murray Hill' },
+      { id: 21, name: 'District 21: Corona, Elmhurst, East Elmhurst, Jackson Heights' },
+      { id: 22, name: 'District 22: Astoria, Long Island City, Woodside' },
+      { id: 23, name: 'District 23: Bellerose, Fresh Meadows, Oakland Gardens, Queens Village' },
+      { id: 24, name: 'District 24: Kew Gardens Hills, Fresh Meadows, Jamaica Estates' },
+      { id: 25, name: 'District 25: Jackson Heights, Elmhurst' },
+      { id: 26, name: 'District 26: Sunnyside, Woodside, Long Island City' },
+      { id: 27, name: 'District 27: Jamaica, St. Albans, Hollis, Queens Village' },
+      { id: 28, name: 'District 28: South Jamaica, Rochdale, Richmond Hill, Ozone Park' },
+      { id: 29, name: 'District 29: Forest Hills, Rego Park, Kew Gardens, Richmond Hill' },
+      { id: 30, name: 'District 30: Maspeth, Middle Village, Glendale, Ridgewood' },
+      { id: 31, name: 'District 31: Far Rockaway, Arverne, Springfield Gardens' },
+      { id: 32, name: 'District 32: Ozone Park, Howard Beach, Woodhaven, Rockaways' }
+    ],
+    bronx: [
+      { id: 11, name: 'District 11: Riverdale, Kingsbridge, Norwood, Woodlawn' },
+      { id: 12, name: 'District 12: Wakefield, Williamsbridge, Baychester, Edenwald' },
+      { id: 13, name: 'District 13: Pelham Parkway, Throggs Neck, Morris Park' },
+      { id: 14, name: 'District 14: Morris Heights, University Heights, Fordham' },
+      { id: 15, name: 'District 15: Belmont, Tremont, West Farms, Van Nest' },
+      { id: 16, name: 'District 16: Concourse, Highbridge, Morrisania' },
+      { id: 17, name: 'District 17: Longwood, Hunts Point, Melrose, Crotona Park' },
+      { id: 18, name: 'District 18: Soundview, Castle Hill, Parkchester, Clason Point' }
+    ],
+    statenisland: [
+      { id: 49, name: 'District 49: North Shore, St. George, Stapleton, West New Brighton' },
+      { id: 50, name: 'District 50: Mid-Island, Willowbrook, New Springville, Todt Hill' },
+      { id: 51, name: 'District 51: South Shore, Tottenville, Great Kills, Eltingville' }
+    ]
+  };
+
+  var CATEGORY_DATA = {
+    youth: {
+      initiative: 'Youth Development & Afterschool Initiative',
+      agency: 'DYCD (Department of Youth & Community Development)',
+      mandate: 'Free & open to public; outside school hours; clear attendance metrics',
+      awardRange: '$10,000 &ndash; $25,000 (Base) | up to $75,000 (Initiative)',
+      strategy: 'Focus narrative on safe third spaces, homework tutoring, STEM workshops, or organized athletic enrichment in high-density corridors.'
+    },
+    seniors: {
+      initiative: 'Support Our Seniors (SOS) & Aging Wellness Initiative',
+      agency: 'DFTA (Department for the Aging / NYC Aging)',
+      mandate: 'Nutritional access, physical wellness, isolation reduction, technology literacy',
+      awardRange: '$10,000 &ndash; $20,000 (Base) | up to $60,000 (Initiative)',
+      strategy: 'Emphasize cultural/linguistic alignment (halal meals, multilingual escorts) and non-profit facility safety.'
+    },
+    food: {
+      initiative: 'Emergency Food Assistance & Food Insecurity Coalition',
+      agency: 'DYCD / DSS-HRA Emergency Food Line',
+      mandate: 'Unconditional food distribution; dignified access; non-proselytizing',
+      awardRange: '$10,000 &ndash; $30,000 (Base) | up to $80,000 (Initiative)',
+      strategy: 'Document exact household counts served monthly and pantry storage equipment needs (refrigeration, shelving).'
+    },
+    immigrant: {
+      initiative: 'Cultural Immigrant Initiative (CII)',
+      agency: 'DCLA (Cultural Affairs) / DYCD',
+      mandate: 'Cultural heritage, immigrant integration, legal navigation, civic arts',
+      awardRange: '$15,000 &ndash; $35,000 (Base) | up to $95,000 (Initiative)',
+      strategy: 'CII is one of City Council\'s highest-priority funding lines. Emphasize newcomer language access, civic empowerment, and inter-generational storytelling.'
+    },
+    workforce: {
+      initiative: 'Digital Inclusion, ESL & Adult Workforce Initiative',
+      agency: 'SBS (Small Business Services) / DYCD Adult Literacy',
+      mandate: 'Measurable job readiness, digital skill acquisition, credential pathways',
+      awardRange: '$15,000 &ndash; $25,000 (Base) | up to $70,000 (Initiative)',
+      strategy: 'Highlight connections to local merchant corridors, MWBE supply chains, and certifications.'
+    },
+    health: {
+      initiative: 'Community Health, Family Support & Mental Wellness',
+      agency: 'DOHMH (Department of Health & Mental Hygiene)',
+      mandate: 'Stigma reduction, preventive health screenings, community health navigators',
+      awardRange: '$10,000 &ndash; $25,000 (Base) | up to $65,000 (Initiative)',
+      strategy: 'Pair educational workshops with licensed practitioners and community navigators.'
+    }
+  };
+
+  window.updateDistrictOptions = function () {
+    var borough = document.getElementById('explorerBorough').value;
+    var distSelect = document.getElementById('explorerDistrict');
+    var list = DISTRICT_DATA[borough] || [];
+    distSelect.innerHTML = list.map(function (d) {
+      return '<option value="' + d.id + '">' + d.name + '</option>';
+    }).join('');
+    runDistrictExplorer();
+  };
+
+  window.runDistrictExplorer = function () {
+    var distSelect = document.getElementById('explorerDistrict');
+    var distId = distSelect.value;
+    var distName = distSelect.options[distSelect.selectedIndex] ? distSelect.options[distSelect.selectedIndex].text : 'District ' + distId;
+    var cat = document.getElementById('explorerCategory').value;
+    var catData = CATEGORY_DATA[cat] || CATEGORY_DATA.youth;
+
+    document.getElementById('resDistrictHeader').textContent = distName;
+    document.getElementById('resInitiativeTitle').textContent = catData.initiative;
+    document.getElementById('resAwardRange').innerHTML = catData.awardRange;
+    document.getElementById('resAgency').textContent = catData.agency;
+    document.getElementById('resMandate').textContent = catData.mandate;
+    document.getElementById('resStrategyTip').innerHTML = catData.strategy + ' OneNYC standardizes the required line-item personnel and supplies budget so Council reviewers approve compliance from Day 1.';
+  };
+
+  // Initialize tool defaults on DOM load
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof updateDistrictOptions === 'function') updateDistrictOptions();
+    if (typeof runReadinessDiagnostic === 'function') runReadinessDiagnostic();
+  });
 })();
 </script>
 </body>
