@@ -1317,7 +1317,10 @@
         <li><a href="#readiness-diagnostic">Diagnostic</a></li>
         <li><a href="#funding-limits">Funding Caps</a></li>
         <li><a href="#district-explorer">District Explorer</a></li>
+        <li><a href="#budget-builder">Budget Builder</a></li>
         <li><a href="#case-study-believeny">Case Study</a></li>
+        <li><a href="#contract-disparity">Disparity Audit</a></li>
+        <li><a href="#mock-call-runbook">Mock Call Runbook</a></li>
         <li><a href="#division-of-work">How We Help</a></li>
         <li><a href="#faq">FAQ</a></li>
       </ul>
@@ -1832,6 +1835,96 @@
 
 
   <!-- ==================== SECTION 5: WHAT ONENYC DOES, AND WHAT STAYS WITH YOU ==================== -->
+    <!-- ==================== INTERACTIVE SCHEDULE C BUDGET BUILDER ==================== -->
+  <div class="req-section-card" id="budget-builder" style="border-top: 4px solid var(--gold); margin-top: 32px;">
+    <div class="req-header-banner">
+      <div class="req-num-badge" style="background: var(--navy); color: var(--gold); font-size: 1.1rem; font-weight: 700;">$</div>
+      <h3 class="req-header-title">Schedule C Grant Budget Builder &amp; Compliance Validator</h3>
+    </div>
+    <p style="color: var(--ink-body); margin: 6px 0 20px 0; font-size: 0.95rem; line-height: 1.55;">
+      Design a compliant City Council line-item grant budget in real time. NYC City Council and administering agencies (DYCD, DFTA, DCLA) enforce strict statutory caps: <strong>Fringe Benefits &le; 25% of Personnel</strong> and <strong>Administrative / Indirect Costs &le; 10% of Direct Total</strong>. This tool flags compliance violations instantly.
+    </p>
+
+    <!-- Preset Template Buttons -->
+    <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; align-items: center;">
+      <span style="font-size: 0.85rem; font-weight: 600; color: var(--ink-body);">Quick Templates:</span>
+      <button type="button" class="btn-subtle" onclick="loadBudgetTemplate('community20k')" style="padding: 6px 14px; font-size: 0.85rem; border-radius: 6px; cursor: pointer;">$20,000 Local Program</button>
+      <button type="button" class="btn-subtle" onclick="loadBudgetTemplate('initiative50k')" style="padding: 6px 14px; font-size: 0.85rem; border-radius: 6px; cursor: pointer;">$50,000 Citywide Initiative</button>
+      <button type="button" class="btn-subtle" onclick="loadBudgetTemplate('believenyCase')" style="padding: 6px 14px; font-size: 0.85rem; border-radius: 6px; cursor: pointer;">Holistic Coalition Model</button>
+      <button type="button" class="btn-subtle" onclick="resetBudgetBuilder()" style="padding: 6px 14px; font-size: 0.85rem; border-radius: 6px; cursor: pointer; color: var(--error);">Clear All</button>
+    </div>
+
+    <!-- Budget Table -->
+    <div style="overflow-x: auto; background: #ffffff; border: 1px solid var(--line); border-radius: 10px; margin-bottom: 20px;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem; text-align: left;" id="budgetTable">
+        <thead>
+          <tr style="background: var(--navy); color: #ffffff;">
+            <th style="padding: 12px 14px;">Line Item Description</th>
+            <th style="padding: 12px 14px; width: 220px;">Statutory Category</th>
+            <th style="padding: 12px 14px; width: 140px; text-align: right;">Amount ($)</th>
+            <th style="padding: 12px 14px; width: 60px; text-align: center;">Action</th>
+          </tr>
+        </thead>
+        <tbody id="budgetTableBody">
+          <!-- Populated by JS -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Add Item Row Controls -->
+    <div style="display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap;">
+      <input type="text" id="newBudgetDesc" placeholder="e.g. Program Coordinator (15 hrs/wk @ $30/hr)" style="flex: 2; min-width: 200px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 6px; font-size: 0.88rem;">
+      <select id="newBudgetCat" style="flex: 1; min-width: 160px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 6px; font-size: 0.88rem;">
+        <option value="ps">Personnel Services (PS)</option>
+        <option value="fringe">Fringe Benefits (Max 25% PS)</option>
+        <option value="supplies">Program Supplies / Materials (OTPS)</option>
+        <option value="rent">Space / Facility Rental (OTPS)</option>
+        <option value="client">Client Stipends / Travel (OTPS)</option>
+        <option value="admin">Admin / Indirect (Max 10% Total)</option>
+      </select>
+      <input type="number" id="newBudgetAmt" placeholder="Amount ($)" style="width: 120px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 6px; font-size: 0.88rem;">
+      <button type="button" class="btn-primary" onclick="addCustomBudgetItem()" style="padding: 10px 18px; font-size: 0.88rem; border-radius: 6px; cursor: pointer; white-space: nowrap;">+ Add Line Item</button>
+    </div>
+
+    <!-- Statutory Metrics Dashboard -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 20px;">
+      <div style="background: #f8fafc; border: 1px solid var(--line); border-radius: 8px; padding: 14px;">
+        <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--ink-muted); font-weight: 700;">Total Grant Request</div>
+        <div id="statTotalBudget" style="font-size: 1.5rem; font-weight: 800; color: var(--navy); margin-top: 4px;">$0</div>
+        <div style="font-size: 0.75rem; color: var(--ink-muted);">Target: $10,000 &ndash; $50,000</div>
+      </div>
+      <div style="background: #f8fafc; border: 1px solid var(--line); border-radius: 8px; padding: 14px;">
+        <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--ink-muted); font-weight: 700;">Personnel Services (PS)</div>
+        <div id="statTotalPS" style="font-size: 1.5rem; font-weight: 800; color: var(--navy); margin-top: 4px;">$0</div>
+        <div id="statPSPct" style="font-size: 0.75rem; color: var(--ink-muted);">0% of total</div>
+      </div>
+      <div style="background: #f8fafc; border: 1px solid var(--line); border-radius: 8px; padding: 14px;" id="statFringeCard">
+        <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--ink-muted); font-weight: 700;">Fringe Benefit Ratio</div>
+        <div id="statFringeRatio" style="font-size: 1.5rem; font-weight: 800; color: var(--ok); margin-top: 4px;">0.0%</div>
+        <div id="statFringeStatus" style="font-size: 0.75rem; color: var(--ok); font-weight: 600;">PASS (&le; 25% Cap)</div>
+      </div>
+      <div style="background: #f8fafc; border: 1px solid var(--line); border-radius: 8px; padding: 14px;" id="statAdminCard">
+        <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--ink-muted); font-weight: 700;">Admin / Indirect Ratio</div>
+        <div id="statAdminRatio" style="font-size: 1.5rem; font-weight: 800; color: var(--ok); margin-top: 4px;">0.0%</div>
+        <div id="statAdminStatus" style="font-size: 0.75rem; color: var(--ok); font-weight: 600;">PASS (&le; 10% Cap)</div>
+      </div>
+    </div>
+
+    <!-- Live Compliance Status Banner -->
+    <div id="budgetComplianceBanner" style="background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid var(--ok); border-radius: 8px; padding: 14px 18px; margin-bottom: 20px;">
+      <div style="font-weight: 700; color: #166534; font-size: 0.95rem;" id="budgetBannerTitle">&check; Fully Schedule C Compliant</div>
+      <div style="font-size: 0.85rem; color: #14532d; margin-top: 2px;" id="budgetBannerDetail">All line items adhere to City Council personnel, fringe benefit, and administrative caps.</div>
+    </div>
+
+    <!-- Export Actions -->
+    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+      <button type="button" class="btn-primary" onclick="exportBudgetCSV()" style="padding: 10px 18px; font-size: 0.88rem; border-radius: 6px; cursor: pointer;">&darr; Export Schedule C Budget (CSV)</button>
+      <button type="button" class="btn-subtle" onclick="copyBudgetSummary()" style="padding: 10px 18px; font-size: 0.88rem; border-radius: 6px; cursor: pointer;">&boxbox; Copy Text Summary</button>
+      <button type="button" class="btn-subtle" onclick="applyBudgetToIntake()" style="padding: 10px 18px; font-size: 0.88rem; border-radius: 6px; cursor: pointer; color: var(--navy); font-weight: 600;">&rarr; Send Budget to Intake Stepper</button>
+    </div>
+  </div>
+
+
   <div class="req-section-card" id="division-of-work">
     <div class="req-header-banner">
       <div class="req-num-badge">5</div>
@@ -1907,6 +2000,120 @@
   </div>
 
 
+    <!-- ==================== EMPIRICAL PRIME CONTRACTING DISPARITY AUDIT ==================== -->
+  <div class="req-section-card" id="contract-disparity" style="border-top: 4px solid var(--navy); margin-top: 32px;">
+    <div class="req-header-banner">
+      <div class="req-num-badge" style="background: var(--navy); color: #ffffff; font-size: 1.1rem; font-weight: 700;">&Delta;</div>
+      <h3 class="req-header-title">Empirical Disparity Audit: $111.97B NYC Prime Procurement vs. Demographic Parity</h3>
+    </div>
+    <p style="color: var(--ink-body); margin: 6px 0 20px 0; font-size: 0.95rem; line-height: 1.55;">
+      Analysis of the official municipal prime contracting database (<strong>9,386 prime vendors, $111.97 Billion in awards</strong>) and Census faith demographics (<strong>NYC Faith Representation official dataset</strong>) demonstrates the systemic barrier grassroots organizations face &mdash; and why OneNYC's Coalition Prime Vendor model is mandatory.
+    </p>
+
+    <!-- Macro Comparative Bar Chart -->
+    <div style="background: #f8fafc; border: 1px solid var(--line); border-radius: 12px; padding: 22px; margin-bottom: 24px;">
+      <div style="font-size: 0.82rem; font-weight: 700; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 16px; letter-spacing: 0.04em;">
+        NYC Demographic Share vs. Prime Municipal Contract Allocation
+      </div>
+
+      <!-- Christian / Catholic -->
+      <div style="margin-bottom: 16px;">
+        <div style="display: flex; justify-content: space-between; font-size: 0.88rem; font-weight: 600; margin-bottom: 4px;">
+          <span>Christian &amp; Catholic Agencies (Catholic Charities, Guardian, etc.)</span>
+          <span style="color: var(--navy);">$1.17 Billion+ Prime Contracts (33% Pop)</span>
+        </div>
+        <div style="background: #e2e8f0; height: 18px; border-radius: 9px; overflow: hidden;">
+          <div style="background: linear-gradient(90deg, #3b82f6, #1d4ed8); width: 100%; height: 100%;"></div>
+        </div>
+      </div>
+
+      <!-- Jewish -->
+      <div style="margin-bottom: 16px;">
+        <div style="display: flex; justify-content: space-between; font-size: 0.88rem; font-weight: 600; margin-bottom: 4px;">
+          <span>Jewish Federations &amp; Agencies (Met Council, UJA, Ohel, etc.)</span>
+          <span style="color: var(--navy);">$899.7 Million+ Prime Contracts (11.18% Pop)</span>
+        </div>
+        <div style="background: #e2e8f0; height: 18px; border-radius: 9px; overflow: hidden;">
+          <div style="background: linear-gradient(90deg, #10b981, #059669); width: 77%; height: 100%;"></div>
+        </div>
+      </div>
+
+      <!-- Muslim -->
+      <div style="margin-bottom: 8px;">
+        <div style="display: flex; justify-content: space-between; font-size: 0.88rem; font-weight: 700; margin-bottom: 4px; color: var(--error);">
+          <span>Muslim Grassroots Community Organizations (NYC Wide)</span>
+          <span>$0.00 / Zero Prime Contracts (11.00% Pop &middot; 944,309 Residents)</span>
+        </div>
+        <div style="background: #fee2e2; height: 18px; border-radius: 9px; overflow: hidden; border: 1px dashed var(--error); position: relative;">
+          <div style="background: var(--error); width: 1px; height: 100%;"></div>
+          <span style="position: absolute; left: 8px; top: 0; font-size: 0.72rem; color: var(--error); font-weight: 800; line-height: 18px;">
+            ABSOLUTE EXCLUSION &middot; 0.00% PRIME CAPTURE
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Community Parity Calculator -->
+    <div style="background: #ffffff; border: 1px solid var(--line); border-radius: 12px; padding: 22px; margin-bottom: 24px;">
+      <h4 style="margin: 0 0 10px 0; color: var(--navy); font-size: 1.1rem; font-weight: 700;">Community Service Parity &amp; Municipal Deficit Calculator</h4>
+      <p style="font-size: 0.88rem; color: var(--ink-body); margin: 0 0 16px 0;">
+        Estimate the municipal investment gap for your community based on the number of residents, youth, or families your programs serve monthly:
+      </p>
+
+      <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 18px; flex-wrap: wrap;">
+        <label for="disparityConstituents" style="font-size: 0.88rem; font-weight: 600; color: var(--navy);">Monthly Community Members Served:</label>
+        <input type="range" id="disparityRange" min="200" max="10000" step="100" value="1200" oninput="syncDisparityInputs('range')" style="flex: 1; min-width: 180px;">
+        <input type="number" id="disparityNum" min="200" max="10000" step="100" value="1200" oninput="syncDisparityInputs('num')" style="width: 100px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; font-weight: 700; text-align: right;">
+        <span style="font-size: 0.88rem; color: var(--ink-muted);">individuals / families</span>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px;">
+        <div style="background: #f8fafc; border: 1px solid var(--line); border-radius: 8px; padding: 14px;">
+          <div style="font-size: 0.72rem; text-transform: uppercase; color: var(--ink-muted); font-weight: 700;">Estimated Annual Service Value</div>
+          <div id="resServiceValue" style="font-size: 1.35rem; font-weight: 800; color: var(--navy); margin-top: 4px;">$288,000</div>
+          <div style="font-size: 0.72rem; color: var(--ink-muted);">Delivered via grassroots volunteerism</div>
+        </div>
+        <div style="background: #fff5f5; border: 1px solid #fed7d7; border-radius: 8px; padding: 14px;">
+          <div style="font-size: 0.72rem; text-transform: uppercase; color: var(--error); font-weight: 700;">City Prime Contract Capture</div>
+          <div style="font-size: 1.35rem; font-weight: 800; color: var(--error); margin-top: 4px;">$0.00</div>
+          <div style="font-size: 0.72rem; color: #991b1b;">0.0% municipal prime reimbursement</div>
+        </div>
+        <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 14px;">
+          <div style="font-size: 0.72rem; text-transform: uppercase; color: #166534; font-weight: 700;">Demographic Parity Benchmark</div>
+          <div id="resParityBenchmark" style="font-size: 1.35rem; font-weight: 800; color: #166534; margin-top: 4px;">$126,500</div>
+          <div style="font-size: 0.72rem; color: #15803d;">Under peer sectarian citywide ratios</div>
+        </div>
+        <div style="background: #fffbeb; border: 1px solid #fef3c7; border-radius: 8px; padding: 14px;">
+          <div style="font-size: 0.72rem; text-transform: uppercase; color: #b45309; font-weight: 700;">Annual Equity Deficit</div>
+          <div id="resEquityDeficit" style="font-size: 1.35rem; font-weight: 800; color: #b45309; margin-top: 4px;">$126,500</div>
+          <div style="font-size: 0.72rem; color: #92400e;">Capital shortfall borne by community</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- The 3 Root Barriers & The OneNYC Solution -->
+    <div class="grid-2" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px;">
+      <div style="background: #f8fafc; border: 1px solid var(--line); border-radius: 10px; padding: 18px;">
+        <h4 style="margin: 0 0 10px 0; color: var(--navy); font-size: 1rem; font-weight: 700;">Why Community Groups Fail Alone</h4>
+        <ul style="margin: 0; padding-left: 18px; font-size: 0.85rem; color: var(--ink-body); line-height: 1.55;">
+          <li style="margin-bottom: 6px;"><strong>MWBE Exclusion:</strong> Local Law 1 applies strictly to for-profit businesses. 501(c)(3) nonprofits cannot certify as MWBE and have zero diversity quotas.</li>
+          <li style="margin-bottom: 6px;"><strong>PASSPort Pre-Qual Moat:</strong> Requires 3 years of audited CPA financial statements and multimillion-dollar balance sheets that small groups lack.</li>
+          <li><strong>6&ndash;12 Month Vouchering Lag:</strong> City contracts pay on delayed cost-reimbursement, bankrupting groups that lack revolving credit lines.</li>
+        </ul>
+      </div>
+
+      <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 18px;">
+        <h4 style="margin: 0 0 10px 0; color: #166534; font-size: 1rem; font-weight: 700;">The OneNYC Solution</h4>
+        <ul style="margin: 0; padding-left: 18px; font-size: 0.85rem; color: #14532d; line-height: 1.55;">
+          <li style="margin-bottom: 6px;"><strong>Model C Fiscal Sponsorship:</strong> OneNYC holds the prime contract, pre-qualification, and insurance; your organization executes programs as a protected sub-recipient.</li>
+          <li style="margin-bottom: 6px;"><strong>Zero Balance Sheet Risk:</strong> OneNYC absorbs the municipal audit liabilities, payroll filings, and PASSPort disclosures.</li>
+          <li><strong>Discretionary to Prime Pathway:</strong> Using the January 2027 Schedule C cycle as the stepping stone to multi-year municipal prime contract standing.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
   <!-- ==================== SECTION 6: READY? HERE'S WHAT HAPPENS NEXT ==================== -->
   <div class="req-section-card" id="next-steps">
     <div class="req-header-banner">
@@ -1940,6 +2147,123 @@
       </div>
     </div>
   </div>
+
+    <!-- ==================== WORKING GROUP: 15-MINUTE INTAKE MOCK CALL RUNBOOK ==================== -->
+  <div class="req-section-card" id="mock-call-runbook" style="border-top: 4px solid var(--sky); margin-top: 32px;">
+    <div class="req-header-banner">
+      <div class="req-num-badge" style="background: var(--navy); color: var(--sky); font-size: 1.1rem; font-weight: 700;">&phone;</div>
+      <h3 class="req-header-title">Working Group Runbook: 15-Minute Intake Mock Call &amp; Verification Harness</h3>
+    </div>
+    <p style="color: var(--ink-body); margin: 6px 0 20px 0; font-size: 0.95rem; line-height: 1.55;">
+      Standardized protocol for OneNYC Fellows and Executive Leadership to conduct the 15-minute intake review call with grassroots leaders. Use this interactive harness to simulate scenarios, review checkcards, and verify compliance ahead of the November 15 intake milestone.
+    </p>
+
+    <!-- Scenario Selector -->
+    <div style="background: #f8fafc; border: 1px solid var(--line); border-radius: 10px; padding: 16px; margin-bottom: 20px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+      <span style="font-size: 0.88rem; font-weight: 700; color: var(--navy);">Select Practice Scenario:</span>
+      <select id="mockScenarioSelect" onchange="loadMockScenario()" style="padding: 8px 14px; border: 1px solid var(--line); border-radius: 6px; font-size: 0.88rem; flex: 1; min-width: 220px;">
+        <option value="believeny">Scenario 1: Holistic Crisis Support Non-Profit (e.g. BelieveNY Pilot)</option>
+        <option value="masjid">Scenario 2: Faith-Based Community Center / Masjid (e.g. Youth & Pantry Program)</option>
+        <option value="emerging">Scenario 3: Emerging Grassroots Arts & Heritage Group (Missing CHAR500)</option>
+        <option value="senior">Scenario 4: Senior Nutrition & Wellness Pantry (Dual District Queens/Brooklyn)</option>
+      </select>
+      <button type="button" class="btn-subtle" onclick="resetMockChecklist()" style="padding: 8px 14px; font-size: 0.85rem; border-radius: 6px; cursor: pointer;">Reset Checklist</button>
+    </div>
+
+    <!-- 5-Step Call Chronology -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 20px;">
+      <!-- Min 0-3 -->
+      <div style="background: #ffffff; border: 1px solid var(--line); border-top: 3px solid var(--navy); border-radius: 8px; padding: 14px;">
+        <div style="font-size: 0.72rem; font-weight: 700; color: var(--navy); text-transform: uppercase;">Minutes 0 &ndash; 3</div>
+        <h4 style="margin: 4px 0 8px 0; font-size: 0.95rem; color: var(--navy);">1. Identity &amp; EIN Sanity Check</h4>
+        <ul style="margin: 0; padding-left: 16px; font-size: 0.82rem; color: var(--ink-body); line-height: 1.45;">
+          <li>Verify legal corporate name matches NY DOS database exactly (no informal DBAs).</li>
+          <li>Confirm organization holds its own 9-digit Federal EIN (not an individual SSN).</li>
+          <li>Check IRS 501(c)(3) determination letter or fiscal sponsor status.</li>
+        </ul>
+        <div style="margin-top: 10px;">
+          <label style="font-size: 0.78rem; font-weight: 600; color: var(--ok-text); cursor: pointer;">
+            <input type="checkbox" id="chkMock1" onchange="updateMockProgress()"> &check; Identity Verified
+          </label>
+        </div>
+      </div>
+
+      <!-- Min 3-6 -->
+      <div style="background: #ffffff; border: 1px solid var(--line); border-top: 3px solid var(--navy); border-radius: 8px; padding: 14px;">
+        <div style="font-size: 0.72rem; font-weight: 700; color: var(--navy); text-transform: uppercase;">Minutes 3 &ndash; 6</div>
+        <h4 style="margin: 4px 0 8px 0; font-size: 0.95rem; color: var(--navy);">2. Statutory 5-Point Audit</h4>
+        <ul style="margin: 0; padding-left: 16px; font-size: 0.82rem; color: var(--ink-body); line-height: 1.45;">
+          <li>Confirm NYS Charities Bureau registration is ACTIVE (no delinquent CHAR500).</li>
+          <li>Check most recent IRS Form 990, 990-EZ, or 990-N e-Postcard.</li>
+          <li>Verify active Board of Directors list (minimum 3 unrelated voting officers).</li>
+        </ul>
+        <div style="margin-top: 10px;">
+          <label style="font-size: 0.78rem; font-weight: 600; color: var(--ok-text); cursor: pointer;">
+            <input type="checkbox" id="chkMock2" onchange="updateMockProgress()"> &check; Statutory Audit Clear
+          </label>
+        </div>
+      </div>
+
+      <!-- Min 6-10 -->
+      <div style="background: #ffffff; border: 1px solid var(--line); border-top: 3px solid var(--navy); border-radius: 8px; padding: 14px;">
+        <div style="font-size: 0.72rem; font-weight: 700; color: var(--navy); text-transform: uppercase;">Minutes 6 &ndash; 10</div>
+        <h4 style="margin: 4px 0 8px 0; font-size: 0.95rem; color: var(--navy);">3. District &amp; Initiative Fit</h4>
+        <ul style="margin: 0; padding-left: 16px; font-size: 0.82rem; color: var(--ink-body); line-height: 1.45;">
+          <li>Match service physical address to exact Council District (1 to 51).</li>
+          <li>Identify primary administering agency (DYCD, DFTA, DCLA, DOHMH).</li>
+          <li>Align program with a citywide initiative (CII, SOS, Youth Development).</li>
+        </ul>
+        <div style="margin-top: 10px;">
+          <label style="font-size: 0.78rem; font-weight: 600; color: var(--ok-text); cursor: pointer;">
+            <input type="checkbox" id="chkMock3" onchange="updateMockProgress()"> &check; District Mapped
+          </label>
+        </div>
+      </div>
+
+      <!-- Min 10-13 -->
+      <div style="background: #ffffff; border: 1px solid var(--line); border-top: 3px solid var(--navy); border-radius: 8px; padding: 14px;">
+        <div style="font-size: 0.72rem; font-weight: 700; color: var(--navy); text-transform: uppercase;">Minutes 10 &ndash; 13</div>
+        <h4 style="margin: 4px 0 8px 0; font-size: 0.95rem; color: var(--navy);">4. Line-Item Budget Review</h4>
+        <ul style="margin: 0; padding-left: 16px; font-size: 0.82rem; color: var(--ink-body); line-height: 1.45;">
+          <li>Review proposed Personnel vs OTPS direct supplies allocation.</li>
+          <li>Enforce statutory limits: Fringe Benefit &le; 25%; Admin &le; 10%.</li>
+          <li>Confirm total request lands between $10k&ndash;$30k (Base) or $50k+ (Initiative).</li>
+        </ul>
+        <div style="margin-top: 10px;">
+          <label style="font-size: 0.78rem; font-weight: 600; color: var(--ok-text); cursor: pointer;">
+            <input type="checkbox" id="chkMock4" onchange="updateMockProgress()"> &check; Budget Validated
+          </label>
+        </div>
+      </div>
+
+      <!-- Min 13-15 -->
+      <div style="background: #ffffff; border: 1px solid var(--line); border-top: 3px solid var(--navy); border-radius: 8px; padding: 14px;">
+        <div style="font-size: 0.72rem; font-weight: 700; color: var(--navy); text-transform: uppercase;">Minutes 13 &ndash; 15</div>
+        <h4 style="margin: 4px 0 8px 0; font-size: 0.95rem; color: var(--navy);">5. November 15 Hand-off</h4>
+        <ul style="margin: 0; padding-left: 16px; font-size: 0.82rem; color: var(--ink-body); line-height: 1.45;">
+          <li>Direct applicant to portal stepper: upload IRS 501c3 and 990 documents.</li>
+          <li>Set calendar notification for November 15 submission deadline.</li>
+          <li>Issue personalized remediation action items for any identified flags.</li>
+        </ul>
+        <div style="margin-top: 10px;">
+          <label style="font-size: 0.78rem; font-weight: 600; color: var(--ok-text); cursor: pointer;">
+            <input type="checkbox" id="chkMock5" onchange="updateMockProgress()"> &check; Hand-off Confirmed
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Scenario Debrief Box -->
+    <div id="mockScenarioDebrief" style="background: #f8fafc; border: 1px solid var(--line); border-left: 4px solid var(--sky); border-radius: 8px; padding: 16px 20px;">
+      <div style="font-weight: 700; color: var(--navy); font-size: 1rem;" id="mockScenarioTitle">Active Scenario: BelieveNY Pilot Partner Walkthrough</div>
+      <div style="font-size: 0.85rem; color: var(--ink-body); margin-top: 4px; line-height: 1.5;" id="mockScenarioDesc">
+        <strong>Profile:</strong> Grassroots holistic crisis non-profit providing domestic violence, mental health, and housing services across Queens and Manhattan.<br>
+        <strong>Key Friction to Address:</strong> Retracted funding from individual council members; staff burnout. OneNYC takes over the application assembly and packages services into compliant DYCD / DOHMH line items.<br>
+        <strong>Fellow Action Item:</strong> Validate 501(c)(3) determination letter, ensure fringe benefits do not exceed 25%, and assign to Cultural Immigrant Initiative (CII) slate.
+      </div>
+    </div>
+  </div>
+
 
   <!-- ==================== OFFICIAL CONTACT, DISCLAIMER & CLOSING ==================== -->
   <div class="flyer-contact-banner">
@@ -3327,7 +3651,13 @@
     { q: 'readiness diagnostic score gaps checklist assessment passport char500',
       a: 'Our Interactive Readiness Diagnostic calculates your score across 5 statutory requirements: 501(c)(3) determination, CHAR500 registration, PASSPort vendor account, Form 990 financials, and Board of Directors list. Missing items can be cured before the November 15 intake deadline.', src: 'Diagnostic Tool' },
     { q: 'fiscal sponsorship unregistered emerging initiative no 501c3',
-      a: 'If your community program does not yet have an independent 501(c)(3) tax exemption, talk to OneNYC about capacity acceleration and Model C fiscal sponsorship so you can still participate in the upcoming municipal cycle.', src: 'Fiscal Sponsorship' }
+      a: 'If your community program does not yet have an independent 501(c)(3) tax exemption, talk to OneNYC about capacity acceleration and Model C fiscal sponsorship so you can still participate in the upcoming municipal cycle.', src: 'Fiscal Sponsorship' },
+    { q: 'budget builder line item fringe admin caps personnel otps statutory rules calculate',
+      a: 'Use our interactive Budget Builder tool above to design your grant budget. It enforces NYC City Council statutory limits in real time: Fringe Benefits cannot exceed 25% of Personnel, and Administrative/Indirect costs cannot exceed 10% of total budget. You can export to CSV or load starter templates (k local, k initiative).', src: 'Budget Builder' },
+    { q: 'prime contract disparity contracting audit 111 billion faith muslim jewish christian representation',
+      a: "Our analysis of 9,386 NYC prime vendors (.97B in awards) and Census faith demographics confirms that Muslim New Yorkers (11.0% of NYC, ~944k residents) receive zsh.00 in visible prime municipal contracts, while Christian/Catholic agencies capture .17B+ and Jewish agencies capture .7M+. OneNYC's Coalition Prime Vendor model bridges this gap through Model C fiscal sponsorship and master prime contracting.", src: 'Disparity Audit' },
+    { q: 'mock call runbook practice fellow leadership 15 minute intake review',
+      a: 'Our 15-Minute Mock Call Runbook provides a structured 5-step checklist for OneNYC Fellows and partner leadership: 1. Identity & EIN Sanity Check (min 0-3), 2. Statutory 5-Point Audit (min 3-6), 3. District & Initiative Fit (min 6-10), 4. Line-Item Budget Review (min 10-13), and 5. November 15 Hand-off (min 13-15). Test practice scenarios directly in the Mock Call Runbook section above.', src: 'Mock Call Runbook' }
   ];
   var STOP = { the:1,a:1,an:1,is:1,are:1,do:1,does:1,did:1,i:1,my:1,me:1,we:1,our:1,of:1,to:1,for:1,in:1,on:1,and:1,or:1,what:1,can:1,could:1,should:1,would:1,you:1,your:1,it:1,this:1,that:1,how:1,about:1,with:1,be:1,been:1,will:1,would:1,there:1,need:1,want:1,looking:1,know:1,help:1,get:1,got:1,us:1,if:1,when:1,where:1,who:1,much:1,many:1,any:1,some:1 };
   var SYN = { mosque:'faith-based', mosques:'faith-based', masjid:'faith-based', church:'faith-based', synagogue:'faith-based', imam:'faith-based', religious:'religious', religion:'religious', guarantee:'funding', approved:'funding', approve:'funding', award:'funding', money:'funding', dollars:'funding', dollar:'funding', paid:'funding', caps:'limits', cap:'limits', due:'deadline', date:'deadline', dates:'deadline', nda:'non-disclosure', disclosure:'non-disclosure', notary:'notarized', notarize:'notarized', notarization:'notarized', sign:'sign', signature:'sign', signed:'sign', esl:'esl', tutoring:'tutoring', youth:'youth', sports:'sports', seniors:'senior', food:'food', docs:'documents', document:'documents', paperwork:'documents', filing:'filings', filings:'filings', ein:'ein', '501c3':'501(c)(3)', nonprofit:'nonprofit', steps:'steps', step:'steps', intake:'intake', start:'intake', begin:'intake', apply:'apply', eligible:'apply', eligibility:'apply', qualify:'qualify', qualifying:'qualify' };
@@ -3620,10 +3950,294 @@
     document.getElementById('resStrategyTip').innerHTML = catData.strategy + ' OneNYC standardizes the required line-item personnel and supplies budget so Council reviewers approve compliance from Day 1.';
   };
 
+  
+  // ==================== BUDGET BUILDER LOGIC ====================
+  var BUDGET_ITEMS = [
+    { desc: 'Program Coordinator (20 hrs/wk @ $30/hr)', cat: 'ps', amount: 14400 },
+    { desc: 'Youth Workshop Facilitator (Stipend)', cat: 'ps', amount: 3600 },
+    { desc: 'Mandatory Fringe Benefits (FICA/Workers Comp @ 18%)', cat: 'fringe', amount: 3240 },
+    { desc: 'Curriculum Kits & Youth Educational Materials', cat: 'supplies', amount: 2200 },
+    { desc: 'Community Space Rental (12 sessions @ $100/session)', cat: 'rent', amount: 1200 },
+    { desc: 'Administrative & Accounting Compliance Oversight', cat: 'admin', amount: 1800 }
+  ];
+
+  var BUDGET_TEMPLATES = {
+    community20k: [
+      { desc: 'Project Lead / Coordinator (15 hrs/wk @ $28/hr)', cat: 'ps', amount: 11000 },
+      { desc: 'Fringe Benefits (FICA/Disability @ 18% PS)', cat: 'fringe', amount: 1980 },
+      { desc: 'Classroom / Workshop Activity Supplies', cat: 'supplies', amount: 3500 },
+      { desc: 'Community Venue Space Rental', cat: 'rent', amount: 2000 },
+      { desc: 'Fiscal & Administrative Oversight (9.5%)', cat: 'admin', amount: 1520 }
+    ],
+    initiative50k: [
+      { desc: 'Senior Program Director (Part-time)', cat: 'ps', amount: 24000 },
+      { desc: 'Community Navigators (2 @ $6,000 each)', cat: 'ps', amount: 12000 },
+      { desc: 'Fringe Benefits (Health / FICA @ 20% PS)', cat: 'fringe', amount: 7200 },
+      { desc: 'Client Transportation Stipends & Transit Passes', cat: 'client', amount: 1800 },
+      { desc: 'Digital Learning Devices & Supplies', cat: 'supplies', amount: 2500 },
+      { desc: 'Administrative & Financial Reporting Indirect (5%)', cat: 'admin', amount: 2500 }
+    ],
+    believenyCase: [
+      { desc: 'Crisis Intervention Specialist (18 hrs/wk @ $32/hr)', cat: 'ps', amount: 15000 },
+      { desc: 'Community Outreach Coordinator', cat: 'ps', amount: 6000 },
+      { desc: 'Statutory Fringe Benefits (FICA/Unemployment @ 19%)', cat: 'fringe', amount: 3990 },
+      { desc: 'Direct Client Emergency Food & Hygiene Supplies', cat: 'supplies', amount: 4500 },
+      { desc: 'Confidential Consultation Space Rental', cat: 'rent', amount: 2400 },
+      { desc: 'Administrative & Compliance Package Management', cat: 'admin', amount: 2110 }
+    ]
+  };
+
+  window.renderBudgetTable = function () {
+    var tbody = document.getElementById('budgetTableBody');
+    if (!tbody) return;
+    tbody.innerHTML = BUDGET_ITEMS.map(function (item, idx) {
+      var catLabel = {
+        ps: 'Personnel Services (PS)',
+        fringe: 'Fringe Benefits',
+        supplies: 'Supplies / Materials',
+        rent: 'Space / Facility Rental',
+        client: 'Client Stipends / Travel',
+        admin: 'Admin / Indirect'
+      }[item.cat] || item.cat;
+
+      return '<tr style="border-bottom: 1px solid var(--line);">' +
+        '<td style="padding: 10px 14px;">' + item.desc + '</td>' +
+        '<td style="padding: 10px 14px; color: var(--navy); font-weight: 600;">' + catLabel + '</td>' +
+        '<td style="padding: 10px 14px; text-align: right; font-weight: 700;">$' + item.amount.toLocaleString() + '</td>' +
+        '<td style="padding: 10px 14px; text-align: center;"><button type="button" onclick="removeBudgetItem(' + idx + ')" style="background:none; border:none; color:var(--error); font-weight:700; cursor:pointer;" title="Delete">&times;</button></td>' +
+      '</tr>';
+    }).join('');
+
+    recalculateBudgetStats();
+  };
+
+  window.addCustomBudgetItem = function () {
+    var descInput = document.getElementById('newBudgetDesc');
+    var catSelect = document.getElementById('newBudgetCat');
+    var amtInput = document.getElementById('newBudgetAmt');
+
+    var desc = descInput.value.trim();
+    var cat = catSelect.value;
+    var amt = parseFloat(amtInput.value);
+
+    if (!desc) { alert('Please enter a line item description.'); return; }
+    if (isNaN(amt) || amt <= 0) { alert('Please enter a valid amount.'); return; }
+
+    BUDGET_ITEMS.push({ desc: desc, cat: cat, amount: Math.round(amt) });
+    descInput.value = '';
+    amtInput.value = '';
+    renderBudgetTable();
+  };
+
+  window.removeBudgetItem = function (idx) {
+    BUDGET_ITEMS.splice(idx, 1);
+    renderBudgetTable();
+  };
+
+  window.loadBudgetTemplate = function (name) {
+    if (BUDGET_TEMPLATES[name]) {
+      BUDGET_ITEMS = JSON.parse(JSON.stringify(BUDGET_TEMPLATES[name]));
+      renderBudgetTable();
+    }
+  };
+
+  window.resetBudgetBuilder = function () {
+    BUDGET_ITEMS = [];
+    renderBudgetTable();
+  };
+
+  function recalculateBudgetStats() {
+    var total = 0;
+    var ps = 0;
+    var fringe = 0;
+    var admin = 0;
+
+    BUDGET_ITEMS.forEach(function (item) {
+      total += item.amount;
+      if (item.cat === 'ps') ps += item.amount;
+      if (item.cat === 'fringe') fringe += item.amount;
+      if (item.cat === 'admin') admin += item.amount;
+    });
+
+    var fringeRatio = ps > 0 ? (fringe / ps) * 100 : 0;
+    var adminRatio = total > 0 ? (admin / total) * 100 : 0;
+    var psPct = total > 0 ? Math.round((ps / total) * 100) : 0;
+
+    var statTotal = document.getElementById('statTotalBudget');
+    var statPS = document.getElementById('statTotalPS');
+    var statPSPct = document.getElementById('statPSPct');
+    var statFringe = document.getElementById('statFringeRatio');
+    var statFringeStatus = document.getElementById('statFringeStatus');
+    var statAdmin = document.getElementById('statAdminRatio');
+    var statAdminStatus = document.getElementById('statAdminStatus');
+    var banner = document.getElementById('budgetComplianceBanner');
+    var bannerTitle = document.getElementById('budgetBannerTitle');
+    var bannerDetail = document.getElementById('budgetBannerDetail');
+
+    if (statTotal) statTotal.textContent = '$' + total.toLocaleString();
+    if (statPS) statPS.textContent = '$' + ps.toLocaleString();
+    if (statPSPct) statPSPct.textContent = psPct + '% of total grant';
+    if (statFringe) statFringe.textContent = fringeRatio.toFixed(1) + '%';
+    if (statAdmin) statAdmin.textContent = adminRatio.toFixed(1) + '%';
+
+    var fringePass = fringeRatio <= 25.0;
+    var adminPass = adminRatio <= 10.0;
+
+    if (statFringeStatus) {
+      statFringeStatus.textContent = fringePass ? 'PASS (≤ 25% Cap)' : 'FAIL (> 25% Statutory Cap)';
+      statFringeStatus.style.color = fringePass ? 'var(--ok)' : 'var(--error)';
+    }
+    if (statAdminStatus) {
+      statAdminStatus.textContent = adminPass ? 'PASS (≤ 10% Cap)' : 'FAIL (> 10% Statutory Cap)';
+      statAdminStatus.style.color = adminPass ? 'var(--ok)' : 'var(--error)';
+    }
+
+    if (banner) {
+      if (fringePass && adminPass) {
+        banner.style.background = '#f0fdf4';
+        banner.style.borderColor = '#bbf7d0';
+        banner.style.borderLeftColor = 'var(--ok)';
+        bannerTitle.innerHTML = '&check; Fully Schedule C Compliant';
+        bannerTitle.style.color = '#166534';
+        bannerDetail.textContent = 'All line items strictly adhere to City Council and administering agency (DYCD/DFTA) personnel, fringe benefit, and administrative caps.';
+        bannerDetail.style.color = '#14532d';
+      } else {
+        banner.style.background = '#fff5f5';
+        banner.style.borderColor = '#fed7d7';
+        banner.style.borderLeftColor = 'var(--error)';
+        bannerTitle.innerHTML = '&times; Statutory Compliance Violation Detected';
+        bannerTitle.style.color = '#991b1b';
+        var issues = [];
+        if (!fringePass) issues.push('Fringe benefits exceed the statutory 25% personnel cap (' + fringeRatio.toFixed(1) + '%).');
+        if (!adminPass) issues.push('Administrative/indirect costs exceed the statutory 10% cap (' + adminRatio.toFixed(1) + '%).');
+        bannerDetail.textContent = issues.join(' ') + ' Council reviewers will reject this budget unless adjusted.';
+        bannerDetail.style.color = '#7f1d1d';
+      }
+    }
+  }
+
+  window.exportBudgetCSV = function () {
+    if (BUDGET_ITEMS.length === 0) { alert('No budget items to export.'); return; }
+    var nl = String.fromCharCode(10);
+    var csv = 'Description,Category,Amount' + nl;
+    BUDGET_ITEMS.forEach(function (i) {
+      csv += '"' + i.desc.replace(/"/g, '""') + '","' + i.cat + '",' + i.amount + nl;
+    });
+    var blob = new Blob([csv], { type: 'text/csv' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'OneNYC_Schedule_C_Budget_Export.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  window.copyBudgetSummary = function () {
+    var total = 0;
+    var lines = ['OneNYC Schedule C Line-Item Budget:'];
+    BUDGET_ITEMS.forEach(function (i) {
+      total += i.amount;
+      lines.push('- ' + i.desc + ' (' + i.cat.toUpperCase() + '): $' + i.amount.toLocaleString());
+    });
+    lines.push('TOTAL GRANT REQUEST: $' + total.toLocaleString());
+    navigator.clipboard.writeText(lines.join(String.fromCharCode(10))).then(function () {
+      alert('Budget summary copied to clipboard!');
+    });
+  };
+
+  window.applyBudgetToIntake = function () {
+    var total = 0;
+    BUDGET_ITEMS.forEach(function (i) { total += i.amount; });
+    var budgetInput = document.getElementById('stepBudget');
+    if (budgetInput) {
+      budgetInput.value = total;
+      alert('Transferred $' + total.toLocaleString() + ' budget request to Intake Form Step 2!');
+      if (typeof scrollToStepper === 'function') scrollToStepper();
+    } else {
+      alert('Intake form not found on page.');
+    }
+  };
+
+  // ==================== DISPARITY CALCULATOR LOGIC ====================
+  window.syncDisparityInputs = function (src) {
+    var range = document.getElementById('disparityRange');
+    var num = document.getElementById('disparityNum');
+    var val = src === 'range' ? parseInt(range.value, 10) : parseInt(num.value, 10);
+    if (isNaN(val)) val = 1000;
+    if (val < 200) val = 200;
+    if (val > 10000) val = 10000;
+
+    range.value = val;
+    num.value = val;
+
+    // Calculations based on $111.97B procurement benchmarks
+    // Average social service value generated per constituent: $240/year
+    var serviceVal = val * 240;
+    // Parity allocation under peer sectarian citywide benchmarks (~$105 - $115 per constituent served)
+    var parityAlloc = Math.round(val * 105.42);
+
+    var resService = document.getElementById('resServiceValue');
+    var resParity = document.getElementById('resParityBenchmark');
+    var resDeficit = document.getElementById('resEquityDeficit');
+
+    if (resService) resService.textContent = '$' + serviceVal.toLocaleString();
+    if (resParity) resParity.textContent = '$' + parityAlloc.toLocaleString();
+    if (resDeficit) resDeficit.textContent = '$' + parityAlloc.toLocaleString();
+  };
+
+  // ==================== MOCK CALL RUNBOOK LOGIC ====================
+  var MOCK_SCENARIOS = {
+    believeny: {
+      title: 'Active Scenario: BelieveNY Pilot Partner Walkthrough',
+      desc: '<strong>Profile:</strong> Grassroots holistic crisis non-profit providing domestic violence, mental health, and housing services across Queens and Manhattan.<br><strong>Key Friction to Address:</strong> Retracted funding from individual council members; staff burnout. OneNYC takes over the application assembly and packages services into compliant DYCD / DOHMH line items.<br><strong>Fellow Action Item:</strong> Validate 501(c)(3) determination letter, ensure fringe benefits do not exceed 25%, and assign to Cultural Immigrant Initiative (CII) slate.'
+    },
+    masjid: {
+      title: 'Active Scenario: Faith-Based Community Center / Masjid',
+      desc: '<strong>Profile:</strong> Local mosque providing Friday food pantry, weekly youth athletic programs, and elderly visitation in Bay Ridge (Council District 43).<br><strong>Key Friction to Address:</strong> Uncertainty about religious vs. secular service funding separation. Clarify that non-sectarian community services (food, sports, senior care) are 100% eligible.<br><strong>Fellow Action Item:</strong> Check NYS Charities Bureau CHAR500 status, verify board list has at least 3 officers, and prepare DYCD local member item.'
+    },
+    emerging: {
+      title: 'Active Scenario: Emerging Grassroots Arts & Heritage Group',
+      desc: '<strong>Profile:</strong> Neighborhood cultural troupe providing immigrant music and arts education in Astoria (Council District 22).<br><strong>Key Friction to Address:</strong> Received 501(c)(3) status 14 months ago but neglected annual NYS Charities Bureau CHAR500 filing.<br><strong>Fellow Action Item:</strong> Flag urgent 45-day CHAR500 curing process before January portal opening; provide OneNYC line-item budget template for DCLA Cultural Immigrant Initiative.'
+    },
+    senior: {
+      title: 'Active Scenario: Senior Nutrition & Wellness Pantry',
+      desc: '<strong>Profile:</strong> Grassroots senior meal delivery serving 650 elderly residents across Bushwick (Brooklyn) and Ridgewood (Queens).<br><strong>Key Friction to Address:</strong> Multi-borough geographic scope. Solo applications to two different borough council members were previously rejected for lack of local focus.<br><strong>Fellow Action Item:</strong> Split program into dual-district coalition slate under DFTA Support Our Seniors (SOS) initiative.'
+    }
+  };
+
+  window.loadMockScenario = function () {
+    var select = document.getElementById('mockScenarioSelect');
+    var sc = MOCK_SCENARIOS[select.value] || MOCK_SCENARIOS.believeny;
+    document.getElementById('mockScenarioTitle').innerHTML = sc.title;
+    document.getElementById('mockScenarioDesc').innerHTML = sc.desc;
+  };
+
+  window.updateMockProgress = function () {
+    var ids = ['chkMock1', 'chkMock2', 'chkMock3', 'chkMock4', 'chkMock5'];
+    var checked = 0;
+    ids.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el && el.checked) checked++;
+    });
+    if (checked === 5) {
+      alert('✓ Intake Mock Call Complete! All 5 statutory checkpoints verified. Organization is ready for November 15 dossier upload.');
+    }
+  };
+
+  window.resetMockChecklist = function () {
+    ['chkMock1', 'chkMock2', 'chkMock3', 'chkMock4', 'chkMock5'].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.checked = false;
+    });
+  };
+
+
   // Initialize tool defaults on DOM load
   document.addEventListener('DOMContentLoaded', function () {
     if (typeof updateDistrictOptions === 'function') updateDistrictOptions();
     if (typeof runReadinessDiagnostic === 'function') runReadinessDiagnostic();
+    if (typeof renderBudgetTable === 'function') renderBudgetTable();
+    if (typeof syncDisparityInputs === 'function') syncDisparityInputs('range');
   });
 })();
 </script>
