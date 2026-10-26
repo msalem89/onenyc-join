@@ -2801,7 +2801,10 @@
         </div>
 
         <div class="field" style="margin-top: 12px;">
-          <label for="prog_narrative">Program Public Benefit Narrative <span class="req">*</span></label>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap;">
+            <label for="prog_narrative" style="margin-bottom:0;">Program Public Benefit Narrative <span class="req">*</span></label>
+            <button type="button" class="cgpt-btn" onclick="draftWithChatGPT()" title="Opens the free ChatGPT (chatgpt.com) with this question pre-filled to help you draft — free, no account needed">✨ Draft with ChatGPT</button>
+          </div>
           <textarea id="prog_narrative" rows="3" style="width: 100%; border: 1px solid var(--line); border-radius: 6px; padding: 10px; font-family: inherit; font-size: 0.9rem;" placeholder="Describe program activities, who is served, and confirmed venue. All services must be free and open to all New Yorkers." oninput="scanSecularCompliance()">Provides free after-school digital literacy, coding labs, and weekend supplemental food pantry boxes to local low-income youth and families in Council District 38, open to all New York residents without restriction or religious requirement.</textarea>
           <div id="narrativeWarning" style="color: #b45309; font-size: 0.82rem; margin-top: 4px; display: none;"></div>
         </div>
@@ -3573,7 +3576,7 @@
 <!-- Q&A ASSISTANT — teaching-friendly, grounded ONLY in #faq (answers read live from the page) -->
 <div id="qaFab" aria-label="Ask a question" title="Ask a question">?</div>
 <div id="qaPanel" hidden>
-  <div id="qaHead"><span class="qa-dot"></span>OneNYC Assistant<button id="qaTeachBtn" title="Email this conversation to info@onenyc.com so we can teach the assistant">✉ teach</button><button id="qaClose" aria-label="Close">×</button></div>
+  <div id="qaHead"><span class="qa-dot"></span>OneNYC Assistant<button id="qaTeachBtn" title="Email this conversation to info@onenyc.com so we can teach the assistant">✉ teach</button><button id="qaChatGPTBtn" title="Open the free ChatGPT (chatgpt.com) in a new tab — no account needed" onclick="openChatGPT()">✨ ChatGPT</button><button id="qaClose" aria-label="Close">×</button></div>
   <div id="qaLog"></div>
   <div id="qaChips"></div>
   <form id="qaForm"><input id="qaInput" type="text" placeholder="Ask about eligibility, funding, deadlines…" autocomplete="off"><button type="submit" aria-label="Send">➤</button></form>
@@ -3612,6 +3615,13 @@
   #qaTeachBtn { margin-left: auto; background: none;  border: 1px solid var(--line-active); border-radius: 8px;
     color: var(--navy); font-size: 11.5px; padding: 3px 9px; cursor: pointer; opacity: .85; }
   #qaTeachBtn:hover { background: #eef3fa; }
+  #qaChatGPTBtn { background: none; border: 1px solid var(--line-active); border-radius: 8px;
+    color: var(--navy); font-size: 11.5px; padding: 3px 9px; cursor: pointer; opacity: .85; }
+  #qaChatGPTBtn:hover { background: #eef3fa; opacity: 1; }
+  .cgpt-btn { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(180deg, #ffffff, #f2f7fd);
+    border: 1px solid var(--line-active); color: var(--navy); font-size: 0.78rem; font-weight: 600;
+    padding: 5px 11px; border-radius: 8px; cursor: pointer; transition: all .15s ease; }
+  .cgpt-btn:hover { border-color: var(--amber); box-shadow: 0 2px 8px -2px rgba(241,163,60,0.45); transform: translateY(-1px); }
 </style>
 <script>
 (function () {
@@ -4240,6 +4250,41 @@
     if (typeof syncDisparityInputs === 'function') syncDisparityInputs('range');
   });
 })();
+</script>
+<!-- ChatGPT assist — deep-links to the FREE chatgpt.com (no key, no iframe; OpenAI sends x-frame-options: SAMEORIGIN so embedding is blocked, new tab + ?q= prefill + clipboard fallback instead). Static, no PII collected. -->
+<script>
+  function cgptNarrativePrompt() {
+    var t = document.getElementById('prog_title') ? document.getElementById('prog_title').value.trim() : '';
+    return 'Help me draft a public benefit narrative for a New York City Council discretionary funding application. The answer must describe: program activities, who is served, and the venue. Rules: all services must be free and open to all New Yorkers; no religious worship, instruction, or proselytization; use only facts I provide — do not invent statistics, partners, or outcomes. Initiative title: "' + t + '". Ask me 2 or 3 short questions to get the facts you need, then draft the narrative in plain language, under 150 words.';
+  }
+  function cgptCopy(s) {
+    if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(s).catch(function () {}); return; }
+    var ta = document.createElement('textarea'); ta.value = s;
+    ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+  function cgptToast(msg) {
+    var t = document.getElementById('cgptToast');
+    if (!t) {
+      t = document.createElement('div'); t.id = 'cgptToast';
+      t.style.cssText = 'position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:10000;background:var(--navy,#1B2A41);color:#fff;padding:10px 16px;border-radius:10px;font-size:13px;box-shadow:0 10px 24px -8px rgba(19,30,48,.4);opacity:0;transition:opacity .2s ease;max-width:calc(100vw - 40px);text-align:center;pointer-events:none;';
+      document.body.appendChild(t);
+    }
+    t.textContent = msg; t.style.opacity = '1';
+    clearTimeout(t._h); t._h = setTimeout(function () { t.style.opacity = '0'; }, 4200);
+  }
+  function draftWithChatGPT() {
+    var p = cgptNarrativePrompt();
+    cgptCopy(p);
+    window.open('https://chatgpt.com/?q=' + encodeURIComponent(p), '_blank', 'noopener');
+    cgptToast('Prompt copied — if ChatGPT did not fill it in automatically, paste (⌘V) into the message box.');
+  }
+  function openChatGPT() {
+    window.open('https://chatgpt.com/', '_blank', 'noopener');
+    cgptToast('Opened the free ChatGPT — no account needed.');
+  }
 </script>
 </body>
 </html>
