@@ -69,8 +69,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 14px 0;
+    padding: 14px 0 0;
     gap: 24px;
+    flex-wrap: wrap;
   }
   .wordmark {
     font-size: 1.45rem;
@@ -99,8 +100,15 @@
     gap: 4px;
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 0 0 8px;
     white-space: nowrap;
+    /* Two-row desktop nav: links get their own centered, self-wrapping row (order 3)
+       so the set of links can never overflow the 1020px container, whatever the fonts. */
+    order: 3;
+    flex: 1 1 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    row-gap: 2px;
   }
   .nav-links a {
     color: #c9d6e8;
@@ -926,7 +934,7 @@
   /* ===== Responsive ===== */
   @media (max-width: 900px) {
     .nav-links { display: none; }
-    .nav-bar { position: relative; }
+    .nav-bar { position: relative; padding-bottom: 14px; }
     .nav-toggle {
       display: inline-flex;
       align-items: center;
@@ -966,6 +974,12 @@
       padding: 8px 24px 14px 24px;
       gap: 2px;
       border-bottom: 1px solid rgba(255,255,255,0.1);
+      /* reset desktop two-row nav rules */
+      order: 0;
+      flex: none;
+      justify-content: flex-start;
+      flex-wrap: nowrap;
+      row-gap: 0;
     }
     #navopen:checked ~ .nav-links a { padding: 12px 8px; font-size: 1rem; border-radius: var(--radius); }
     header.top { position: static; }
