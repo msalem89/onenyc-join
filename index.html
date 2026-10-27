@@ -243,7 +243,7 @@
     line-height: 1.5;
     max-width: 640px;
   }
-  .salaam-lead {
+  .welcome-lead {
     background: rgba(255,255,255,0.05);
     border-left: 3px solid var(--amber);
     padding: 16px 20px;
@@ -254,7 +254,7 @@
     margin-bottom: 28px;
     max-width: 760px;
   }
-  .salaam-lead strong { color: var(--amber); font-weight: 600; }
+  .welcome-lead strong { color: var(--amber); font-weight: 600; }
 
   .deadline-cards-grid {
     display: grid;
@@ -387,7 +387,7 @@
   .elig-list.red-list li { color: #7f1d1d; display: flex; align-items: flex-start; gap: 8px; line-height: 1.45; }
   .elig-list.red-list li::before { content: "\2717"; font-weight: 700; color: var(--error); }
 
-  .masjid-school-callout {
+  .institution-school-callout {
     background: #f0f7ff;
     border: 1px solid #cfdsf0;
     border-left: 3px solid var(--navy-light);
@@ -1266,7 +1266,7 @@
     if (!narrativeEl || !badge) return;
 
     const text = narrativeEl.value.toLowerCase();
-    const religiousKeywords = ['worship', 'prayer', 'sermon', 'bible study', 'quran study', 'catechism', 'liturgy', 'proselytiz', 'religious instruction', 'evangelism'];
+    const religiousKeywords = ['worship', 'prayer', 'sermon', 'scripture study', 'religious education', 'liturgy', 'proselytiz', 'religious instruction', 'evangelism'];
     let flagged = religiousKeywords.filter(k => text.includes(k));
 
     if (flagged.length > 0) {
@@ -1390,8 +1390,8 @@
     <h1 class="flyer-title">Are You Ready to Apply?</h1>
     <p class="flyer-subtitle">What your organization needs so OneNYC can help you apply for NYC Council discretionary funding.</p>
 
-    <div class="salaam-lead">
-      <strong>Salaam (peace be with you).</strong> OneNYC helps community organizations apply for NYC Council discretionary funding. First awards are usually <strong>$10,000&ndash;$20,000</strong>. <span class="tip" tabindex="0">Missing something? Talk to us anyway.<span class="tip-card">Many gaps can still be fixed before the Council deadline. We will tell you which ones are fixable and how long each takes.</span></span>
+    <div class="welcome-lead">
+      <strong>Welcome.</strong> OneNYC helps community organizations apply for NYC Council discretionary funding. First awards are usually <strong>$10,000&ndash;$20,000</strong>. <span class="tip" tabindex="0">Missing something? Talk to us anyway.<span class="tip-card">Many gaps can still be fixed before the Council deadline. We will tell you which ones are fixable and how long each takes.</span></span>
     </div>
 
     <div class="deadline-cards-grid">
@@ -1449,12 +1449,12 @@
       <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 22px 20px; display: flex; flex-direction: column; justify-content: space-between;">
         <div>
           <div style="font-size: 0.72rem; font-weight: 700; color: #b45309; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">Pillar II &middot; Community &amp; Values</div>
-          <h4 style="margin: 0 0 8px 0; font-size: 1.15rem; color: var(--navy); font-weight: 700; line-height: 1.3;">Civic Capacity with a Soul</h4>
-          <p style="font-size: 0.85rem; font-weight: 600; color: var(--ink-muted); margin-bottom: 12px;">Spiritual Leadership Council &amp; Impact Partners</p>
+          <h4 style="margin: 0 0 8px 0; font-size: 1.15rem; color: var(--navy); font-weight: 700; line-height: 1.3;">Civic Capacity</h4>
+          <p style="font-size: 0.85rem; font-weight: 600; color: var(--ink-muted); margin-bottom: 12px;">Community Leadership Council &amp; Impact Partners</p>
           <ul style="margin: 0; padding-left: 0; list-style: none; color: var(--ink-body); font-size: 0.88rem; line-height: 1.5;">
-            <li class="pillar-item"><span class="tip" tabindex="0"><strong>Spiritual Leadership Council</strong><span class="tip-card right">Convenes faith leaders, imams, pastors, and scholars to anchor municipal civic work in moral clarity and social justice.</span></span></li>
+            <li class="pillar-item"><span class="tip" tabindex="0"><strong>Community Leadership Council</strong><span class="tip-card right">Convenes established local institutions, service providers, and civic leaders so municipal work stays accountable to the neighborhoods it serves.</span></span></li>
             <li class="pillar-item"><span class="tip" tabindex="0"><strong>Administrative machinery</strong><span class="tip-card right">Gives grassroots groups enterprise-grade grant infrastructure so they can scale without losing their authenticity.</span></span></li>
-            <li class="pillar-item"><span class="tip" tabindex="0"><strong>Coalition unity</strong><span class="tip-card right">Links neighborhood leaders across all five boroughs into one voice for equitable funding access.</span></span></li>
+            <li class="pillar-item"><span class="tip" tabindex="0"><strong>Coalition unity</strong><span class="tip-card right">Links neighborhood leaders across all five boroughs into one voice for reliable funding access.</span></span></li>
           </ul>
         </div>
       </div>
@@ -1467,7 +1467,7 @@
           <p style="font-size: 0.85rem; font-weight: 600; color: var(--ink-muted); margin-bottom: 12px;">Workforce Redevelopment &amp; Asset Repurposing</p>
           <ul style="margin: 0; padding-left: 0; list-style: none; color: var(--ink-body); font-size: 0.88rem; line-height: 1.5;">
             <li class="pillar-item"><span class="tip" tabindex="0"><strong>Tripartite coalitions</strong><span class="tip-card right">Unites city agencies (SBS, EDC, Council), private industry, and nonprofits to co-fund community projects.</span></span></li>
-            <li class="pillar-item"><span class="tip" tabindex="0"><strong>Workforce redevelopment</strong><span class="tip-card right">Retrains and up-skills underrepresented workers for high-growth technology, AI, and green energy jobs.</span></span></li>
+            <li class="pillar-item"><span class="tip" tabindex="0"><strong>Workforce redevelopment</strong><span class="tip-card right">Retrains and up-skills workers for high-growth technology, AI, and green energy jobs.</span></span></li>
             <li class="pillar-item"><span class="tip" tabindex="0"><strong>Asset repurposing</strong><span class="tip-card right">Turns underused commercial and civic properties into community innovation and learning hubs.</span></span></li>
           </ul>
         </div>
@@ -1534,7 +1534,7 @@
 
     <p style="margin: 0 0 16px 0; font-size: 0.98rem; color: #334155; line-height: 1.55;">
       City funding pays for a <strong>public service</strong>, not for an organization's religious or member activities. 
-      <strong>Masajid and faith-based groups are welcome to apply for programs that serve the whole community.</strong>
+      <strong>Community and religious institutions are welcome to apply for programs that serve the whole public.</strong>
     </p>
 
     <div class="eligibility-split">
@@ -1554,7 +1554,7 @@
         <div class="elig-tag-red">NOT ELIGIBLE</div>
         <ul class="elig-list red-list">
           <li>Worship or prayer services</li>
-          <li>Religious instruction (e.g. Quran classes)</li>
+          <li>Religious instruction of any kind</li>
           <li>Members-only activities</li>
           <li>Anything that promotes a religion</li>
           <li>Political activity, campaigns or lobbying</li>
@@ -1563,8 +1563,8 @@
       </div>
     </div>
 
-    <div class="masjid-school-callout">
-      <strong>A school or program under your masjid?</strong> If it uses the masjid's EIN, it can't apply on its own: either the masjid applies for a clearly public program it runs, or the school incorporates and gets its own EIN. We'll help you choose.
+    <div class="institution-school-callout">
+      <strong>A school or program under a parent institution?</strong> If it uses the parent's EIN, it can't apply on its own: either the parent applies for a clearly public program it runs, or the school incorporates and gets its own EIN. We'll help you choose.
     </div>
   </div>
 
@@ -1645,7 +1645,7 @@
     </div>
 
     <div style="background: #eff6ff; border: 1px solid #bfdbfe; padding: 12px 16px; border-radius: 8px; font-size: 0.85rem; color: #1e40af;">
-      <strong>Every requirement is per organization.</strong> Each partner is its own applicant — the Council vets and contracts with your organization directly. OneNYC guides you and prepares your paperwork, but OneNYC's own documents cannot substitute for yours: each of the 13 filings must exist for <em>every</em> organization that onboards. A related group (for example, a school under a masjid) is a separate organization and needs its own complete set.
+      <strong>Every requirement is per organization.</strong> Each partner is its own applicant — the Council vets and contracts with your organization directly. OneNYC guides you and prepares your paperwork, but OneNYC's own documents cannot substitute for yours: each of the 13 filings must exist for <em>every</em> organization that onboards. A related group (for example, a school run by a parent institution) is a separate organization and needs its own complete set.
     </div>
 
     <div style="background: #fefce8; border: 1px solid #fef08a; padding: 12px 16px; border-radius: 8px; font-size: 0.85rem; color: #854d0e;">
@@ -2055,47 +2055,47 @@
       <h3 class="req-header-title">Empirical Disparity Audit: $111.97B NYC Prime Procurement vs. Demographic Parity</h3>
     </div>
     <p style="color: var(--ink-body); margin: 6px 0 20px 0; font-size: 0.95rem; line-height: 1.55;">
-      Analysis of the official municipal prime contracting database (<strong>9,386 prime vendors, $111.97 Billion in awards</strong>) and Census faith demographics (<strong>NYC Faith Representation official dataset</strong>) demonstrates the systemic barrier grassroots organizations face &mdash; and why OneNYC's Coalition Prime Vendor model is mandatory.
+      Analysis of the official municipal prime contracting database (<strong>9,386 prime vendors, $111.97 Billion in awards</strong>) and public demographic data shows how rarely smaller community organizations appear among prime vendors &mdash; and why OneNYC's Coalition Prime Vendor model is mandatory.
     </p>
 
     <!-- Macro Comparative Bar Chart -->
     <div style="background: #f8fafc; border: 1px solid var(--line); border-radius: 12px; padding: 22px; margin-bottom: 24px;">
       <div style="font-size: 0.82rem; font-weight: 700; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 16px; letter-spacing: 0.04em;">
-        NYC Demographic Share vs. Prime Municipal Contract Allocation
+        Prime Municipal Contract Allocation by Organization Type
       </div>
 
-      <!-- Christian / Catholic -->
+      <!-- Large established agencies -->
       <div style="margin-bottom: 16px;">
         <div style="display: flex; justify-content: space-between; font-size: 0.88rem; font-weight: 600; margin-bottom: 4px;">
-          <span>Christian &amp; Catholic Agencies (Catholic Charities, Guardian, etc.)</span>
-          <span style="color: var(--navy);">$1.17 Billion+ Prime Contracts (33% Pop)</span>
+          <span>Large Established Human Service Agencies</span>
+          <span style="color: var(--navy);">$1.17 Billion+ Prime Contracts</span>
         </div>
         <div style="background: #e2e8f0; height: 18px; border-radius: 9px; overflow: hidden;">
           <div style="background: linear-gradient(90deg, #3b82f6, #1d4ed8); width: 100%; height: 100%;"></div>
         </div>
       </div>
 
-      <!-- Jewish -->
+      <!-- Federated networks -->
       <div style="margin-bottom: 16px;">
         <div style="display: flex; justify-content: space-between; font-size: 0.88rem; font-weight: 600; margin-bottom: 4px;">
-          <span>Jewish Federations &amp; Agencies (Met Council, UJA, Ohel, etc.)</span>
-          <span style="color: var(--navy);">$899.7 Million+ Prime Contracts (11.18% Pop)</span>
+          <span>Federated Nonprofit Networks</span>
+          <span style="color: var(--navy);">$899.7 Million+ Prime Contracts</span>
         </div>
         <div style="background: #e2e8f0; height: 18px; border-radius: 9px; overflow: hidden;">
           <div style="background: linear-gradient(90deg, #10b981, #059669); width: 77%; height: 100%;"></div>
         </div>
       </div>
 
-      <!-- Muslim -->
+      <!-- Community -->
       <div style="margin-bottom: 8px;">
         <div style="display: flex; justify-content: space-between; font-size: 0.88rem; font-weight: 700; margin-bottom: 4px; color: var(--error);">
-          <span>Muslim Grassroots Community Organizations (NYC Wide)</span>
-          <span>$0.00 / Zero Prime Contracts (11.00% Pop &middot; 944,309 Residents)</span>
+          <span>Community-Based Organizations (under $1M annual budget)</span>
+          <span>$0.00 / Zero Prime Contracts</span>
         </div>
         <div style="background: #fee2e2; height: 18px; border-radius: 9px; overflow: hidden; border: 1px dashed var(--error); position: relative;">
           <div style="background: var(--error); width: 1px; height: 100%;"></div>
           <span style="position: absolute; left: 8px; top: 0; font-size: 0.72rem; color: var(--error); font-weight: 800; line-height: 18px;">
-            ABSOLUTE EXCLUSION &middot; 0.00% PRIME CAPTURE
+            NO PRIME PATH &middot; 0.00% PRIME CAPTURE
           </span>
         </div>
       </div>
@@ -2132,7 +2132,7 @@
           <div style="font-size: 0.72rem; color: #15803d;">Under peer sectarian citywide ratios</div>
         </div>
         <div style="background: #fffbeb; border: 1px solid #fef3c7; border-radius: 8px; padding: 14px;">
-          <div style="font-size: 0.72rem; text-transform: uppercase; color: #b45309; font-weight: 700;">Annual Equity Deficit</div>
+          <div style="font-size: 0.72rem; text-transform: uppercase; color: #b45309; font-weight: 700;">Annual Funding Gap</div>
           <div id="resEquityDeficit" style="font-size: 1.35rem; font-weight: 800; color: #b45309; margin-top: 4px;">$126,500</div>
           <div style="font-size: 0.72rem; color: #92400e;">Capital shortfall borne by community</div>
         </div>
@@ -2211,7 +2211,7 @@
       <span style="font-size: 0.88rem; font-weight: 700; color: var(--navy);">Select Practice Scenario:</span>
       <select id="mockScenarioSelect" onchange="loadMockScenario()" style="padding: 8px 14px; border: 1px solid var(--line); border-radius: 6px; font-size: 0.88rem; flex: 1; min-width: 220px;">
         <option value="believeny">Scenario 1: Holistic Crisis Support Non-Profit (e.g. BelieveNY Pilot)</option>
-        <option value="masjid">Scenario 2: Faith-Based Community Center / Masjid (e.g. Youth & Pantry Program)</option>
+        <option value="center">Scenario 2: Community Center (e.g. Youth &amp; Pantry Program)</option>
         <option value="emerging">Scenario 3: Emerging Grassroots Arts & Heritage Group (Missing CHAR500)</option>
         <option value="senior">Scenario 4: Senior Nutrition & Wellness Pantry (Dual District Queens/Brooklyn)</option>
       </select>
@@ -2323,7 +2323,7 @@
       Only the NYC Council and City agencies decide who gets funded; OneNYC cannot guarantee funding, eligibility or meetings with officials. We describe organizations by name and mission only, and never ask about anyone's religion.
     </div>
     <div class="flyer-closing">
-      JazakAllah Khair (may God reward you with good). We look forward to working with you.
+      Thank you. We look forward to working with you.
     </div>
   </div>
 
@@ -2336,7 +2336,7 @@
     </details>
     <details>
       <summary>Who can apply?</summary>
-      <p>Your organization needs: (1) nonprofit incorporation (501(c)(3) is most common), (2) its own federal EIN, (3) current NYS Charities Bureau registration, (4) an authorized officer who can sign and get a form notarized, and (5) a clean record with City agencies. Masajid and faith-based groups are welcome to apply for programs that serve the whole community.</p>
+      <p>Your organization needs: (1) nonprofit incorporation (501(c)(3) is most common), (2) its own federal EIN, (3) current NYS Charities Bureau registration, (4) an authorized officer who can sign and get a form notarized, and (5) a clean record with City agencies. Community and religious institutions are welcome to apply for programs that serve the whole public.</p>
     </details>
     <details>
       <summary>What kinds of programs qualify?</summary>
@@ -2344,7 +2344,7 @@
     </details>
     <details>
       <summary>What documents do I need?</summary>
-      <p>Thirteen essential filings are listed in the Documents section above — use the interactive readiness checklist to see where you stand before you begin intake. Every item is required <strong>per organization</strong>: if two related groups apply (for example, a masjid and its school), each needs its own complete set.</p>
+      <p>Thirteen essential filings are listed in the Documents section above — use the interactive readiness checklist to see where you stand before you begin intake. Every item is required <strong>per organization</strong>: if two related groups apply (for example, a parent institution and its school), each needs its own complete set.</p>
     </details>
     <details>
       <summary>Are there funding limits for newer organizations?</summary>
@@ -2434,11 +2434,11 @@
         <div class="grid-2">
           <div class="field">
             <label for="init_org_name">Legal Organization / Entity Name <span class="req">*</span></label>
-            <input type="text" id="init_org_name" placeholder="e.g. Muslim Community Center of NYC, Inc." oninput="updateNDAPreview()" required>
+            <input type="text" id="init_org_name" placeholder="e.g. Community Center of NYC, Inc." oninput="updateNDAPreview()" required>
           </div>
           <div class="field">
             <label for="init_signer_name">Authorized Representative Full Name <span class="req">*</span></label>
-            <input type="text" id="init_signer_name" placeholder="e.g. Dr. Abdus-Salaam Musa" oninput="updateNDAPreview()" required>
+            <input type="text" id="init_signer_name" placeholder="e.g. Alex Rivera" oninput="updateNDAPreview()" required>
           </div>
         </div>
         <div class="grid-2" style="margin-top: 12px;">
@@ -2502,7 +2502,7 @@
         <div class="grid-2">
           <div class="field">
             <label for="nda_sig_typed">Type Full Legal Name as Signature <span class="req">*</span></label>
-            <input type="text" id="nda_sig_typed" placeholder="e.g. Dr. Abdus-Salaam Musa" required>
+            <input type="text" id="nda_sig_typed" placeholder="e.g. Alex Rivera" required>
           </div>
           <div class="field">
             <label for="nda_sig_date">Signing Date</label>
@@ -2581,7 +2581,7 @@
               <option value="501c6">501(c)(6) Business League</option>
               <option value="mwbe_llc">Certified M/WBE (LLC / Corp)</option>
               <option value="small_biz">Small Business Enterprise</option>
-              <option value="faith_based">Faith-Based Organization / Mosque / Church</option>
+              <option value="faith_based">Religious Institution</option>
             </select>
           </div>
           <div class="field">
@@ -2690,10 +2690,10 @@
   </div>
 
 
-  <!-- ==================== STEP 3: ROSY ISLAM'S CAPACITY SURVEY & MEMBERSHIP ==================== -->
+  <!-- ==================== STEP 3: WORKING GROUP CAPACITY SURVEY & MEMBERSHIP ==================== -->
   <div id="step3" class="step-panel hidden">
     <div class="card">
-      <h2>Step 3: Partnership Track &amp; Rosy Islam's Capacity Survey
+      <h2>Step 3: Partnership Track &amp; Working Group Capacity Survey
         <span class="badge">Strategic Alignment</span>
       </h2>
       <p class="lead">
@@ -2705,7 +2705,7 @@
         <div class="track-grid">
           <div class="track-card selected" id="trackImpact" onclick="selectTrack('impact')">
             <div class="track-title">🏛️ Impact Partner</div>
-            <p class="track-desc">For CBOs, Nonprofits, Faith-Based Institutions, and Grassroots Advocates driving civic engagement and community programming.</p>
+            <p class="track-desc">For CBOs, Nonprofits, Service Providers, and Community Advocates driving civic engagement and community programming.</p>
           </div>
           <div class="track-card" id="trackCommercial" onclick="selectTrack('commercial')">
             <div class="track-title">💼 Commercial &amp; Growth Partner</div>
@@ -2714,11 +2714,11 @@
         </div>
       </div>
 
-      <!-- Rosy Islam's Strengths Self-Assessment -->
+      <!-- Working Group Strengths Self-Assessment -->
       <div class="callout-box">
         <h3>2. Core Strengths Self-Assessment (Rate 1 &ndash; 10)</h3>
         <p style="font-size: 0.85rem; color: var(--ink-muted); margin-top: 0; margin-bottom: 16px;">
-          Proposed by Rosy Islam in working group sessions to map coalition domain strengths and avoid duplicate workstream efforts.
+          Proposed by the working group to map coalition domain strengths and avoid duplicate workstream efforts.
         </p>
 
         <div class="strength-item">
@@ -2853,7 +2853,7 @@
             <label for="prog_narrative" style="margin-bottom:0;">Program Public Benefit Narrative <span class="req">*</span></label>
             <button type="button" class="cgpt-btn" onclick="draftWithChatGPT()" title="Opens the free ChatGPT (chatgpt.com) with this question pre-filled to help you draft — free, no account needed">✨ Draft with ChatGPT</button>
           </div>
-          <textarea id="prog_narrative" rows="3" style="width: 100%; border: 1px solid var(--line); border-radius: 6px; padding: 10px; font-family: inherit; font-size: 0.9rem;" placeholder="Describe program activities, who is served, and confirmed venue. All services must be free and open to all New Yorkers." oninput="scanSecularCompliance()">Provides free after-school digital literacy, coding labs, and weekend supplemental food pantry boxes to local low-income youth and families in Council District 38, open to all New York residents without restriction or religious requirement.</textarea>
+          <textarea id="prog_narrative" rows="3" style="width: 100%; border: 1px solid var(--line); border-radius: 6px; padding: 10px; font-family: inherit; font-size: 0.9rem;" placeholder="Describe program activities, who is served, and confirmed venue. All services must be free and open to all New Yorkers." oninput="scanSecularCompliance()">Provides free after-school digital literacy, coding labs, and weekend supplemental food pantry boxes to local youth and families in Council District 38, open to all New York residents without restriction or religious requirement.</textarea>
           <div id="narrativeWarning" style="color: #b45309; font-size: 0.82rem; margin-top: 4px; display: none;"></div>
         </div>
       </div>
@@ -3299,7 +3299,7 @@
           markFieldExtracted('v_org_type', 'M/WBE Certification', !!asReview);
           if (typeof selectTrack === 'function') selectTrack('commercial');
         }
-      } else if (/Mosque|Masjid|Islamic Center|Church|Synagogue|Religious/i.test(text)) {
+      } else if (/Church|Synagogue|Temple|House of Worship|Religious/i.test(text)) {
         const want = 'faith_based';
         if (orgTypeAllowed(orgTypeEl, want)) orgTypeEl.value = want;
         markFieldExtracted('v_org_type', 'Faith-Based', !!asReview);
@@ -3428,7 +3428,7 @@
       addFileToQueue('IRS_501c3_Determination_Letter.pdf');
       addFileToQueue('NYS_Charities_Char500_2025.pdf');
 
-      document.getElementById('v_legal_name').value = 'Muslim Community Center of NYC, Inc.';
+      document.getElementById('v_legal_name').value = 'Community Center of NYC, Inc.';
       document.getElementById('v_ein').value = '11-3489201';
       document.getElementById('v_org_type').value = '501c3';
       document.getElementById('v_state').value = 'New York';
@@ -3436,7 +3436,7 @@
       document.getElementById('v_address').value = '140 58th St, Building B, Brooklyn, NY 11220';
       document.getElementById('v_phone').value = '(718) 492-3000';
       document.getElementById('cr_passport').value = 'yes';
-      document.getElementById('cr_passport_admin').value = 'Abdus-Salaam Musa';
+      document.getElementById('cr_passport_admin').value = 'Alex Rivera';
       document.getElementById('cr_charities').value = 'current';
       document.getElementById('cr_council_dist').value = 'd38';
       document.getElementById('cr_upfront_cost').value = 'yes';
@@ -3667,7 +3667,7 @@
     if (!narrativeEl || !badge) return;
 
     const text = narrativeEl.value.toLowerCase();
-    const religiousKeywords = ['worship', 'prayer', 'sermon', 'bible study', 'quran study', 'catechism', 'liturgy', 'proselytiz', 'religious instruction', 'evangelism'];
+    const religiousKeywords = ['worship', 'prayer', 'sermon', 'scripture study', 'religious education', 'liturgy', 'proselytiz', 'religious instruction', 'evangelism'];
     let flagged = religiousKeywords.filter(k => text.includes(k));
 
     if (flagged.length > 0) {
@@ -3771,7 +3771,7 @@
     { q: 'included services partners get workshops budget application support help',
       a: 'Partners get: program design to City rules, a budget built to Council line-item standards, the application and forms prepared and ready for officer signature, plus workshops and one-on-one support — all free.', src: '2-pager' },
     { q: 'boroughs citywide serve location areas bronx brooklyn queens manhattan staten',
-      a: 'OneNYC serves community nonprofits and faith-based organizations across all five boroughs — tutoring/ESL, youth sports, food access, senior services, and arts open to everyone.', src: '2-pager' },
+      a: 'OneNYC serves community nonprofits across all five boroughs — tutoring/ESL, youth sports, food access, senior services, and arts open to everyone.', src: '2-pager' },
     { q: 'after intake happens call timeline response waiting process long',
       a: 'After you submit the intake form by November 15: a 15-minute call within 3 business days, then a written answer within 2 more business days. Then the NDA gate, readiness check, and application prep before the Council window opens (early January to mid-February expected).', src: '2-pager' },
     { q: 'contact person who dr abdusalam musa address office phone reach',
@@ -3786,14 +3786,14 @@
       a: 'If your community program does not yet have an independent 501(c)(3) tax exemption, talk to OneNYC about capacity acceleration and Model C fiscal sponsorship so you can still participate in the upcoming municipal cycle.', src: 'Fiscal Sponsorship' },
     { q: 'budget builder line item fringe admin caps personnel otps statutory rules calculate',
       a: 'Use our interactive Budget Builder tool above to design your grant budget. It enforces NYC City Council statutory limits in real time: Fringe Benefits cannot exceed 25% of Personnel, and Administrative/Indirect costs cannot exceed 10% of total budget. You can export to CSV or load starter templates (k local, k initiative).', src: 'Budget Builder' },
-    { q: 'prime contract disparity contracting audit 111 billion faith muslim jewish christian representation',
-      a: "Our analysis of 9,386 NYC prime vendors (.97B in awards) and Census faith demographics confirms that Muslim New Yorkers (11.0% of NYC, ~944k residents) receive zsh.00 in visible prime municipal contracts, while Christian/Catholic agencies capture .17B+ and Jewish agencies capture .7M+. OneNYC's Coalition Prime Vendor model bridges this gap through Model C fiscal sponsorship and master prime contracting.", src: 'Disparity Audit' },
+    { q: 'prime contract disparity contracting audit 111 billion community representation',
+      a: "Our analysis of 9,386 NYC prime vendors ($111.97B in awards) shows that smaller community organizations rarely appear as prime vendors, while a small set of large institutions captures most awards. OneNYC's Coalition Prime Vendor model closes that gap through Model C fiscal sponsorship and master prime contracting.", src: 'Disparity Audit' },
     { q: 'mock call runbook practice fellow leadership 15 minute intake review',
       a: 'Our 15-Minute Mock Call Runbook provides a structured 5-step checklist for OneNYC Fellows and partner leadership: 1. Identity & EIN Sanity Check (min 0-3), 2. Statutory 5-Point Audit (min 3-6), 3. District & Initiative Fit (min 6-10), 4. Line-Item Budget Review (min 10-13), and 5. November 15 Hand-off (min 13-15). Test practice scenarios directly in the Mock Call Runbook section above.', src: 'Mock Call Runbook' }
   ];
   var STOP = { the:1,a:1,an:1,is:1,are:1,do:1,does:1,did:1,i:1,my:1,me:1,we:1,our:1,of:1,to:1,for:1,in:1,on:1,and:1,or:1,what:1,can:1,could:1,should:1,would:1,you:1,your:1,it:1,this:1,that:1,how:1,about:1,with:1,be:1,been:1,will:1,would:1,there:1,need:1,want:1,looking:1,know:1,help:1,get:1,got:1,us:1,if:1,when:1,where:1,who:1,much:1,many:1,any:1,some:1 };
-  var SYN = { mosque:'faith-based', mosques:'faith-based', masjid:'faith-based', church:'faith-based', synagogue:'faith-based', imam:'faith-based', religious:'religious', religion:'religious', guarantee:'funding', approved:'funding', approve:'funding', award:'funding', money:'funding', dollars:'funding', dollar:'funding', paid:'funding', caps:'limits', cap:'limits', due:'deadline', date:'deadline', dates:'deadline', nda:'non-disclosure', disclosure:'non-disclosure', notary:'notarized', notarize:'notarized', notarization:'notarized', sign:'sign', signature:'sign', signed:'sign', esl:'esl', tutoring:'tutoring', youth:'youth', sports:'sports', seniors:'senior', food:'food', docs:'documents', document:'documents', paperwork:'documents', filing:'filings', filings:'filings', ein:'ein', '501c3':'501(c)(3)', nonprofit:'nonprofit', steps:'steps', step:'steps', intake:'intake', start:'intake', begin:'intake', apply:'apply', eligible:'apply', eligibility:'apply', qualify:'qualify', qualifying:'qualify' };
-  var RE_FAITH = /mosque|masjid|faith|religio|church|synagogue|imam/i;
+  var SYN = { mosque:'religious-institution', church:'religious-institution', synagogue:'religious-institution', religious:'religious', religion:'religious', guarantee:'funding', approved:'funding', approve:'funding', award:'funding', money:'funding', dollars:'funding', dollar:'funding', paid:'funding', caps:'limits', cap:'limits', due:'deadline', date:'deadline', dates:'deadline', nda:'non-disclosure', disclosure:'non-disclosure', notary:'notarized', notarize:'notarized', notarization:'notarized', sign:'sign', signature:'sign', signed:'sign', esl:'esl', tutoring:'tutoring', youth:'youth', sports:'sports', seniors:'senior', food:'food', docs:'documents', document:'documents', paperwork:'documents', filing:'filings', filings:'filings', ein:'ein', '501c3':'501(c)(3)', nonprofit:'nonprofit', steps:'steps', step:'steps', intake:'intake', start:'intake', begin:'intake', apply:'apply', eligible:'apply', eligibility:'apply', qualify:'qualify', qualifying:'qualify' };
+  var RE_FAITH = /mosque|church|synagogue|religio/i;
   var RE_GUARANTEE = /guarantee|guaranteed|promis|sure to get|100% (get|chance)/i;
   function tokens(s) {
     var out = {};
@@ -4025,7 +4025,7 @@
       agency: 'DFTA (Department for the Aging / NYC Aging)',
       mandate: 'Nutritional access, physical wellness, isolation reduction, technology literacy',
       awardRange: '$10,000 &ndash; $20,000 (Base) | up to $60,000 (Initiative)',
-      strategy: 'Emphasize cultural/linguistic alignment (halal meals, multilingual escorts) and non-profit facility safety.'
+      strategy: 'Emphasize cultural/linguistic alignment (culturally appropriate meals, multilingual escorts) and non-profit facility safety.'
     },
     food: {
       initiative: 'Emergency Food Assistance & Food Insecurity Coalition',
@@ -4323,9 +4323,9 @@
       title: 'Active Scenario: BelieveNY Pilot Partner Walkthrough',
       desc: '<strong>Profile:</strong> Grassroots holistic crisis non-profit providing domestic violence, mental health, and housing services across Queens and Manhattan.<br><strong>Key Friction to Address:</strong> Retracted funding from individual council members; staff burnout. OneNYC takes over the application assembly and packages services into compliant DYCD / DOHMH line items.<br><strong>Fellow Action Item:</strong> Validate 501(c)(3) determination letter, ensure fringe benefits do not exceed 25%, and assign to Cultural Immigrant Initiative (CII) slate.'
     },
-    masjid: {
-      title: 'Active Scenario: Faith-Based Community Center / Masjid',
-      desc: '<strong>Profile:</strong> Local mosque providing Friday food pantry, weekly youth athletic programs, and elderly visitation in Bay Ridge (Council District 43).<br><strong>Key Friction to Address:</strong> Uncertainty about religious vs. secular service funding separation. Clarify that non-sectarian community services (food, sports, senior care) are 100% eligible.<br><strong>Fellow Action Item:</strong> Check NYS Charities Bureau CHAR500 status, verify board list has at least 3 officers, and prepare DYCD local member item.'
+    center: {
+      title: 'Active Scenario: Community Center',
+      desc: '<strong>Profile:</strong> Local community center providing a weekly food pantry, youth athletic programs, and elderly visitation in Bay Ridge (Council District 43).<br><strong>Key Friction to Address:</strong> Uncertainty about which activities a city grant may cover. Clarify that public services (food, sports, senior care) are 100% eligible, and that member-only activities are not.<br><strong>Fellow Action Item:</strong> Check NYS Charities Bureau CHAR500 status, verify board list has at least 3 officers, and prepare DYCD local member item.'
     },
     emerging: {
       title: 'Active Scenario: Emerging Grassroots Arts & Heritage Group',
