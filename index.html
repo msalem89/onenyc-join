@@ -1089,6 +1089,40 @@
   .footnote-dates { position: relative; text-shadow: 0 1px 10px rgba(27,42,65,0.95), 0 0 3px rgba(27,42,65,0.9); }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } .flyer-hero::after { opacity: 0.10; } }
   @media print { body { background: white !important; } .flyer-hero::after { display: none; } .req-section-card, .next-step-box { box-shadow: none; } }
+
+  /* ===== Hover-detail system: keep main points visible, detail on hover/focus ===== */
+  .tip {
+    position: relative; display: inline-block; cursor: help;
+    border-bottom: 1px dotted rgba(241,163,60,0.65);
+  }
+  .tip:focus, .tip:focus-within { outline: none; }
+  .tip:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; border-radius: 3px; }
+  .tip-card {
+    position: absolute; left: 0; top: calc(100% + 9px); z-index: 70;
+    width: max-content; max-width: 330px;
+    background: #0e1a29; color: #e9eef6;
+    border: 1px solid rgba(241,163,60,0.45); border-radius: 8px;
+    padding: 10px 13px; font-size: 0.82rem; font-weight: 400; line-height: 1.45;
+    letter-spacing: 0; text-align: left; text-transform: none; font-style: normal;
+    box-shadow: 0 14px 30px rgba(6,12,20,0.45);
+    opacity: 0; visibility: hidden; transform: translateY(-4px);
+    transition: opacity .14s ease, transform .14s ease, visibility .14s;
+    pointer-events: none;
+  }
+  .tip-card::before {
+    content: ""; position: absolute; left: 16px; top: -5px; width: 8px; height: 8px;
+    background: #0e1a29; border-left: 1px solid rgba(241,163,60,0.45);
+    border-top: 1px solid rgba(241,163,60,0.45); transform: rotate(45deg);
+  }
+  .tip:hover > .tip-card, .tip:focus > .tip-card, .tip:focus-within > .tip-card {
+    opacity: 1; visibility: visible; transform: translateY(0);
+  }
+  .tip-card.right { left: auto; right: 0; }
+  .tip-card.right::before { left: auto; right: 16px; }
+  .pillar-item { margin-bottom: 7px; color: var(--ink-body); font-size: 0.9rem; line-height: 1.45; }
+  .pillar-item strong { color: var(--navy); font-weight: 700; }
+  @media (max-width: 760px) { .tip-card { max-width: 74vw; } }
+  @media print { .tip-card { display: none !important; } }
 </style>
   <!-- Mozilla PDF.js for automated client-side document extraction -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
@@ -1354,32 +1388,32 @@
     </div>
 
     <h1 class="flyer-title">Are You Ready to Apply?</h1>
-    <p class="flyer-subtitle">What your organization needs for OneNYC to help you apply for NYC City Council discretionary funding.</p>
+    <p class="flyer-subtitle">What your organization needs so OneNYC can help you apply for NYC Council discretionary funding.</p>
 
     <div class="salaam-lead">
-      <strong>Salaam (peace be with you).</strong> OneNYC helps community organizations prepare strong applications for New York City Council discretionary funding, which opens each January. Most first awards are <strong>$10,000 to $20,000</strong> for a local program. This requirements sheet lists what you need to qualify for our help. <em>If you're missing something, talk to us anyway: many gaps can be fixed before the deadline.</em>
+      <strong>Salaam (peace be with you).</strong> OneNYC helps community organizations apply for NYC Council discretionary funding. First awards are usually <strong>$10,000&ndash;$20,000</strong>. <span class="tip" tabindex="0">Missing something? Talk to us anyway.<span class="tip-card">Many gaps can still be fixed before the Council deadline. We will tell you which ones are fixable and how long each takes.</span></span>
     </div>
 
     <div class="deadline-cards-grid">
       <div class="deadline-card highlight-card">
         <div class="deadline-date">Nov 15</div>
-        <div class="deadline-desc">Return your intake form to OneNYC</div>
+        <div class="deadline-desc"><span class="tip" tabindex="0">Intake form due<span class="tip-card">The intake form tells us which requirements you already meet. Find it in the intake section below and return it by Nov 15 to stay in this cycle.</span></span></div>
       </div>
       <div class="deadline-card">
         <div class="deadline-date">Early Jan</div>
-        <div class="deadline-desc">Council application opens (expected)</div>
+        <div class="deadline-desc"><span class="tip" tabindex="0">Application opens<span class="tip-card">Expected, not confirmed. Last cycle the Council application opened on January 5.</span></span></div>
       </div>
       <div class="deadline-card">
         <div class="deadline-date">Mid-Feb</div>
-        <div class="deadline-desc">Council application closes (expected)</div>
+        <div class="deadline-desc"><span class="tip" tabindex="0">Application closes<span class="tip-card">Expected, not confirmed. Last cycle the application closed on February 18.</span></span></div>
       </div>
       <div class="deadline-card" style="background: #f4fdf7; border: 1px solid #c6ecd2; border-top: 2px solid var(--ok);">
         <div class="deadline-date" style="color: var(--ok-text);">Free</div>
-        <div class="deadline-desc" style="color: #14532d;">For every funded program — no cost to participants</div>
+        <div class="deadline-desc" style="color: #14532d;"><span class="tip" tabindex="0">No cost to you<span class="tip-card">OneNYC charges no fee to prepare or submit your application. There is no cost for any funded program.</span></span></div>
       </div>
     </div>
     <div class="footnote-dates">
-      * FY2028 dates are not yet announced. Last year the application opened January 5 and closed February 18.
+      <span class="tip" tabindex="0">&#9432; Dates are estimates<span class="tip-card right">FY2028 dates are not yet announced. Last year the application opened January 5 and closed February 18.</span></span>
     </div>
   </div>
 </section>
@@ -1393,7 +1427,7 @@
       <h3 class="req-header-title">Our Strategic Pillars: Institute, Civic Capacity &amp; Workforce Development</h3>
     </div>
     <p style="color: var(--ink-body); margin: 8px 0 20px 0; font-size: 0.98rem; line-height: 1.55;">
-      OneNYC bridges community-based leadership with institutional execution. We combine rigorous policy analysis, ethical civic engagement, and cross-sector workforce redevelopment to build lasting neighborhood prosperity.
+      Three pillars connect neighborhood leadership to institutional delivery. <span class="tip" tabindex="0">Hover any line for detail.<span class="tip-card">Each pillar names the work, the partner, and the outcome. Tap a line on a phone to see the same detail.</span></span>
     </p>
 
     <div class="grid-3" style="margin-top: 16px;">
@@ -1403,10 +1437,10 @@
           <div style="font-size: 0.72rem; font-weight: 700; color: var(--sky); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">Pillar I &middot; Policy &amp; Rigor</div>
           <h4 style="margin: 0 0 8px 0; font-size: 1.15rem; color: var(--navy); font-weight: 700; line-height: 1.3;">OneNYC Institute</h4>
           <p style="font-size: 0.85rem; font-weight: 600; color: var(--ink-muted); margin-bottom: 12px;">Policy Approach &amp; Design: Truth &amp; Tradeoffs</p>
-          <ul style="margin: 0; padding-left: 18px; color: var(--ink-body); font-size: 0.88rem; line-height: 1.5;">
-            <li style="margin-bottom: 8px;"><strong>Truth &amp; Tradeoffs Doctrine:</strong> Moving past aspirational rhetoric to data-driven municipal analysis that transparently weighs real community benefits and fiscal costs.</li>
-            <li style="margin-bottom: 8px;"><strong>Capability Building:</strong> Direct training for non-profit executives in municipal procurement, budget architecture, and governance.</li>
-            <li><strong>Knowledge Transfer:</strong> Codifying repeatable grant and legislative workflows into durable community-owned toolkits.</li>
+          <ul style="margin: 0; padding-left: 0; list-style: none; color: var(--ink-body); font-size: 0.88rem; line-height: 1.5;">
+            <li class="pillar-item"><span class="tip" tabindex="0"><strong>Truth &amp; Tradeoffs</strong><span class="tip-card">Data-driven municipal analysis that states the real community benefit and the real fiscal cost, instead of aspirational rhetoric.</span></span></li>
+            <li class="pillar-item"><span class="tip" tabindex="0"><strong>Capability building</strong><span class="tip-card">Direct training for nonprofit executives in municipal procurement, budget architecture, and governance.</span></span></li>
+            <li class="pillar-item"><span class="tip" tabindex="0"><strong>Knowledge transfer</strong><span class="tip-card">Repeatable grant and legislative workflows codified into community-owned toolkits.</span></span></li>
           </ul>
         </div>
       </div>
@@ -1417,10 +1451,10 @@
           <div style="font-size: 0.72rem; font-weight: 700; color: #b45309; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">Pillar II &middot; Community &amp; Values</div>
           <h4 style="margin: 0 0 8px 0; font-size: 1.15rem; color: var(--navy); font-weight: 700; line-height: 1.3;">Civic Capacity with a Soul</h4>
           <p style="font-size: 0.85rem; font-weight: 600; color: var(--ink-muted); margin-bottom: 12px;">Spiritual Leadership Council &amp; Impact Partners</p>
-          <ul style="margin: 0; padding-left: 18px; color: var(--ink-body); font-size: 0.88rem; line-height: 1.5;">
-            <li style="margin-bottom: 8px;"><strong>Spiritual Leadership Council:</strong> Convening faith leaders, imams, pastors, and scholars to anchor municipal civic initiatives in moral clarity and social justice.</li>
-            <li style="margin-bottom: 8px;"><strong>Administrative Machinery:</strong> Giving local grassroots organizations enterprise grant infrastructure so they can scale without losing their authentic soul.</li>
-            <li><strong>Coalition Unity:</strong> Connecting neighborhood leaders across all five boroughs into a unified voice for equitable capital and funding access.</li>
+          <ul style="margin: 0; padding-left: 0; list-style: none; color: var(--ink-body); font-size: 0.88rem; line-height: 1.5;">
+            <li class="pillar-item"><span class="tip" tabindex="0"><strong>Spiritual Leadership Council</strong><span class="tip-card right">Convenes faith leaders, imams, pastors, and scholars to anchor municipal civic work in moral clarity and social justice.</span></span></li>
+            <li class="pillar-item"><span class="tip" tabindex="0"><strong>Administrative machinery</strong><span class="tip-card right">Gives grassroots groups enterprise-grade grant infrastructure so they can scale without losing their authenticity.</span></span></li>
+            <li class="pillar-item"><span class="tip" tabindex="0"><strong>Coalition unity</strong><span class="tip-card right">Links neighborhood leaders across all five boroughs into one voice for equitable funding access.</span></span></li>
           </ul>
         </div>
       </div>
@@ -1431,10 +1465,10 @@
           <div style="font-size: 0.72rem; font-weight: 700; color: #15803d; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">Pillar III &middot; Economic Mobility</div>
           <h4 style="margin: 0 0 8px 0; font-size: 1.15rem; color: var(--navy); font-weight: 700; line-height: 1.3;">Public-Private Partnerships</h4>
           <p style="font-size: 0.85rem; font-weight: 600; color: var(--ink-muted); margin-bottom: 12px;">Workforce Redevelopment &amp; Asset Repurposing</p>
-          <ul style="margin: 0; padding-left: 18px; color: var(--ink-body); font-size: 0.88rem; line-height: 1.5;">
-            <li style="margin-bottom: 8px;"><strong>Tripartite Coalitions:</strong> Uniting municipal agencies (SBS, EDC, Council), private industry, and grassroots non-profits to co-fund community projects.</li>
-            <li style="margin-bottom: 8px;"><strong>Workforce Redevelopment:</strong> Retraining and up-skilling underrepresented workers into high-growth modern technology, AI, and green energy fields.</li>
-            <li><strong>Asset Repurposing:</strong> Transforming underutilized commercial spaces and civic properties into community innovation and educational hubs.</li>
+          <ul style="margin: 0; padding-left: 0; list-style: none; color: var(--ink-body); font-size: 0.88rem; line-height: 1.5;">
+            <li class="pillar-item"><span class="tip" tabindex="0"><strong>Tripartite coalitions</strong><span class="tip-card right">Unites city agencies (SBS, EDC, Council), private industry, and nonprofits to co-fund community projects.</span></span></li>
+            <li class="pillar-item"><span class="tip" tabindex="0"><strong>Workforce redevelopment</strong><span class="tip-card right">Retrains and up-skills underrepresented workers for high-growth technology, AI, and green energy jobs.</span></span></li>
+            <li class="pillar-item"><span class="tip" tabindex="0"><strong>Asset repurposing</strong><span class="tip-card right">Turns underused commercial and civic properties into community innovation and learning hubs.</span></span></li>
           </ul>
         </div>
       </div>
@@ -3053,6 +3087,65 @@
   //   window.NAFS_OCR_INTAKE_URL = 'https://your-approved-tunnel.example';
   const NAFS_OCR_INTAKE_URL = (window.NAFS_OCR_INTAKE_URL || 'http://127.0.0.1:8890').replace(/\/$/, '');
 
+  // --- WO-0fda3aef: preflight + manual-entry fallback when OCR unreachable ---
+  let OCR_STATUS = 'unknown';
+  async function preflightOcr() {
+    if (OCR_STATUS !== 'unknown') return OCR_STATUS;
+    if (location.protocol === 'https:' && NAFS_OCR_INTAKE_URL.startsWith('http:')) {
+      OCR_STATUS = 'blocked_mixed_content'; return OCR_STATUS;
+    }
+    try {
+      const r = await fetch(NAFS_OCR_INTAKE_URL + '/healthz', { method: 'GET' });
+      OCR_STATUS = r.ok ? 'online' : 'offline';
+    } catch (e) { OCR_STATUS = 'offline'; }
+    return OCR_STATUS;
+  }
+
+  // --- WO-0fda3aef: field validation before auto-fill ---
+  const SS4_JUNK = /IMPORTANT INFORMATION FOR|INTERNAL REVENUE SERVICE|DEPARTMENT OF THE TREASURY|DEPARTMENT OF STATE|REQUEST FOR TAXPAYER|CATALOG NUMBER|SUBSTITUTE FORM/i;
+  const ORG_SUFFIX = /\b(INC|LLC|CORP|LTD|FOUNDATION|ASSOCIATION|INSTITUTE)\b/i;
+  function validateField(key, val) {
+    if (val === undefined || val === null) return null;
+    const v = String(val).trim();
+    if (!v) return null;
+    if (key === 'ein') return /^\d{2}-\d{7}$/.test(v) ? v : null;
+    if (key === 'org_name' && SS4_JUNK.test(v)) return null;
+    if (key === 'year_formed') {
+      const y = parseInt(v, 10), cy = new Date().getFullYear();
+      return (y >= 1898 && y <= cy + 1) ? String(y) : null;
+    }
+    if (key === 'address' && (v.length > 120 || /For assistance/i.test(v))) return null;
+    if (key === 'phone' && /(?:800|888|877|866|855|844|833)\D*\d{3}/.test(v)) return null;
+    return v;
+  }
+  function orgTypeAllowed(sel, val) {
+    for (const o of sel.options) if (o.value === val) return true;
+    return false;
+  }
+
+  // --- WO-0fda3aef: review_required gate before submission ---
+  document.addEventListener('change', function (e) {
+    const el = e.target;
+    if (el && el.classList && el.classList.contains('field-extracted')) el.dataset.reviewed = '1';
+  }, true);
+  window.allExtractedReviewed = function () {
+    const els = document.querySelectorAll('.field-extracted');
+    for (const el of els) if (!el.dataset.reviewed) return false;
+    return true;
+  };
+  setTimeout(function () {
+    const orig = window.submitSurveyAndComplete;
+    if (typeof orig === 'function') {
+      window.submitSurveyAndComplete = async function () {
+        if (!window.allExtractedReviewed()) {
+          alert('Auto-extracted fields need your review.\nPlease check each highlighted field (edit or tab through), then submit again.');
+          return;
+        }
+        return orig.apply(this, arguments);
+      };
+    }
+  }, 0);
+
   function handleFileSelect(e) {
     const files = e.target.files;
     processFiles(files);
@@ -3111,6 +3204,13 @@
 
   async function extractViaServerOcr(file, reason, opts) {
     const fillFields = !opts || opts.fillFields !== false;
+    const st = await preflightOcr();
+    if (st !== 'online') {
+      console.warn('OCR preflight failed (' + st + ') - manual entry fallback');
+      if (fillFields) updateFileStatus(file.name, '⚠️ OCR service unreachable (' + st + ') — manual entry enabled');
+      else updateFileStatus(file.name, 'Stored locally; OCR copy unavailable (' + st + ')');
+      return;
+    }
     try {
       updateFileStatus(file.name, '<span class="parse-spinner"></span> Read from scan (secure OCR)...');
       const form = new FormData();
@@ -3151,17 +3251,19 @@
       ['phone', 'v_phone', 'Read from scan'],
       ['year_formed', 'v_year', 'Read from scan'],
     ];
+    let skipped = 0;
     map.forEach(([key, id, label]) => {
-      const val = fields[key];
-      if (!val) return;
       const el = document.getElementById(id);
       if (!el) return;
-      if (!el.value || el.classList.contains('field-extracted')) {
-        if (key === 'phone' && /(?:800|888|877|866|855|844|833)/.test(String(val))) return;
-        el.value = String(val).trim();
-        markFieldExtracted(id, label, true);
-      }
+      if (el.value && !el.classList.contains('field-extracted')) return;
+      const v = validateField(key, fields[key]);
+      if (!v) { skipped++; return; }
+      let lbl = label;
+      if (key === 'org_name' && !ORG_SUFFIX.test(v)) lbl = 'Read from scan — add legal suffix (Inc/LLC)';
+      el.value = v;
+      markFieldExtracted(id, lbl, true);
     });
+    if (skipped) console.info('intake: ' + skipped + ' field(s) failed validation - manual entry');
   }
 
   function parseAndPopulateExtractedData(text, filename, asReview) {
@@ -3172,8 +3274,9 @@
       if (rawEin.length === 9 && !rawEin.includes('-')) {
         rawEin = rawEin.substring(0, 2) + '-' + rawEin.substring(2);
       }
+      if (!/^\d{2}-\d{7}$/.test(rawEin)) rawEin = null;
       const einEl = document.getElementById('v_ein');
-      if (einEl) {
+      if (einEl && rawEin) {
         einEl.value = rawEin;
         markFieldExtracted('v_ein', 'EIN', !!asReview);
       }
@@ -3189,12 +3292,16 @@
         orgTypeEl.value = '501c4';
         markFieldExtracted('v_org_type', '501(c)(4)', !!asReview);
         if (typeof selectTrack === 'function') selectTrack('impact');
-      } else if (/M\/WBE|Minority\s*and\s*Women|WBE|MBE|Small Business Services/i.test(text)) {
-        orgTypeEl.value = 'mwbe_llc';
-        markFieldExtracted('v_org_type', 'M/WBE Certification', !!asReview);
-        if (typeof selectTrack === 'function') selectTrack('commercial');
+      } else if (/Minority\s*and\s*Women[\s-]*Owned|MWBE\s+Certification|certified\s+(?:M\/WBE|MWBE|MBE|WBE)|M\/WBE\s+certif/i.test(text)) {
+        const want = 'mwbe_llc';
+        if (orgTypeAllowed(orgTypeEl, want)) {
+          orgTypeEl.value = want;
+          markFieldExtracted('v_org_type', 'M/WBE Certification', !!asReview);
+          if (typeof selectTrack === 'function') selectTrack('commercial');
+        }
       } else if (/Mosque|Masjid|Islamic Center|Church|Synagogue|Religious/i.test(text)) {
-        orgTypeEl.value = 'faith_based';
+        const want = 'faith_based';
+        if (orgTypeAllowed(orgTypeEl, want)) orgTypeEl.value = want;
         markFieldExtracted('v_org_type', 'Faith-Based', !!asReview);
         if (typeof selectTrack === 'function') selectTrack('impact');
       }
@@ -3215,7 +3322,7 @@
       }
       if (!nameMatch) {
         let incm = text.match(/\b([A-Z][A-Za-z0-9\s,\-&]{3,50}?\b(?:INC(?:ORPORATED|\.)?|LLC|CORP(?:ORATION|\.)?|FOUNDATION|ASSOCIATION|CENTER|INSTITUTE))\b/);
-        if (incm && !/TREASURY|INTERNAL REVENUE|DEPARTMENT/i.test(incm[1])) {
+        if (incm && !/TREASURY|INTERNAL REVENUE|DEPARTMENT|IMPORTANT INFORMATION/i.test(incm[1])) {
           nameMatch = incm[1];
         }
       }
@@ -3238,7 +3345,8 @@
     const yearEl = document.getElementById('v_year');
     if (yearEl) {
       let yearMatch = text.match(/(?:Effective date of exemption|incorporated|formation|dated|filed on)[^\d]{1,30}\b(19\d{2}|20\d{2})\b/i);
-      if (yearMatch) {
+      const yv = parseInt(yearMatch[1], 10), cyv = new Date().getFullYear();
+      if (yv >= 1898 && yv <= cyv + 1) {
         yearEl.value = yearMatch[1];
         markFieldExtracted('v_year', 'Year', !!asReview);
       }
