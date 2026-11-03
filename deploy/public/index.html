@@ -440,8 +440,10 @@ details[open] .plate__img img{filter:saturate(1) contrast(1.04)}
   font-size:clamp(2rem,3.6vw,3.65rem);line-height:.94;letter-spacing:-.03em;
   text-wrap:balance;
 }
-.plate--paper .plate__img{height:clamp(360px,62vh,680px)}
-.plate--paper{margin-left:clamp(0px,3vw,48px)}
+.plate--paper .plate__img{height:auto;overflow:visible;background:transparent;box-shadow:none}
+.plate--paper .plate__img::after{display:none}
+.plate--paper .plate__img img{display:block;width:100%;height:auto;object-fit:contain;transform:translate3d(0,var(--py,0px),0);filter:saturate(.96) contrast(1.04)}
+.plate--paper{margin-left:0}
 
 /* ---------- work strip ---------- */
 .work__head{
@@ -1007,7 +1009,7 @@ details.is-closing > .panel > .panel__in{animation:innerOut .28s linear both}
   .stop{padding:clamp(62px,10vh,100px) 0}
   .plate__cap{width:calc(100% - 18px);margin:-34px 0 0 9px;padding:18px 16px 20px;gap:11px}
   .plate__cap h2{font-size:clamp(1.9rem,7.4vw,2.7rem)}
-  .plate--paper .plate__img{height:clamp(300px,52vh,460px)}
+  .plate--paper .plate__img{height:auto}
   .plate--paper{margin-left:0}
   .work__head{display:block;margin-bottom:22px}
   .work__head .sign{margin-bottom:14px}
@@ -1119,20 +1121,12 @@ details[data-stop][open] .panel__in{animation:panelIn .55s cubic-bezier(.16,1,.3
 /* ============ refined motion pass ============ */
 @media (prefers-reduced-motion: no-preference){
 
-  /* 1. hero load cascade: h1 mask-reveal, sub + acts rise */
-  #heroTitle{
-    clip-path:inset(0 0 100% -6%);
-    translate:0 .75em;
-    animation:heroMask 1.05s var(--ease) .12s both;
-  }
-  .hero__sub{opacity:0;translate:0 22px;animation:heroRise .8s var(--ease) .62s both}
-  .hero__acts .btn{opacity:0;translate:0 22px;animation:heroRise .8s var(--ease) .8s both}
-  .hero__acts .btn:nth-child(2){animation-delay:.92s}
-  @keyframes heroMask{
-    0%{clip-path:inset(0 0 100% -6%);translate:0 .75em}
-    100%{clip-path:inset(-8% 0 -8% -6%);translate:0 0}
-  }
-  @keyframes heroRise{to{opacity:1;translate:0 0}}
+  /* 1. hero load cascade: h1 + sub + acts rise */
+  #heroTitle{animation:heroRise .85s var(--ease) .08s both}
+  .hero__sub{animation:heroRise .8s var(--ease) .28s both}
+  .hero__acts .btn{animation:heroRise .8s var(--ease) .42s both}
+  .hero__acts .btn:nth-child(2){animation-delay:.52s}
+  @keyframes heroRise{from{opacity:0;translate:0 22px}to{opacity:1;translate:0 0}}
 
   /* 2. staggered children inside each stop */
   .stop .sign,.stop h2,.stop .cue{
@@ -1144,10 +1138,12 @@ details[data-stop][open] .panel__in{animation:panelIn .55s cubic-bezier(.16,1,.3
   .stop.is-in h2{transition-delay:.18s}
   .stop.is-in .cue{transition-delay:.3s}
 
-  /* 3. image wipe-in (clip-path only; transform stays parallax-owned) */
-  .stop .plate__img img{clip-path:inset(0 100% 0 0);transition:clip-path .95s var(--ease) .35s,filter .6s}
-  .stop:nth-of-type(even) .plate__img img{clip-path:inset(0 0 0 100%)}
-  .stop.is-in .plate__img img{clip-path:inset(0 0 0 0)}
+  /* 3. image wipe-in (clip-path only; cutout uses opacity+translate so drop-shadow isn't clipped) */
+  .stop .plate:not(.plate--paper) .plate__img img{clip-path:inset(0 100% 0 0);transition:clip-path .95s var(--ease) .35s,filter .6s}
+  .stop:nth-of-type(even) .plate:not(.plate--paper) .plate__img img{clip-path:inset(0 0 0 100%)}
+  .stop.is-in .plate:not(.plate--paper) .plate__img img{clip-path:inset(0 0 0 0)}
+  .stop .plate--paper .plate__img{opacity:0;translate:0 28px;transition:opacity .85s var(--ease) .2s,translate .85s var(--ease) .2s}
+  .stop.is-in .plate--paper .plate__img{opacity:1;translate:0 0}
 
   /* 4. strip figures cascade */
   .strip figure{opacity:0;translate:0 46px;transition:opacity .8s var(--ease),translate .8s var(--ease)}
@@ -1215,7 +1211,7 @@ details[data-stop][open] .panel__in{animation:panelIn .55s cubic-bezier(.16,1,.3
     <details class="hero__d" data-stop>
       <summary class="hero__open" aria-label="Open: the short version">
         <span class="hero__media" aria-hidden="true">
-          <img src="assets/nyc-avenue-e1.jpg" alt="" width="2848" height="1600" fetchpriority="high" decoding="async">
+          <img src="assets/nyc-avenue-e1.jpg" alt="" width="2848" height="1600" fetchpriority="high">
           <span class="hero__veil"></span>
         </span>
 
@@ -1258,11 +1254,11 @@ details[data-stop][open] .panel__in{animation:panelIn .55s cubic-bezier(.16,1,.3
             <div>
               <dt>Cost</dt>
               <dd>Free</dd>
-              <small>No fee, and no share of an award.</small>
+              <small>Provided at no cost to your charity.</small>
             </div>
           </dl>
 
-          <p class="lead">Council Members award direct funding to district charities every year. Most first awards are $10,000 to $25,000. Our free help keeps 100% of every dollar on your programs. You stay the applicant. The award goes straight into your organization&rsquo;s account.</p>
+          <p class="lead">Council Members award direct funding to district charities every year. Most first awards are $10,000 to $25,000. You stay the applicant, and the award goes straight into your organization&rsquo;s account.</p>
           <p class="body">Most first awards are $10,000 to $20,000. The work between here and there is paperwork, and that is what we do.</p>
           <p class="note">You sign, and the application is yours. We prepare the packet and file with you.</p>
 
@@ -1289,7 +1285,7 @@ details[data-stop][open] .panel__in{animation:panelIn .55s cubic-bezier(.16,1,.3
       <details class="stop__d" data-stop>
         <summary class="plate plate--paper" aria-label="Open: Paperwork, handled">
           <span class="plate__img">
-            <img src="assets/real/paper-stilllife-h1.jpg" alt="A stack of application papers with a red stamp and a pen on a wooden desk." width="2848" height="1600" loading="lazy" decoding="async">
+            <img src="assets/real/paper-stilllife-cutout.png" alt="A stack of application papers with a red stamp and a pen on a wooden desk." width="2848" height="1140">
           </span>
           <div class="plate__cap">
             <span class="sign sign--paper">
@@ -1355,23 +1351,23 @@ details[data-stop][open] .panel__in{animation:panelIn .55s cubic-bezier(.16,1,.3
 
           <div class="strip">
             <figure>
-              <span class="ph"><img src="assets/partner-hall-a1.jpg" alt="A sunlit community hall lined with chairs before a program begins." width="2848" height="1600" loading="lazy" decoding="async"></span>
+              <span class="ph"><img src="assets/partner-hall-a1.jpg" alt="A sunlit community hall lined with chairs before a program begins." width="2848" height="1600"></span>
               <figcaption><b>Community hall</b></figcaption>
             </figure>
             <figure>
-              <span class="ph"><img src="assets/partner-classroom-b1.jpg" alt="Students working at a long table in an after-school room." width="2848" height="1600" loading="lazy" decoding="async"></span>
+              <span class="ph"><img src="assets/partner-classroom-b1.jpg" alt="Students working at a long table in an after-school room." width="2848" height="1600"></span>
               <figcaption><b>After school</b></figcaption>
             </figure>
             <figure>
-              <span class="ph"><img src="assets/partner-pantry-c1.jpg" alt="Volunteers handing over a box of fresh produce at a food pantry." width="2304" height="1500" loading="lazy" decoding="async"></span>
+              <span class="ph"><img src="assets/partner-pantry-c1.jpg" alt="Volunteers handing over a box of fresh produce at a food pantry." width="2304" height="1500"></span>
               <figcaption><b>Food access</b></figcaption>
             </figure>
             <figure>
-              <span class="ph"><img src="assets/partner-arts-d1.jpg" alt="Hands painting ceramic bowls in a community arts studio." width="2304" height="1728" loading="lazy" decoding="async"></span>
+              <span class="ph"><img src="assets/partner-arts-d1.jpg" alt="Hands painting ceramic bowls in a community arts studio." width="2304" height="1728"></span>
               <figcaption><b>Arts studio</b></figcaption>
             </figure>
             <figure>
-              <span class="ph"><img src="assets/partner-seniors-e1.jpg" alt="Older adults playing cards around tables in a senior center." width="2304" height="1728" loading="lazy" decoding="async"></span>
+              <span class="ph"><img src="assets/partner-seniors-e1.jpg" alt="Older adults playing cards around tables in a senior center." width="2304" height="1728"></span>
               <figcaption><b>Senior center</b></figcaption>
             </figure>
           </div>
@@ -1476,7 +1472,7 @@ details[data-stop][open] .panel__in{animation:panelIn .55s cubic-bezier(.16,1,.3
 
               <!-- Live Preview Frame -->
               <div class="doc-viewer__frame">
-                <img id="samplePreviewImg" src="assets/samples/sample-irs-501c3.png" alt="Sample IRS 501(c)(3) Determination Letter" width="800" height="1000" loading="lazy">
+                <img id="samplePreviewImg" src="assets/samples/sample-irs-501c3.png" alt="Sample IRS 501(c)(3) Determination Letter" width="800" height="1000">
                 <span class="doc-viewer__tag">Official NYC Council Exhibit</span>
               </div>
 
@@ -1560,7 +1556,7 @@ details[data-stop][open] .panel__in{animation:panelIn .55s cubic-bezier(.16,1,.3
           <details class="stop__d" data-stop>
             <summary class="plate plate--window" aria-label="Open: Paper in. Application out.">
               <span class="plate__img">
-                <img src="assets/billboard-city-f1.jpg" alt="A box of fresh produce passing between two pairs of hands at a food pantry." width="2304" height="1500" loading="lazy" decoding="async">
+                <img src="assets/billboard-city-f1.jpg" alt="A box of fresh produce passing between two pairs of hands at a food pantry." width="2304" height="1500">
               </span>
               <div class="plate__cap">
                 <span class="sign sign--paper">
@@ -1696,12 +1692,6 @@ details[data-stop][open] .panel__in{animation:panelIn .55s cubic-bezier(.16,1,.3
               <b style="color:#0F5132;display:block;font-size:14px;">Application Received</b>
               <p style="color:#155724;font-size:12.5px;margin-top:4px;line-height:1.5;">
                 Thank you. We have received your intake. Our compliance team will reach out within 3 business days to review your charity&rsquo;s legal documents and go through the checklist.
-              </p>
-            </div>
-
-            <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--paper-line);text-align:center;">
-              <p style="font-size:12px;color:var(--ink-3);line-height:1.5;">
-                <b>100% free for NYC charities.</b> No fees, and no cut of your grant.
               </p>
             </div>
           </form>
