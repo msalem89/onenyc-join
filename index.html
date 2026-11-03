@@ -473,7 +473,7 @@ details[open] .plate__img img{filter:saturate(1) contrast(1.04)}
 }
 .strip figure:hover img{transform:scale(1.07);filter:saturate(1) contrast(1.05)}
 .strip figcaption{
-  font:400 9px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;
+  font:400 clamp(10px,0.9vw,12px)/1.5 var(--mono);letter-spacing:.12em;text-transform:uppercase;
   color:var(--cream-2);
   display:flex;align-items:baseline;gap:8px;
 }
@@ -574,7 +574,7 @@ details[open] .plate__img img{filter:saturate(1) contrast(1.04)}
 }
 .stage__hint{
   position:absolute;bottom:4%;left:50%;transform:translateX(-50%);z-index:2;
-  font:400 9px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--cream-2);
+  font:400 clamp(10px,0.85vw,11px)/1.4 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--cream-2);
   white-space:nowrap;pointer-events:none;
 }
 
@@ -680,6 +680,7 @@ details[open] .plate__img img{filter:saturate(1) contrast(1.04)}
   background:rgba(163,39,26,.07);font-size:10.5px;line-height:1.45;color:var(--danger);
 }
 .fileerr[hidden]{display:none}
+.flow__act .btn--wide{width:fit-content;max-width:100%;margin-inline:auto;}
 .flow__act{margin-top:12px}
 
 .scan{margin-top:12px;border:1px solid var(--paper-line);padding:10px 12px;background:rgba(255,255,255,.3)}
@@ -807,8 +808,9 @@ details[open] .plate__img img{filter:saturate(1) contrast(1.04)}
 .foot__top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:28px}
 .endline{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .endline .sign{padding-right:14px}
-.endline__note{font:400 9px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.endline__note{font:400 clamp(10px,0.85vw,12px)/1.5 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--cream-2)}
 .foot__cta{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.foot__cta .btn{white-space:nowrap}
 .foot__grid{
   display:grid;grid-template-columns:1.3fr .8fr .9fr;gap:clamp(24px,4vw,60px);
   margin-top:clamp(34px,5vw,52px);padding-top:clamp(24px,3vw,34px);border-top:1px solid var(--line);
@@ -829,7 +831,7 @@ details[open] .plate__img img{filter:saturate(1) contrast(1.04)}
   display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 30px;
   margin-top:clamp(26px,4vw,40px);padding-top:14px;border-top:1px solid var(--line);
   font:400 9px/1.5 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
-}
+font-size:clamp(10px,0.85vw,12px);line-height:1.55;color:var(--cream-2);}
 .foot__brand{display:flex;align-items:center;gap:12px;margin-bottom:14px}
 .foot__brand img{height:22px;width:auto}
 
@@ -957,7 +959,7 @@ details.is-closing > .panel > .panel__in{animation:innerOut .28s linear both}
   .ftable th:nth-child(3),.ftable td:nth-child(3){display:none}
   .window .panel__in{padding:18px 16px 22px}
   .foot__grid{grid-template-columns:1fr;gap:26px}
-  .foot__bottom{font-size:8px}
+  .foot__bottom{font-size:10px}
   .dock{left:12px;right:12px;bottom:12px;transform:translateY(160%);max-width:none;padding:8px 8px 8px 14px;gap:10px}
   .dock.is-on{transform:translateY(0)}
   .dock__copy b{font-size:9px}
@@ -973,7 +975,7 @@ details.is-closing > .panel > .panel__in{animation:innerOut .28s linear both}
   .head .btn{padding:0 9px}
   .brand__logo{height:19px}
   .dock__copy span{display:none}
-  .strip figcaption{font-size:8px}
+  .strip figcaption{font-size:10px}
   .cube{--cube:190px}
 }
 
@@ -1048,7 +1050,7 @@ details[data-stop][open] .panel__in{animation:panelIn .55s cubic-bezier(.16,1,.3
       <span class="head__days"><span data-days>13</span> <span data-days-label>days left</span></span>
     </p>
     <a class="btn btn--accent btn--sm" href="#intake">
-      Sign up now
+      Get started
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13"/><path d="m12 5 7 7-7 7"/></svg>
     </a>
   </div>
@@ -1396,7 +1398,7 @@ details[data-stop][open] .panel__in{animation:panelIn .55s cubic-bezier(.16,1,.3
           <details class="stop__d" data-stop>
             <summary class="plate plate--window" aria-label="Open: Paper in. Application out.">
               <span class="plate__img">
-                <img src="assets/partner-pantry-c1.jpg" alt="A box of fresh produce passing between two pairs of hands at a food pantry." width="2304" height="1500" loading="lazy" decoding="async">
+                <img src="assets/billboard-city-f1.jpg" alt="A box of fresh produce passing between two pairs of hands at a food pantry." width="2304" height="1500" loading="lazy" decoding="async">
               </span>
               <div class="plate__cap">
                 <span class="sign sign--paper">
@@ -1614,7 +1616,7 @@ details[data-stop][open] .panel__in{animation:panelIn .55s cubic-bezier(.16,1,.3
       </div>
       <div class="foot__cta">
         <a class="btn btn--accent" href="#intake">
-          Sign up now
+          Start your application
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13"/><path d="m12 5 7 7-7 7"/></svg>
         </a>
         <a class="btn btn--ghost" href="mailto:info@onenyc.com">Email the desk</a>
@@ -1640,8 +1642,8 @@ details[data-stop][open] .panel__in{animation:panelIn .55s cubic-bezier(.16,1,.3
         <ul class="foot__nav">
           <li><a href="#start">01 Start</a></li>
           <li><a href="#paperwork">02 Paperwork</a></li>
-          <li><a href="#work">03 The work</a></li>
-          <li><a href="#packet">04 The packet</a></li>
+          <li><a href="#work">03 Do I qualify?</a></li>
+          <li><a href="#packet">04 The documents</a></li>
           <li><a href="#intake">05 Sign up</a></li>
         </ul>
       </div>
