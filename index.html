@@ -1090,6 +1090,75 @@ details[data-stop][open] .panel__in{animation:panelIn .55s cubic-bezier(.16,1,.3
 /* days counter: stable digits */
 .head__days [data-days]{font-variant-numeric:tabular-nums;display:inline-block;min-width:2ch}
 </style>
+
+<style id="ship-anim">
+/* ============ packet-ship: cube breaks apart, becomes a train ============ */
+.ship__btn{ margin-top:14px;display:inline-flex;align-items:center;gap:8px; background:transparent;border:1px solid rgba(253,185,19,.45);border-radius:2px; padding:8px 14px; color:var(--cream); font:500 10px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase; cursor:pointer; transition:background .25s,border-color .25s }
+.ship__btn:hover{background:rgba(253,185,19,.14);border-color:var(--amber)}
+.ship__btn:disabled{opacity:.45;cursor:default}
+.stage__hint{transition:opacity .3s}
+
+@media (prefers-reduced-motion: no-preference){
+  /* dispersal: each face flies outward along its own axis and fades */
+  .stage.is-shipping .cube{animation:cubeShake .5s var(--ease) both}
+  .stage.is-shipping .face--front {animation:faceOut .8s var(--ease) .45s both;--fx:0;--fy:0;--fz:340px;--fr:0deg}
+  .stage.is-shipping .face--back  {animation:faceOut .8s var(--ease) .50s both;--fx:0;--fy:0;--fz:-340px;--fr:0deg}
+  .stage.is-shipping .face--right {animation:faceOut .8s var(--ease) .55s both;--fx:340px;--fy:0;--fz:0;--fr:90deg}
+  .stage.is-shipping .face--left  {animation:faceOut .8s var(--ease) .60s both;--fx:-340px;--fy:0;--fz:0;--fr:-90deg}
+  .stage.is-shipping .face--top   {animation:faceOut .8s var(--ease) .65s both;--fx:0;--fy:-340px;--fz:0;--fr:0deg}
+  .stage.is-shipping .face--bottom{animation:faceOut .8s var(--ease) .70s both;--fx:0;--fy:340px;--fz:0;--fr:0deg}
+  .stage.is-shipping .cube__shadow{opacity:0;transition:opacity .4s}
+  @keyframes cubeShake{
+    0%,100%{transform:rotateX(-16deg) rotateY(-34deg)}
+    25%{transform:rotateX(-13deg) rotateY(-28deg)}
+    50%{transform:rotateX(-19deg) rotateY(-40deg)}
+    75%{transform:rotateX(-14deg) rotateY(-30deg)}
+  }
+  @keyframes faceOut{
+    0%{opacity:1;translate:0 0;scale:1;rotate:0deg}
+    100%{opacity:0;translate:var(--fx) var(--fy);scale:.4;rotate:var(--fr)}
+  }
+}
+</style>
+
+<style id="ship-anim-2">
+/* train overlay + track + stamp (continues ship-anim) */
+.ship__train{ position:absolute;inset:auto 0 18%;z-index:5; display:flex;justify-content:center; pointer-events:none; opacity:0 }
+.stage.is-shipping .ship__train{opacity:1;transition:opacity .3s .8s}
+.train{ display:flex;align-items:flex-end;gap:6px; translate:-120vw 0 }
+.stage.is-shipping .train{animation:trainRun 4.6s cubic-bezier(.35,0,.3,1) .85s both}
+.car{ position:relative;width:64px;height:44px; background:linear-gradient(152deg,#F8F3E8 0%,#E2D8C4 100%); border:1px solid rgba(18,22,27,.35); border-radius:3px 3px 0 0; display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2px; color:#142033; box-shadow:0 6px 14px rgba(0,0,0,.35) }
+.car b{font:700 12px/1 var(--mono);letter-spacing:.02em}
+.car span{font:500 7px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#5A6472}
+.car--engine{ width:78px;background:linear-gradient(150deg,#FFB824,#F29A00);border-color:rgba(80,50,0,.4);border-radius:8px 8px 0 0 }
+.car--engine::before{ content:"";position:absolute;top:-12px;left:12px; width:16px;height:12px; background:#F29A00;border-radius:3px 3px 0 0 }
+.car--cab{background:#161C22;color:var(--paper);border-color:rgba(245,240,228,.25)}
+.car--cab span{color:var(--amber)}
+.wheel{ position:absolute;bottom:-7px;width:13px;height:13px;border-radius:50%; background:#142033;border:2px solid #F8F3E8; }
+.wheel:nth-of-type(1){left:8px}.wheel:nth-of-type(2){right:8px}
+@keyframes trainRun{
+  0%{translate:-120vw 0}
+  18%{translate:0 0}
+  82%{translate:0 0}
+  100%{translate:120vw 0}
+}
+.ship__track{ position:absolute;left:8%;right:8%;bottom:14%;height:2px; z-index:4; background:repeating-linear-gradient(90deg,var(--amber) 0 14px,transparent 14px 26px); opacity:0;transition:opacity .3s }
+.stage.is-shipping .ship__track{opacity:.75;transition-delay:.8s}
+.ship__stamp{ position:absolute;top:12%;left:50%;translate:-50% 0; z-index:6; padding:10px 18px; border:2px solid var(--amber); color:var(--amber); font:700 11px/1.4 var(--mono);letter-spacing:.22em;text-transform:uppercase; rotate:-6deg; opacity:0; pointer-events:none }
+.stage.is-delivered .ship__stamp{animation:stampIn .5s var(--ease) both}
+@keyframes stampIn{0%{opacity:0;scale:2.4}100%{opacity:1;scale:1}}
+@media (prefers-reduced-motion: no-preference){
+  .stage.is-shipping .wheel{animation:wheelSpin 1s linear infinite}
+  @keyframes wheelSpin{to{rotate:360deg}}
+  .stage.is-shipping .car--engine::after{ content:"";position:absolute;top:-26px;left:16px;width:9px;height:9px;border-radius:50%; background:rgba(245,240,228,.28); animation:puff 1.6s ease-out infinite }
+  @keyframes puff{0%{opacity:.8;translate:0 0;scale:.6}100%{opacity:0;translate:-10px -18px;scale:1.8}}
+}
+@media (prefers-reduced-motion: reduce){
+  .stage.is-shipping .ship__train{opacity:1;transition:none}
+  .train{translate:0 0}
+  .stage.is-shipping .train{animation:none}
+}
+</style>
 </head>
 <body id="top">
 <a class="skip" href="#main">Skip to content</a>
@@ -1384,6 +1453,20 @@ details[data-stop][open] .panel__in{animation:panelIn .55s cubic-bezier(.16,1,.3
             </div>
             <span class="cube__shadow" aria-hidden="true"></span>
             <span class="stage__hint">Drag or scroll to turn</span>
+        <span class="ship__track" aria-hidden="true"></span>
+        <div class="ship__train" aria-hidden="true">
+          <div class="train">
+            <div class="car car--engine"><b>IP</b><span>OneNYC line</span><i class="wheel"></i><i class="wheel"></i></div>
+            <div class="car"><b>4</b><span>Legal</span><i class="wheel"></i><i class="wheel"></i></div>
+            <div class="car"><b>4</b><span>Money</span><i class="wheel"></i><i class="wheel"></i></div>
+            <div class="car"><b>3</b><span>Board</span><i class="wheel"></i><i class="wheel"></i></div>
+            <div class="car"><b>2</b><span>Insurance</span><i class="wheel"></i><i class="wheel"></i></div>
+            <div class="car car--cab"><b>13/13</b><span>Packet ready</span><i class="wheel"></i><i class="wheel"></i></div>
+          </div>
+        </div>
+        <span class="ship__stamp">Packet shipped</span>
+        <button class="ship__btn" type="button" data-ship>Ship it down the line &#9654;</button>
+
           </div>
         </summary>
 
@@ -2590,6 +2673,53 @@ details[data-stop][open] .panel__in{animation:panelIn .55s cubic-bezier(.16,1,.3
     el.textContent = Math.round(e * target);
     if(p < 1) requestAnimationFrame(tick);
   });
+})();
+</script>
+
+<script id="ship-anim-js">
+(function(){
+  var stage = document.querySelector('[data-cube-stage]');
+  if(!stage || !stage.querySelector('.cube')) return;
+  var btn = stage.querySelector('[data-ship]');
+  var busy = false;
+  var D = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function reset(){
+    stage.classList.remove('is-shipping','is-delivered');
+    busy = false;
+    btn.disabled = false;
+    btn.textContent = '';
+    btn.innerHTML = 'Ship it down the line <i aria-hidden="true">&#9654;</i>';
+    btn.onclick = null;
+  }
+
+  function ship(){
+    if(busy) return;
+    busy = true; btn.disabled = true;
+    stage.classList.add('is-shipping');
+    var total = D ? 700 : 5600;
+    window.setTimeout(function(){ stage.classList.add('is-delivered'); }, D ? 150 : 4700);
+    window.setTimeout(function(){
+      btn.innerHTML = 'Reset the packet <i aria-hidden="true">&#8635;</i>';
+      btn.disabled = false;
+      btn.onclick = function(ev){ ev.stopPropagation(); reset(); };
+    }, total);
+  }
+
+  btn.addEventListener('click', function(ev){ ev.stopPropagation(); ship(); });
+
+  /* auto-run once when the section settles in view */
+  if(!D && 'IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(es, o){
+      es.forEach(function(e){
+        if(e.isIntersecting){
+          o.disconnect();
+          window.setTimeout(ship, 1400);
+        }
+      });
+    }, { threshold:.25 });
+    io.observe(stage);
+  }
 })();
 </script>
 </body>
