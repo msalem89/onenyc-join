@@ -185,7 +185,7 @@ img {
   width: 100%;
 }
 
-.brand {
+.brand { flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 14px;
@@ -217,7 +217,7 @@ img {
   letter-spacing: 0.01em;
 }
 
-.head__right {
+.head__right { flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 18px;
@@ -259,7 +259,7 @@ img {
   font-size: 11px;
 }
 
-.head__cta {
+.head__cta { flex-shrink: 0; white-space: nowrap;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -1607,6 +1607,13 @@ img {
 }
 
 @media (max-width: 768px) {
+  .brand__meta {
+    display: none;
+  }
+  .head__cta { flex-shrink: 0; white-space: nowrap;
+    padding: 7px 14px;
+    font-size: 12px;
+  }
   .program-strip {
     grid-template-columns: 1fr;
   }
@@ -1633,6 +1640,209 @@ img {
     display: none;
   }
 }
+
+@media (max-width: 480px) {
+  :root {
+    --head-h: 64px;
+    --pad: 16px;
+  }
+  .brand__logo {
+    height: 22px;
+  }
+  .brand__title {
+    font-size: 13px;
+  }
+  .brand__meta {
+    display: none;
+  }
+  .head__cta { flex-shrink: 0; white-space: nowrap;
+    padding: 7px 12px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .dock {
+    bottom: 12px;
+    max-width: calc(100vw - 24px);
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 6px;
+  }
+  .dock::-webkit-scrollbar {
+    display: none;
+  }
+  .dock__btn {
+    padding: 6px 10px;
+    font-size: 11.5px;
+    white-space: nowrap;
+  }
+  h1 {
+    font-size: 2.2rem;
+  }
+  h2 {
+    font-size: 1.8rem;
+  }
+  .scene {
+    padding: clamp(50px, 8vh, 80px) 0;
+  }
+}
+
+
+/* ---------- Feathered Paperwork Image (Soft Edge Blend) ---------- */
+.feathered-plate {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  border-radius: 28px;
+  display: block;
+  margin: 0 auto;
+}
+
+.feathered-plate img {
+  width: 100%;
+  height: auto;
+  display: block;
+  -webkit-mask-image: radial-gradient(ellipse 65% 60% at 50% 50%, #000 15%, rgba(0, 0, 0, 0.75) 45%, rgba(0, 0, 0, 0.25) 70%, transparent 92%);
+  mask-image: radial-gradient(ellipse 65% 60% at 50% 50%, #000 15%, rgba(0, 0, 0, 0.75) 45%, rgba(0, 0, 0, 0.25) 70%, transparent 92%);
+  filter: contrast(1.08) brightness(0.95);
+  transition: transform 0.6s var(--ease);
+}
+.feathered-plate:hover img {
+  transform: scale(1.02);
+}
+
+.feathered-plate__cap {
+  position: absolute;
+  bottom: 24px;
+  left: 28px;
+  right: 28px;
+  padding: 12px 18px;
+  background: rgba(10, 16, 26, 0.78);
+  border: 1px solid var(--glass-border-light);
+  border-radius: var(--radius-pill);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  backdrop-filter: var(--glass-blur-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--cream);
+}
+.feathered-plate__cap b {
+  color: var(--amber);
+}
+
+/* ---------- Video Elements (Nkora Style Ambient Loops) ---------- */
+.ambient-video-card {
+  position: relative;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  border: 1px solid var(--glass-border-light);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  aspect-ratio: 16 / 11;
+  background: #030508;
+}
+
+.ambient-video-card video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: contrast(1.06) brightness(0.92);
+}
+
+.ambient-video-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(7, 11, 17, 0.15) 0%, rgba(7, 11, 17, 0.8) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 24px;
+}
+
+/* Embedded Card Video for Food Distribution */
+.program-card__video {
+  position: relative;
+  height: 160px;
+  overflow: hidden;
+  background: #030508;
+}
+.program-card__video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 80%;
+  display: block;
+  filter: contrast(1.08) brightness(0.9);
+}
+.live-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  background: rgba(7, 11, 17, 0.75);
+  border: 1px solid var(--glass-border-light);
+  border-radius: var(--radius-pill);
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--amber);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  backdrop-filter: var(--glass-blur-sm);
+}
+.live-badge__dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
+}
+
+/* ---------- 3D Cube Real Document Samples ---------- */
+.face__sample-wrap {
+  width: 100%;
+  height: 180px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin: 8px 0;
+  background: #070B11;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6);
+  position: relative;
+}
+.face__sample-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: transform 0.4s var(--ease);
+}
+.face:hover .face__sample-wrap img {
+  transform: scale(1.05);
+}
+.sample-watermark {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  padding: 2px 6px;
+  background: rgba(7, 11, 17, 0.85);
+  border: 1px solid var(--glass-border);
+  border-radius: 4px;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--amber);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
 </style>
 </head>
 <body id="top">
@@ -1675,9 +1885,9 @@ img {
           <span class="stop-bullet">1</span>
           <span>Stop 01 &bull; Partner Intake</span>
         </div>
-        <h1>Your program belongs in the City budget.</h1>
+        <h1>Your Council Member has funding for local programs. We make sure they fund yours.</h1>
         <p class="hero__lead">
-          New York City Council allocates direct municipal grants to local non-profits every year. OneNYC packages your compliance dossier, connects you to your Council Member, and handles administrative paperwork at zero fee.
+          Every year, your local City Council Member awards $10,000 to $25,000 municipal grants to community non-profits serving their district. OneNYC packages your compliance paperwork, pre-clears your 13 documents, and files directly with your Council Member at zero fee.
         </p>
         <div class="hero__stats">
           <div class="glass-stat">
@@ -1689,8 +1899,8 @@ img {
             <div class="glass-stat__lbl">100% free to charity &bull; Keep every dollar</div>
           </div>
           <div class="glass-stat">
-            <div class="glass-stat__num">All 51</div>
-            <div class="glass-stat__lbl">NYC Council Districts pre-cleared once</div>
+            <div class="glass-stat__num">Your District</div>
+            <div class="glass-stat__lbl">Filed directly with your local Council Member</div>
           </div>
           <div class="glass-stat">
             <div class="glass-stat__num">15 Minutes</div>
@@ -1703,11 +1913,15 @@ img {
         </div>
       </div>
       <div class="hero-visual">
-        <div class="photo-card">
-          <img src="assets/nyc-avenue-e1.jpg" alt="A sunlit New York City avenue with local neighborhood store fronts." width="1200" height="800">
-          <div class="photo-card__overlay">
+        <div class="ambient-video-card">
+          <video autoplay loop muted playsinline poster="assets/nyc-avenue-e1.jpg">
+            <source src="assets/videos/nyc-traffic.mp4" type="video/mp4">
+            <source src="assets/videos/avenue-night.mp4" type="video/mp4">
+            <img src="assets/nyc-avenue-e1.jpg" alt="A sunlit New York City avenue with traffic and neighborhood store fronts.">
+          </video>
+          <div class="ambient-video-card__overlay">
             <span class="photo-card__tag">New York City &bull; FY2028</span>
-            <span class="photo-card__caption">City funding, unlocked for the groups doing the work.</span>
+            <span class="photo-card__caption">Municipal funding, delivered to your neighborhood.</span>
           </div>
         </div>
       </div>
@@ -1720,12 +1934,9 @@ img {
   <section class="scene scene--reality" id="reality">
     <div class="wrap reality-grid">
       <div class="reality-visual">
-        <div class="photo-card">
+        <div class="feathered-plate">
           <img src="assets/real/paper-stilllife-h1.jpg" alt="Official municipal application papers with a red stamp and pen." width="1200" height="900">
-          <div class="photo-card__overlay">
-            <span class="photo-card__tag">Case File &bull; Technical Compliance</span>
-            <span class="photo-card__caption">Pre-Audit Protocol &bull; Zero Disqualification Guarantee</span>
-          </div>
+          
         </div>
       </div>
       <div class="reality-card">
@@ -1735,7 +1946,7 @@ img {
         </div>
         <h2>The paperwork takes longer than the program.</h2>
         <p class="lead">
-          Most first applications do not fail on program merits. They fail on technical compliance: a missing board resolution, an uncertified financial review, an unfiled CHAR500, or a formatting error on the municipal schedule. When one paper is missing, the entire application is disqualified before a Council Member ever reads it.
+          Most first applications do not fail on program merits. They fail on technical compliance: a missing board resolution, an uncertified financial review, an unfiled CHAR500, or a formatting error on the municipal schedule. When one paper is missing, the entire application is disqualified before your Council Member ever reads it.
         </p>
         <div class="reality-metrics">
           <div class="metric-item">
@@ -1754,7 +1965,7 @@ img {
         <div class="reality-solution">
           <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
           <div>
-            <b>Complete Pre-Audit Package:</b> OneNYC assembles, audits, and formats every document so your charity clears City compliance on day one.
+            <b>Complete Pre-Audit Package:</b> OneNYC assembles, audits, and formats every document so your charity clears City compliance and gets approved by your Council Member.
           </div>
         </div>
       </div>
@@ -1787,11 +1998,15 @@ img {
         </div>
 
         <div class="program-card">
-          <div class="program-card__img">
-            <img src="assets/partner-pantry-c1.jpg" alt="Volunteers handing fresh groceries at a community food pantry." width="600" height="400">
+          <div class="program-card__video">
+            <video autoplay loop muted playsinline poster="assets/partner-pantry-c1.jpg">
+              <source src="assets/videos/food-distribution.mp4" type="video/mp4">
+              <img src="assets/partner-pantry-c1.jpg" alt="Volunteers handing fresh groceries at a community food pantry.">
+            </video>
+            <span class="live-badge"><span class="live-badge__dot"></span> On The Ground</span>
           </div>
           <div class="program-card__body">
-            <h3 class="program-card__title">Food Security</h3>
+            <h3 class="program-card__title">Food Security &amp; Pantries</h3>
             <p class="program-card__desc">Community food pantries, emergency grocery distributions, and hot meal kitchens.</p>
           </div>
         </div>
@@ -1863,16 +2078,18 @@ img {
           <span class="stop-bullet">4</span>
           <span>Stop 04 &bull; The Dossier</span>
         </div>
-        <h2>Thirteen documents. One pre-cleared dossier.</h2>
+        <h2>Thirteen documents. One pre-cleared filing.</h2>
         <p class="lead">
           Every NYC Council Member uses the exact same compliance rules. We package all 13 required filings once. Any Council Member whose district you serve can fund you from that one dossier.
         </p>
 
         <div class="dossier-pills">
-          <button type="button" class="cube-btn is-active" data-face="front">Legal (4)</button>
-          <button type="button" class="cube-btn" data-face="right">Financial (4)</button>
-          <button type="button" class="cube-btn" data-face="back">Governance (3)</button>
-          <button type="button" class="cube-btn" data-face="left">Insurance (2)</button>
+          <button type="button" class="cube-btn is-active" data-face="front">501(c)(3) Letter</button>
+          <button type="button" class="cube-btn" data-face="right">Incorporation</button>
+          <button type="button" class="cube-btn" data-face="back">Form 990</button>
+          <button type="button" class="cube-btn" data-face="left">CHAR410 / State</button>
+          <button type="button" class="cube-btn" data-face="top">By-Laws</button>
+          <button type="button" class="cube-btn" data-face="bottom">EIN Letter</button>
         </div>
 
         <div class="doc-groups">
@@ -1930,117 +2147,123 @@ img {
       <div class="dossier-visual">
         <div class="stage" id="cubeStage">
           <div class="cube" id="cube">
-            <!-- Front Face: Legal -->
+            <!-- Front Face: Legal 501(c)(3) -->
             <div class="face face--front" data-face="front">
               <div class="face__header">
-                <span class="face__tag">01 &bull; Legal</span>
-                <span class="face__count">4 / 13</span>
+                <span class="face__tag">SAMPLE &bull; 01 OF 13</span>
+                <span class="face__count">IRS Exemption</span>
+              </div>
+              <div class="face__sample-wrap">
+                <img src="assets/cube-samples/face-501c3.jpg" alt="Sample IRS 501(c)(3) Determination Letter">
+                <span class="sample-watermark">Actual Document Sample</span>
               </div>
               <div>
-                <h3 class="face__title">Legal Foundation</h3>
-                <ul class="face__list">
-                  <li>Certificate of Incorporation</li>
-                  <li>IRS 501(c)(3) Letter</li>
-                  <li>Organizational By-Laws</li>
-                  <li>NYS Charities Registration</li>
-                </ul>
+                <h3 class="face__title" style="margin:2px 0;font-size:15px;">501(c)(3) Letter</h3>
+                <p style="font-size:11.5px;color:var(--cream-2);line-height:1.35;">IRS letter confirming federal tax-exempt charitable status.</p>
               </div>
               <div class="face__foot">
-                <span>NYC Comptroller Pre-Clear</span>
-                <span>Verified</span>
+                <span>IRS Determination</span>
+                <span style="color:var(--green);">&check; Required</span>
               </div>
             </div>
 
-            <!-- Right Face: Financial -->
+            <!-- Right Face: Certificate of Incorporation -->
             <div class="face face--right" data-face="right">
               <div class="face__header">
-                <span class="face__tag">02 &bull; Financial</span>
-                <span class="face__count">4 / 13</span>
+                <span class="face__tag">SAMPLE &bull; 02 OF 13</span>
+                <span class="face__count">NYS Incorporation</span>
+              </div>
+              <div class="face__sample-wrap">
+                <img src="assets/cube-samples/face-incorporation.jpg" alt="Sample NYS Certificate of Incorporation">
+                <span class="sample-watermark">Actual Document Sample</span>
               </div>
               <div>
-                <h3 class="face__title">Financial Audit</h3>
-                <ul class="face__list">
-                  <li>IRS Form 990 / 990-EZ</li>
-                  <li>NYS CHAR500 Filing</li>
-                  <li>Certified Audit / Review</li>
-                  <li>FY Operating Budget</li>
-                </ul>
+                <h3 class="face__title" style="margin:2px 0;font-size:15px;">Incorporation Certificate</h3>
+                <p style="font-size:11.5px;color:var(--cream-2);line-height:1.35;">NYS Department of State certificate of not-for-profit filing.</p>
               </div>
               <div class="face__foot">
-                <span>Fiscal Viability</span>
-                <span>Audited</span>
+                <span>NYS Dept. of State</span>
+                <span style="color:var(--green);">&check; Required</span>
               </div>
             </div>
 
-            <!-- Back Face: Governance -->
+            <!-- Back Face: IRS Form 990-EZ -->
             <div class="face face--back" data-face="back">
               <div class="face__header">
-                <span class="face__tag">03 &bull; Governance</span>
-                <span class="face__count">3 / 13</span>
+                <span class="face__tag">SAMPLE &bull; 03 OF 13</span>
+                <span class="face__count">Form 990 Return</span>
+              </div>
+              <div class="face__sample-wrap">
+                <img src="assets/cube-samples/face-form990.jpg" alt="Sample IRS Form 990-EZ Return">
+                <span class="sample-watermark">Actual Document Sample</span>
               </div>
               <div>
-                <h3 class="face__title">Board Governance</h3>
-                <ul class="face__list">
-                  <li>Board of Directors Roster</li>
-                  <li>Conflict of Interest Policy</li>
-                  <li>Signed Board Resolution</li>
-                </ul>
+                <h3 class="face__title" style="margin:2px 0;font-size:15px;">IRS Form 990 / 990-EZ</h3>
+                <p style="font-size:11.5px;color:var(--cream-2);line-height:1.35;">Most recently filed annual informational tax return.</p>
               </div>
               <div class="face__foot">
-                <span>Independent Oversight</span>
-                <span>Active</span>
+                <span>Financial Review</span>
+                <span style="color:var(--green);">&check; Required</span>
               </div>
             </div>
 
-            <!-- Left Face: Insurance -->
+            <!-- Left Face: NYS CHAR410 Registration -->
             <div class="face face--left" data-face="left">
               <div class="face__header">
-                <span class="face__tag">04 &bull; Insurance</span>
-                <span class="face__count">2 / 13</span>
+                <span class="face__tag">SAMPLE &bull; 04 OF 13</span>
+                <span class="face__count">State Charities</span>
+              </div>
+              <div class="face__sample-wrap">
+                <img src="assets/cube-samples/face-char410.jpg" alt="Sample NYS CHAR410 Charities Registration">
+                <span class="sample-watermark">Actual Document Sample</span>
               </div>
               <div>
-                <h3 class="face__title">City Insurance</h3>
-                <ul class="face__list">
-                  <li>$1M+ General Liability (CGL)</li>
-                  <li>Workers' Comp / Disability</li>
-                  <li>City of New York Endorsement</li>
-                </ul>
+                <h3 class="face__title" style="margin:2px 0;font-size:15px;">CHAR410 / CHAR500</h3>
+                <p style="font-size:11.5px;color:var(--cream-2);line-height:1.35;">Active registration with the NYS Attorney General Charities Bureau.</p>
               </div>
               <div class="face__foot">
-                <span>Municipal Protection</span>
-                <span>Current</span>
+                <span>NYS Charities Bureau</span>
+                <span style="color:var(--green);">&check; Required</span>
               </div>
             </div>
 
-            <!-- Top Face: Complete Dossier -->
+            <!-- Top Face: By-Laws & Board Resolution -->
             <div class="face face--top" data-face="top">
               <div class="face__header">
-                <span class="face__tag">Standard</span>
-                <span class="face__count">13 / 13</span>
+                <span class="face__tag">SAMPLE &bull; 05 OF 13</span>
+                <span class="face__count">Governance</span>
+              </div>
+              <div class="face__sample-wrap">
+                <img src="assets/cube-samples/face-bylaws.jpg" alt="Sample Organizational Bylaws">
+                <span class="sample-watermark">Actual Document Sample</span>
               </div>
               <div>
-                <h3 class="face__title">Complete Dossier</h3>
-                <p style="font-size:12px;color:var(--cream-2);line-height:1.45;">One packaged dossier. Ready for any district you serve.</p>
+                <h3 class="face__title" style="margin:2px 0;font-size:15px;">By-Laws &amp; Resolution</h3>
+                <p style="font-size:11.5px;color:var(--cream-2);line-height:1.35;">Signed board governance resolution and by-laws.</p>
               </div>
               <div class="face__foot">
-                <span>Ready to File</span>
-                <span>FY2028</span>
+                <span>Board Governance</span>
+                <span style="color:var(--green);">&check; Required</span>
               </div>
             </div>
 
-            <!-- Bottom Face: OneNYC Impact Partners -->
+            <!-- Bottom Face: Federal EIN Letter -->
             <div class="face face--bottom" data-face="bottom">
               <div class="face__header">
-                <span class="face__tag">OneNYC</span>
-                <span class="face__count">$0 Fee</span>
+                <span class="face__tag">SAMPLE &bull; 06 OF 13</span>
+                <span class="face__count">Federal EIN</span>
+              </div>
+              <div class="face__sample-wrap">
+                <img src="assets/cube-samples/face-ein.jpg" alt="Sample Federal EIN Assignment Letter">
+                <span class="sample-watermark">Actual Document Sample</span>
               </div>
               <div>
-                <h3 class="face__title">Impact Partners</h3>
-                <p style="font-size:12px;color:var(--cream-2);line-height:1.45;">Zero fees, zero commission. Grassroots programs keep every dollar.</p>
+                <h3 class="face__title" style="margin:2px 0;font-size:15px;">EIN Letter (CP 575)</h3>
+                <p style="font-size:11.5px;color:var(--cream-2);line-height:1.35;">Federal Tax Identification number assignment notice from the IRS.</p>
               </div>
               <div class="face__foot">
-                <span>Public Coalition</span>
-                <span>Verified</span>
+                <span>Federal Tax ID</span>
+                <span style="color:var(--green);">&check; Required</span>
               </div>
             </div>
           </div>
@@ -2087,7 +2310,7 @@ img {
                 <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
               </div>
               <h3>02 &bull; You Approve</h3>
-              <p>Every single number, word, and signature is verified by you. Nothing is ever submitted to the City without your explicit consent.</p>
+              <p>Every single number, word, and signature is verified by you. Nothing is ever submitted to your Council Member without your explicit consent.</p>
             </div>
 
             <div class="pillar-card">
@@ -2129,11 +2352,11 @@ img {
           </div>
           <div class="timeline-step">
             <h4>03. 15-Minute Alignment Call</h4>
-            <p>A brief call with our team to map your targeted Council Members and district boundaries.</p>
+            <p>A brief call to verify the Council Member who represents your neighborhood programs.</p>
           </div>
           <div class="timeline-step">
                         <h4>04. Complete Dossier Filing</h4>
-                        <p>We package your 13 compliance documents and file with your Council Member at zero fee.</p>
+                        <p>We package your 13 compliance documents and file directly with your local Council Member at zero fee.</p>
                       </div>
                       <div class="timeline-step">
                         <h4>Which district do I apply in?</h4>
