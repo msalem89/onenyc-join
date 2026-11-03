@@ -515,9 +515,13 @@ details[open] .plate__img img{filter:saturate(1) contrast(1.04)}
 .stage{
   position:relative;display:grid;place-items:center;
   min-height:clamp(380px,58vh,600px);
+  -webkit-perspective:1200px;
   perspective:1200px;perspective-origin:50% 46%;
-  cursor:pointer;
+  cursor:grab;
+  user-select:none;-webkit-user-select:none;
+  touch-action:none;
 }
+.stage:active{cursor:grabbing}
 .stage__halo{
   position:absolute;width:78%;height:78%;border-radius:50%;z-index:0;
   background:radial-gradient(50% 50% at 50% 50%,rgba(255,170,0,.16),rgba(255,170,0,0) 70%);
@@ -526,6 +530,7 @@ details[open] .plate__img img{filter:saturate(1) contrast(1.04)}
 .cube{
   --cube:clamp(196px,23vw,290px);
   position:relative;width:var(--cube);height:var(--cube);
+  -webkit-transform-style:preserve-3d;
   transform-style:preserve-3d;
   transform:rotateX(-16deg) rotateY(-34deg);
   will-change:transform;z-index:1;
@@ -536,6 +541,7 @@ details[open] .plate__img img{filter:saturate(1) contrast(1.04)}
   padding:clamp(12px,1.4vw,18px);
   background:linear-gradient(152deg,#F8F3E8 0%,#EDE5D5 58%,#E2D8C4 100%);
   border:1px solid rgba(18,22,27,.34);
+  -webkit-backface-visibility:hidden;
   backface-visibility:hidden;
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.55),inset 0 -28px 50px rgba(18,22,27,.08);
   color:var(--ink);
@@ -996,18 +1002,7 @@ details.is-closing > .panel > .panel__in{animation:innerOut .28s linear both}
 
 </style>
 
-<style id="bg-cube">
-/* the 3D object belongs to the world, not the page furniture */
-[data-cube-stage]{
-  position:fixed;right:3%;top:24%;width:clamp(240px,26vw,380px);height:clamp(240px,26vw,380px);
-  z-index:0;opacity:.42;pointer-events:none;filter:saturate(.9) contrast(1.02);
-  transition:opacity .6s ease;
-}
-[data-cube-stage] .cube{--cube:100%;width:100%;height:100%;transform:rotateX(-14deg) rotateY(-28deg)}
-main{position:relative;z-index:1}
-@media(max-width:1000px){[data-cube-stage]{display:none}}
-@media (prefers-reduced-motion:reduce){[data-cube-stage]{opacity:.25}}
-</style>
+
 
 <style id="ghost-and-morph">
 /* ghost words live in the empty space, same surface, no box */
@@ -1327,7 +1322,7 @@ details[data-stop][open] .panel__in{animation:panelIn .55s cubic-bezier(.16,1,.3
               </div>
             </div>
             <span class="cube__shadow" aria-hidden="true"></span>
-            <span class="stage__hint">Tilt / scroll to turn</span>
+            <span class="stage__hint">Drag or scroll to turn</span>
           </div>
         </summary>
 
@@ -1895,18 +1890,47 @@ details[data-stop][open] .panel__in{animation:panelIn .55s cubic-bezier(.16,1,.3
   var stage = $('[data-cube-stage]');
   var cube = $('[data-cube]');
   var yaw = -34, pitch = -16, targetYaw = -34, targetPitch = -16;
+  var isDragging = false, startX = 0, startY = 0, startYaw = -34, startPitch = -16;
   var pointerX = 0, pointerY = 0;
 
   if (stage && cube && !reduce) {
-    stage.addEventListener('pointermove', function (e) {
-      if (e.pointerType === 'touch') return;
-      var r = stage.getBoundingClientRect();
-      pointerX = clamp(((e.clientX - r.left) / r.width) * 2 - 1, -1, 1);
-      pointerY = clamp(((e.clientY - r.top) / r.height) * 2 - 1, -1, 1);
+    stage.addEventListener('pointerdown', function (e) {
+      isDragging = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      startYaw = targetYaw;
+      startPitch = targetPitch;
+      try { stage.setPointerCapture(e.pointerId); } catch (_) {}
     });
+    stage.addEventListener('pointermove', function (e) {
+      if (isDragging) {
+        var dx = e.clientX - startX;
+        var dy = e.clientY - startY;
+        targetYaw = startYaw + dx * 0.55;
+        targetPitch = clamp(startPitch - dy * 0.55, -75, 75);
+      } else {
+        if (e.pointerType === 'touch') return;
+        var r = stage.getBoundingClientRect();
+        pointerX = clamp(((e.clientX - r.left) / r.width) * 2 - 1, -1, 1);
+        pointerY = clamp(((e.clientY - r.top) / r.height) * 2 - 1, -1, 1);
+      }
+    });
+    function endDrag(e) {
+      if (!isDragging) return;
+      isDragging = false;
+      try { stage.releasePointerCapture(e.pointerId); } catch (_) {}
+    }
+    stage.addEventListener('pointerup', endDrag);
+    stage.addEventListener('pointercancel', endDrag);
     stage.addEventListener('pointerleave', function () {
-      pointerX = 0;
-      pointerY = 0;
+      if (!isDragging) {
+        pointerX = 0;
+        pointerY = 0;
+      }
+    });
+    stage.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
     });
   }
 
@@ -1966,9 +1990,13 @@ details[data-stop][open] .panel__in{animation:panelIn .55s cubic-bezier(.16,1,.3
       if (stage && cube) {
         var sr = stage.getBoundingClientRect();
         if (sr.bottom > -120 && sr.top < vh + 120) {
-          var sp = clamp((vh - sr.top) / (vh + sr.height), 0, 1);
-          targetYaw = -34 + sp * 212 + pointerX * 16;
-          targetPitch = -16 + Math.sin(sp * Math.PI) * 7 + pointerY * 12;
+          if (!isDragging) {
+            var sp = clamp((vh - sr.top) / (vh + sr.height), 0, 1);
+            var scrollYaw = -34 + sp * 212 + pointerX * 16;
+            var scrollPitch = -16 + Math.sin(sp * Math.PI) * 7 + pointerY * 12;
+            targetYaw = lerp(targetYaw, scrollYaw, 0.05);
+            targetPitch = lerp(targetPitch, scrollPitch, 0.05);
+          }
           yaw = lerp(yaw, targetYaw, 0.08);
           pitch = lerp(pitch, targetPitch, 0.08);
           cube.style.transform = 'rotateX(' + pitch.toFixed(2) + 'deg) rotateY(' + yaw.toFixed(2) + 'deg)';
@@ -2470,22 +2498,6 @@ details[data-stop][open] .panel__in{animation:panelIn .55s cubic-bezier(.16,1,.3
 </script>
 
 
-<script>
-(function(){
-  var stage=document.querySelector('[data-cube-stage]');
-  if(!stage) return;
-  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(reduce) return;
-  var y=window.scrollY||0, t=y;
-  window.addEventListener('scroll',function(){t=window.scrollY||0;},{passive:true});
-  (function loop(){
-    y+=(t-y)*0.06;
-    var ang=y*0.02, lift=Math.sin(y*0.002)*10-y*0.03;
-    stage.style.transform='translate3d(0,'+lift.toFixed(1)+'px,0) rotate('+ang.toFixed(2)+'deg)';
-    requestAnimationFrame(loop);
-  })();
-})();
-</script>
 
 <script>
 (function(){
