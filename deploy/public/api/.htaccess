@@ -1,0 +1,18 @@
+# API directory — cPanel/Apache. Clean URLs: /api/signup -> signup.php, /api/healthz -> healthz.php
+Options -Indexes
+AddDefaultCharset UTF-8
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^signup/?$  signup.php  [L,QSA]
+  RewriteRule ^healthz/?$ healthz.php [L,QSA]
+</IfModule>
+
+<IfModule mod_php.c>
+  php_flag display_errors off
+  php_flag log_errors on
+</IfModule>
+
+<FilesMatch "\.(jsonl|json|log|ini|php\.bak|dist)$">
+  Require all denied
+</FilesMatch>

@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OneNYC Partners — get funding-ready, free</title>
+<style>
+  :root{
+    --navy:#0e1729; --navy2:#16233d; --ink:#0f172a; --muted:#5b6b85; --line:#e3e8ef;
+    --amber:#f5a623; --amber-d:#d98d0c; --ok:#0f7a4a; --bg:#f7f9fc; --white:#fff;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg)}
+  a{color:#1d4ed8}
+  .wrap{width:min(1080px,92vw);margin:0 auto}
+  /* header */
+  header{background:var(--navy);color:#fff;padding:14px 0;position:sticky;top:0;z-index:10}
+  .bar{display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:.02em;min-width:0}
+  .brand > div{min-width:0}
+  .cta{flex:0 0 auto}
+  .brand span{display:block;font-size:.72rem;font-weight:500;color:#9fb0cc;letter-spacing:.04em;text-transform:uppercase}
+  .cta{background:var(--amber);color:#241a05;border:0;border-radius:10px;padding:11px 18px;font-weight:700;font-size:.95rem;cursor:pointer}
+  .cta:hover{background:var(--amber-d)}
+  /* hero */
+  .hero{background:linear-gradient(180deg,var(--navy) 0%,var(--navy2) 100%);color:#fff;padding:56px 0 64px}
+  .eyebrow{color:var(--amber);font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
+  h1{font-size:clamp(2rem,5vw,3.1rem);line-height:1.08;margin:0 0 18px;letter-spacing:-.02em;max-width:18ch}
+  .lede{font-size:clamp(1rem,2.2vw,1.18rem);color:#c9d6ea;max-width:56ch;margin:0 0 26px}
+  .hero-cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .ghost{background:transparent;color:#dfe8f6;border:1px solid #38496a;border-radius:10px;padding:11px 16px;font-weight:600;cursor:pointer}
+  .trust{display:flex;gap:22px;flex-wrap:wrap;margin-top:30px;color:#9fb0cc;font-size:.88rem}
+  .trust b{color:#fff}
+  /* sections */
+  section{padding:56px 0}
+  h2{font-size:clamp(1.35rem,3vw,1.8rem);margin:0 0 8px;letter-spacing:-.01em}
+  .sub{color:var(--muted);margin:0 0 26px;max-width:60ch}
+  .qgrid{display:grid;gap:18px}
+  .qcard{background:var(--white);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .qcard h3{margin:0 0 14px;font-size:1rem}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{border:1px solid var(--line);background:#fbfcfe;border-radius:999px;padding:9px 14px;font-size:.9rem;cursor:pointer;color:#25324a}
+  .chip[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+  /* form */
+  .formcard{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:26px;box-shadow:0 8px 30px rgba(15,23,42,.06)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:620px){.grid2{grid-template-columns:1fr}}
+  label{display:block;font-size:.85rem;font-weight:600;margin-bottom:6px;color:#25324a}
+  input[type=text],input[type=email]{width:100%;padding:11px 12px;border:1px solid #cbd5e1;border-radius:9px;font-size:1rem;background:#fff}
+  input:focus{outline:2px solid #93b4f5;outline-offset:1px}
+  .field{margin-bottom:14px}
+  .consent{display:flex;gap:9px;align-items:flex-start;font-size:.86rem;color:#3b4a63;margin:6px 0 18px}
+  .consent input{margin-top:3px}
+  .submit{width:100%;padding:14px;border:0;border-radius:11px;background:var(--ok);color:#fff;font-weight:700;font-size:1rem;cursor:pointer}
+  .submit[disabled]{opacity:.6;cursor:progress}
+  .status{margin-top:16px;padding:14px;border-radius:10px;font-size:.92rem;display:none}
+  .status.ok{display:block;background:#effbf4;border:1px solid #b9ecd0;color:#0c5c39}
+  .status.err{display:block;background:#fff5f5;border:1px solid #fbd5d5;color:#8a1f1f}
+  .code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:700}
+  footer{background:var(--navy);color:#9fb0cc;padding:26px 0;font-size:.86rem}
+  footer a{color:#c9d6ea}
+  .next{display:grid;gap:10px;margin:14px 0 0;padding:0;list-style:none;font-size:.9rem}
+  .next li{display:flex;gap:8px;align-items:flex-start}
+  .dot{width:18px;height:18px;border-radius:50%;background:#d7f0e2;color:#0c5c39;font-size:.72rem;font-weight:700;display:grid;place-items:center;flex:0 0 18px;margin-top:2px}
+  @media(max-width:560px){
+    .brand span{display:none}
+    .bar{gap:10px}
+    header .cta{padding:10px 14px;font-size:.9rem}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap bar">
+    <div class="brand">ONE NYC <span>Impact Partnership &amp; Municipal Funding Coalition</span></div>
+    <button class="cta" onclick="document.getElementById('signup').scrollIntoView()">Start free</button>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Free support · Five boroughs · Nov 15 intake</div>
+    <h1>Your nonprofit, funding-ready — without the paperwork maze.</h1>
+    <p class="lede">OneNYC handles the compliance, documents and process so your organization can go after
+      NYC Council discretionary funding. We draft, advise and prepare; you submit under your own account.
+      No cost, no funding promises — just the work that gets you ready.</p>
+    <div class="hero-cta">
+      <button class="cta" onclick="document.getElementById('questions').scrollIntoView()">See if you qualify</button>
+      <button class="ghost" onclick="document.getElementById('signup').scrollIntoView()">Skip to sign-up</button>
+    </div>
+    <div class="trust">
+      <div><b>3 minutes</b> to start</div>
+      <div><b>4 fields</b> to sign up</div>
+      <div><b>Free</b> for eligible 501(c)(3)s</div>
+    </div>
+  </div>
+</div>
+
+<section id="questions">
+  <div class="wrap">
+    <h2>Three quick questions</h2>
+    <p class="sub">Answer these and we'll tell you what your onboarding looks like. Nothing here is binding.</p>
+    <div class="qgrid">
+      <div class="qcard">
+        <h3>1. Where do you work?</h3>
+        <div class="chips" data-q="borough">
+          <button class="chip" type="button" aria-pressed="false">Manhattan</button>
+          <button class="chip" type="button" aria-pressed="false">Brooklyn</button>
+          <button class="chip" type="button" aria-pressed="false">Queens</button>
+          <button class="chip" type="button" aria-pressed="false">Bronx</button>
+          <button class="chip" type="button" aria-pressed="false">Staten Island</button>
+          <button class="chip" type="button" aria-pressed="false">Citywide</button>
+        </div>
+      </div>
+      <div class="qcard">
+        <h3>2. What do you run?</h3>
+        <div class="chips" data-q="focus">
+          <button class="chip" type="button" aria-pressed="false">Arts &amp; culture</button>
+          <button class="chip" type="button" aria-pressed="false">Youth</button>
+          <button class="chip" type="button" aria-pressed="false">Housing</button>
+          <button class="chip" type="button" aria-pressed="false">Health</button>
+          <button class="chip" type="button" aria-pressed="false">Workforce</button>
+          <button class="chip" type="button" aria-pressed="false">Other</button>
+        </div>
+      </div>
+      <div class="qcard">
+        <h3>3. What gets in the way?</h3>
+        <div class="chips" data-q="blocker">
+          <button class="chip" type="button" aria-pressed="false">Paperwork</button>
+          <button class="chip" type="button" aria-pressed="false">Eligibility rules</button>
+          <button class="chip" type="button" aria-pressed="false">Budget &amp; docs</button>
+          <button class="chip" type="button" aria-pressed="false">PASSPort account</button>
+          <button class="chip" type="button" aria-pressed="false">Not sure where to start</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="signup" style="padding-top:0">
+  <div class="wrap">
+    <h2>Sign up in four fields</h2>
+    <p class="sub">We'll email you the next step. An NDA and, where health data is involved, a BAA come after —
+      workspace access is granted once both are signed.</p>
+
+    <form class="formcard" id="signupForm" novalidate>
+      <div class="grid2">
+        <div class="field">
+          <label for="first">First name</label>
+          <input id="first" name="first" type="text" autocomplete="given-name" required>
+        </div>
+        <div class="field">
+          <label for="last">Last name</label>
+          <input id="last" name="last" type="text" autocomplete="family-name" required>
+        </div>
+      </div>
+      <div class="field">
+        <label for="org">Organization</label>
+        <input id="org" name="org" type="text" autocomplete="organization" required>
+      </div>
+      <div class="field">
+        <label for="email">Work email</label>
+        <input id="email" name="email" type="email" autocomplete="email" required>
+      </div>
+
+      <label class="consent">
+        <input type="checkbox" id="tos">
+        <span>I agree to the <a href="/terms.html" target="_blank" rel="noopener">Terms of Service</a> and
+        <a href="/privacy.html" target="_blank" rel="noopener">Privacy Notice</a>, including electronic signature
+        of the NDA and BAA.</span>
+      </label>
+
+      <button class="submit" id="submitBtn" type="submit">Request onboarding</button>
+      <div class="status" id="status" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    OneNYC Partners · <a href="mailto:info@onenyc.com">info@onenyc.com</a> ·
+    <a href="/terms.html">Terms</a> · <a href="/privacy.html">Privacy</a>
+    <div style="margin-top:8px;opacity:.75">We do not promise funding. Your organization submits its own applications.</div>
+  </div>
+</footer>
+
+<script>
+  const answers = { borough: '', focus: '', blocker: '' };
+  document.querySelectorAll('.chips').forEach(group => {
+    group.addEventListener('click', e => {
+      const chip = e.target.closest('.chip'); if (!chip) return;
+      group.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', 'false'));
+      chip.setAttribute('aria-pressed', 'true');
+      answers[group.dataset.q] = chip.textContent.trim();
+    });
+  });
+
+  const form = document.getElementById('signupForm');
+  const status = document.getElementById('status');
+  const btn = document.getElementById('submitBtn');
+  const TERMS_VERSION = 'v1-draft-2026-11-01';
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    status.className = 'status'; status.textContent = '';
+    const first = document.getElementById('first').value.trim();
+    const last  = document.getElementById('last').value.trim();
+    const org   = document.getElementById('org').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const tos   = document.getElementById('tos').checked;
+
+    if (!first || !last) return fail('Please add your first and last name.');
+    if (!org)            return fail('Please add your organization.');
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return fail('Please add a valid email address.');
+    if (!tos)            return fail('Please agree to the Terms and Privacy Notice.');
+
+    btn.disabled = true; btn.textContent = 'Sending…';
+    try {
+      const res = await fetch('/api/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          org,
+          signer_name: `${first} ${last}`,
+          signer_email: email,
+          borough: answers.borough,
+          prog_narrative: [answers.focus && `Focus: ${answers.focus}`, answers.blocker && `Blocker: ${answers.blocker}`]
+                            .filter(Boolean).join(' · '),
+          legal_advisory_ack: true,
+          tos_accepted: true,
+          terms_version: TERMS_VERSION,
+          tos_accepted_at: new Date().toISOString()
+        })
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.detail || `Server said ${res.status}`);
+      status.className = 'status ok';
+      status.innerHTML = `✓ You're in. Confirmation <span class="code">${data.confirmation_code}</span>` +
+        `<ul class="next">` +
+        `<li><i class="dot">1</i><span>Check your inbox — the NDA arrives for electronic signature.</span></li>` +
+        `<li><i class="dot">2</i><span>If health data is involved, the BAA follows.</span></li>` +
+        `<li><i class="dot">3</i><span>Once both are signed, we open your workspace and start PASSPort enrollment.</span></li>` +
+        `</ul>`;
+      form.querySelectorAll('input').forEach(i => { if (i.type !== 'checkbox') i.value = ''; });
+      document.getElementById('tos').checked = false;
+    } catch (err) {
+      fail(`We couldn't save that: ${err.message}. Try again, or email info@onenyc.com.`);
+    } finally {
+      btn.disabled = false; btn.textContent = 'Request onboarding';
+    }
+  });
+
+  function fail(msg) { status.className = 'status err'; status.textContent = msg; }
+</script>
+</body>
+</html>

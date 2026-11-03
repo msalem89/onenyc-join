@@ -1,0 +1,2 @@
+# Belt and braces: this directory must never be reachable over HTTP.
+Require all denied
