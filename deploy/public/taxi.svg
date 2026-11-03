@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 160" fill="none">
+  <!-- Shadow -->
+  <ellipse cx="120" cy="148" rx="95" ry="10" fill="rgba(0,0,0,0.5)" filter="blur(4px)"/>
+  <!-- Wheels -->
+  <rect x="22" y="116" width="28" height="28" rx="8" fill="#111"/>
+  <rect x="190" y="116" width="28" height="28" rx="8" fill="#111"/>
+  <circle cx="36" cy="130" r="6" fill="#444"/>
+  <circle cx="204" cy="130" r="6" fill="#444"/>
+  <!-- Main Body / Lower Hull -->
+  <path d="M28 116 L36 84 Q38 78 48 76 L192 76 Q202 78 204 84 L212 116 Q214 126 200 126 L40 126 Q26 126 28 116 Z" fill="#FFB703" stroke="#E09600" stroke-width="1.5"/>
+  <!-- Bumper -->
+  <rect x="32" y="118" width="176" height="12" rx="5" fill="#222" stroke="#333" stroke-width="1"/>
+  <!-- License Plate -->
+  <rect x="98" y="119" width="44" height="10" rx="2" fill="#E5E5E5" stroke="#999" stroke-width="0.5"/>
+  <text x="120" y="127" font-family="monospace" font-size="7" font-weight="bold" fill="#111" text-anchor="middle">NYC • 7Y82</text>
+  <!-- Checker Stripe on Trunk -->
+  <g opacity="0.85">
+    <rect x="44" y="98" width="152" height="7" fill="#111"/>
+    <!-- Checker squares -->
+    <rect x="48" y="98" width="7" height="7" fill="#FFF"/>
+    <rect x="62" y="98" width="7" height="7" fill="#FFF"/>
+    <rect x="76" y="98" width="7" height="7" fill="#FFF"/>
+    <rect x="90" y="98" width="7" height="7" fill="#FFF"/>
+    <rect x="104" y="98" width="7" height="7" fill="#FFF"/>
+    <rect x="118" y="98" width="7" height="7" fill="#FFF"/>
+    <rect x="132" y="98" width="7" height="7" fill="#FFF"/>
+    <rect x="146" y="98" width="7" height="7" fill="#FFF"/>
+    <rect x="160" y="98" width="7" height="7" fill="#FFF"/>
+    <rect x="174" y="98" width="7" height="7" fill="#FFF"/>
+    <rect x="188" y="98" width="7" height="7" fill="#FFF"/>
+  </g>
+  <!-- Taillights -->
+  <rect x="36" y="94" width="18" height="16" rx="4" fill="#FF2A2A" stroke="#CC0000" stroke-width="1"/>
+  <rect x="186" y="94" width="18" height="16" rx="4" fill="#FF2A2A" stroke="#CC0000" stroke-width="1"/>
+  <rect x="40" y="102" width="10" height="5" rx="1" fill="#FFB703"/>
+  <rect x="190" y="102" width="10" height="5" rx="1" fill="#FFB703"/>
+  <!-- Cabin Roof & Windows -->
+  <path d="M58 76 L74 38 Q78 34 88 34 L152 34 Q162 34 166 38 L182 76 Z" fill="#E5A300"/>
+  <!-- Rear Window Glass -->
+  <path d="M64 74 L78 40 Q80 38 88 38 L152 38 Q160 38 162 40 L176 74 Z" fill="#1B263B" stroke="#0F172A" stroke-width="1"/>
+  <!-- Window Glass reflection line -->
+  <path d="M78 44 L92 70" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round"/>
+  <!-- Roof Top -->
+  <rect x="82" y="30" width="76" height="6" rx="2" fill="#FFB703"/>
+  <!-- Taxi Medallion Roof Light -->
+  <rect x="100" y="18" width="40" height="14" rx="3" fill="#FFF9E6" stroke="#D4A000" stroke-width="1"/>
+  <rect x="101" y="19" width="38" height="12" rx="2" fill="#FFD60A" opacity="0.9"/>
+  <text x="120" y="28" font-family="sans-serif" font-size="6.5" font-weight="900" fill="#111" text-anchor="middle" letter-spacing="0.5">NYC TAXI</text>
+  <!-- Taxi Light Amber Glow -->
+  <ellipse cx="120" cy="25" rx="24" ry="6" fill="rgba(255, 214, 10, 0.35)" filter="blur(3px)"/>
+</svg>

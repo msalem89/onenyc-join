@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>OneNYC Impact Partners — NYC Council Discretionary Funding for Non-Profits</title>
 <meta name="description" content="Municipal funding for New York City non-profits. We package your 13 compliance documents for all 51 City Council Members at zero fee.">
-<meta name="theme-color" content="#070B11">
+<meta name="theme-color" content="#0A1828">
 <meta property="og:title" content="OneNYC Impact Partners — Municipal Discretionary Grants">
 <meta property="og:description" content="City Council funding for neighborhood non-profit programs. 100% free compliance intake from OneNYC.">
 <meta property="og:type" content="website">
@@ -23,24 +23,39 @@
   --body: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, -apple-system-body, sans-serif;
   --mono: ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
 
-  --bg: #070B11;
-  --bg-deep: #030508;
-  --paper: #F8F6F0;
-  --cream: #EDE8DC;
-  --cream-2: #D1CBC0;
-  --amber: #FF9F0A;
-  --amber-dark: #D97706;
-  --amber-glow: rgba(255, 159, 10, 0.28);
-  --green: #30D158;
-  --ink: #0A101A;
+  /* Rich Municipal Dark Slate Palette */
+  --bg: #0A121D;
+  --bg-deep: #060B14;
+  --paper: #FFFFFF;
+  --cream: #F5F7FA;
+  --cream-2: #D1D8E2;
+  --muted: #8E99A8;
+  --ink: #0B111A;
+  --ink-2: #242E3C;
+  --ink-3: #5A6678;
 
-  --glass-bg: rgba(14, 21, 33, 0.76);
-  --glass-card: rgba(18, 27, 44, 0.72);
-  --glass-card-hover: rgba(24, 36, 58, 0.82);
+  /* Civic Amber Accents */
+  --amber: #FFAA00;
+  --amber-soft: #FFC24D;
+  --amber-dark: #D98200;
+  --amber-glow: rgba(255, 170, 0, 0.28);
+  --amber-gradient: linear-gradient(180deg, #FFB82E 0%, #F59E0B 100%);
+
+  --green: #30D158;
+  --green-soft: #A7F3D0;
+  --blue: #0A84FF;
+
+  /* Apple Glass Elevation System */
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-bg-hover: rgba(255, 255, 255, 0.08);
+  --glass-card: rgba(16, 23, 35, 0.78);
+  --glass-card-hover: rgba(22, 32, 48, 0.86);
   --glass-border: rgba(255, 255, 255, 0.12);
-  --glass-border-light: rgba(255, 255, 255, 0.22);
+  --glass-border-light: rgba(255, 255, 255, 0.20);
+  --glass-sheen: inset 0 1px 0 0 rgba(255, 255, 255, 0.20);
+  --glass-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.18), 0 24px 64px -16px rgba(0, 0, 0, 0.55);
   --glass-blur: blur(28px) saturate(190%);
-  --glass-blur-sm: blur(16px) saturate(180%);
+  --glass-blur-sm: blur(16px) saturate(160%);
 
   --radius-sm: 10px;
   --radius-md: 16px;
@@ -54,7 +69,6 @@
 
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --cube: clamp(240px, 26vw, 320px);
 }
 
 *, *::before, *::after {
@@ -88,7 +102,7 @@ body {
   inset: 0;
   z-index: -3;
   pointer-events: none;
-  background: radial-gradient(ellipse 90% 60% at 50% -10%, #17283E 0%, #080D15 65%, #030508 100%);
+  background: radial-gradient(130% 90% at 50% 15%, #1A2E4C 0%, #101E30 45%, #060B14 100%);
   transition: background 1.2s ease;
 }
 
@@ -696,7 +710,7 @@ img {
 }
 
 /* --------------------------------------------------------------------------
-   Scene 4: The 13-Document Compliance Dossier & Interactive 3D Cube
+   Scene 4: The 13-Document Compliance Dossier & Document Showcase
    -------------------------------------------------------------------------- */
 .scene--dossier {
   background: radial-gradient(ellipse 70% 60% at 30% 50%, rgba(16, 26, 42, 0.5) 0%, transparent 100%);
@@ -721,216 +735,318 @@ img {
   margin-bottom: 30px;
 }
 
-.dossier-pills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 24px;
+.dossier-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(32px, 5vw, 64px);
+  align-items: flex-start;
 }
 
-.cube-btn {
+.dossier-category-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.dossier-tab {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
-  background: rgba(255, 255, 255, 0.06);
+  gap: 7px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-pill);
-  color: var(--paper);
+  color: var(--cream);
   font-family: var(--display);
-  font-size: 13.5px;
+  font-size: 13px;
   font-weight: 500;
   cursor: pointer;
   -webkit-backdrop-filter: var(--glass-blur-sm);
   backdrop-filter: var(--glass-blur-sm);
-  transition: all 0.25s var(--ease);
+  transition: all 0.2s var(--ease);
 }
-.cube-btn:hover {
-  background: rgba(255, 255, 255, 0.12);
+.dossier-tab:hover {
+  background: rgba(255, 255, 255, 0.1);
   border-color: var(--glass-border-light);
-  transform: translateY(-1px);
 }
-.cube-btn.is-active {
-  background: var(--amber);
-  color: #070B11;
+.dossier-tab.is-active {
+  background: rgba(255, 170, 0, 0.16);
   border-color: var(--amber);
+  color: #FFFFFF;
   font-weight: 600;
-  box-shadow: 0 4px 16px rgba(255, 159, 10, 0.35);
 }
+.tab-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+.tab-dot.amber { background: var(--amber); box-shadow: 0 0 6px var(--amber); }
+.tab-dot.green { background: var(--green); box-shadow: 0 0 6px var(--green); }
+.tab-dot.blue { background: #0A84FF; box-shadow: 0 0 6px #0A84FF; }
+.tab-dot.purple { background: #BF5AF2; box-shadow: 0 0 6px #BF5AF2; }
 
 .doc-groups {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 14px;
 }
 
 .doc-group {
-  padding: 18px;
+  padding: 18px 20px;
   background: var(--glass-card);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
   -webkit-backdrop-filter: var(--glass-blur);
   backdrop-filter: var(--glass-blur);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
-  transition: border-color 0.25s ease;
+  transition: border-color 0.25s ease, background 0.25s ease;
 }
 .doc-group.is-highlighted {
-  border-color: var(--amber);
-  background: rgba(255, 159, 10, 0.08);
+  border-color: rgba(255, 170, 0, 0.45);
+  background: rgba(18, 30, 48, 0.9);
 }
 
 .doc-group__head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .doc-group__title {
   font-family: var(--display);
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 600;
   color: #FFFFFF;
 }
 
 .doc-group__badge {
   font-family: var(--mono);
-  font-size: 10px;
-  padding: 2px 7px;
-  border-radius: 99px;
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
   background: rgba(255, 255, 255, 0.08);
   color: var(--amber);
 }
 
 .doc-group ul {
   list-style: none;
-  font-size: 12px;
-  color: var(--cream-2);
-  line-height: 1.6;
-}
-.doc-group li::before {
-  content: "• ";
-  color: var(--amber);
-}
-
-/* 3D Cube Stage */
-.stage {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1;
-  max-width: 420px;
-  margin: 0 auto;
-  display: grid;
-  place-items: center;
-  perspective: 1200px;
-  -webkit-perspective: 1200px;
-  user-select: none;
-}
-
-.cube {
-  position: relative;
-  width: var(--cube);
-  height: var(--cube);
-  transform-style: preserve-3d;
-  -webkit-transform-style: preserve-3d;
-  cursor: grab;
-  transition: transform 0.15s ease-out;
-}
-.cube.is-dragging {
-  cursor: grabbing;
-}
-
-.face {
-  position: absolute;
-  inset: 0;
-  background: rgba(14, 21, 33, 0.88);
-  border: 1px solid var(--glass-border-light);
-  border-radius: var(--radius-lg);
-  padding: clamp(18px, 2.2vw, 24px);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  box-sizing: border-box;
-  -webkit-backdrop-filter: var(--glass-blur);
-  backdrop-filter: var(--glass-blur);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 0 40px rgba(255, 255, 255, 0.03), 0 20px 50px rgba(0, 0, 0, 0.6);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+  gap: 8px;
 }
 
-.face--front  { transform: translateZ(calc(var(--cube) / 2)); }
-.face--back   { transform: rotateY(180deg) translateZ(calc(var(--cube) / 2)); }
-.face--right  { transform: rotateY(90deg) translateZ(calc(var(--cube) / 2)); }
-.face--left   { transform: rotateY(-90deg) translateZ(calc(var(--cube) / 2)); }
-.face--top    { transform: rotateX(90deg) translateZ(calc(var(--cube) / 2)); }
-.face--bottom { transform: rotateX(-90deg) translateZ(calc(var(--cube) / 2)); }
-
-.face__header {
+.doc-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid var(--glass-border);
-  padding-bottom: 8px;
+  gap: 12px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 13px;
+  color: var(--cream);
+}
+.doc-item:hover, .doc-item.is-selected {
+  background: rgba(255, 170, 0, 0.12);
+  border-color: rgba(255, 170, 0, 0.35);
+}
+.doc-item__bullet {
+  color: var(--amber);
+  font-weight: bold;
+}
+.doc-item__name {
+  flex: 1;
+}
+.doc-item__action {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--amber);
+  white-space: nowrap;
+}
+.doc-item__status {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--green);
+  white-space: nowrap;
 }
 
-.face__tag {
+/* Right Column: Apple Glass Document Showcase Card */
+.doc-showcase-card {
+  position: sticky;
+  top: calc(var(--head-h) + 24px);
+  background: var(--glass-card);
+  border: 1px solid var(--glass-border-light);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow);
+}
+
+.doc-showcase-header {
+  margin-bottom: 16px;
+}
+
+.doc-showcase-tags {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.doc-showcase-badge {
   font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.12em;
+  font-size: 11px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--amber);
 }
 
-.face__count {
+.doc-showcase-req {
   font-family: var(--mono);
   font-size: 11px;
-  color: var(--cream-2);
+  color: var(--green);
 }
 
-.face__title {
+.doc-picker-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.picker-btn {
+  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+  font-family: var(--display);
+  font-size: 12px;
+  color: var(--cream-2);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.picker-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+}
+.picker-btn.is-active {
+  background: var(--amber);
+  color: #0A121D;
+  border-color: var(--amber);
+  font-weight: 600;
+}
+
+.doc-preview-frame {
+  position: relative;
+  background: #060B14;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  margin-bottom: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  max-height: 380px;
+}
+
+.doc-preview-img-wrap {
+  position: relative;
+  max-width: 100%;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.doc-preview-img-wrap img {
+  width: 100%;
+  max-height: 340px;
+  object-fit: contain;
+  display: block;
+  background: #FFF;
+}
+
+.doc-sample-tag {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  background: rgba(10, 18, 29, 0.85);
+  color: var(--amber);
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  backdrop-filter: var(--glass-blur-sm);
+  border: 1px solid var(--glass-border);
+}
+
+.doc-showcase-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.doc-meta-head {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.doc-title {
   font-family: var(--display);
   font-size: 17px;
   font-weight: 700;
   color: #FFFFFF;
-  margin: 10px 0 6px;
 }
 
-.face__list {
-  list-style: none;
-  font-size: 12px;
-  line-height: 1.5;
-  color: var(--cream-2);
-}
-.face__list li {
-  margin-bottom: 4px;
-}
-.face__list li::before {
-  content: "✓ ";
-  color: var(--green);
-  font-weight: 700;
-}
-
-.face__foot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.doc-authority {
   font-family: var(--mono);
-  font-size: 10px;
-  color: var(--cream-2);
-  border-top: 1px solid var(--glass-border);
-  padding-top: 8px;
-  margin-top: 8px;
+  font-size: 11px;
+  color: var(--amber);
 }
 
-.cube-hint {
-  text-align: center;
-  font-size: 12px;
+.doc-desc {
+  font-size: 13px;
   color: var(--cream-2);
-  margin-top: 18px;
+  line-height: 1.5;
+}
+
+.doc-preaudit-callout {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: rgba(48, 209, 88, 0.08);
+  border: 1px solid rgba(48, 209, 88, 0.2);
+  font-size: 12px;
+  color: var(--cream);
+  line-height: 1.45;
+}
+.doc-preaudit-callout svg {
+  color: var(--green);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.doc-preaudit-callout b {
+  color: var(--green);
+}
+
+@media (max-width: 900px) {
+  .dossier-grid {
+    grid-template-columns: 1fr;
+  }
+  .doc-showcase-card {
+    position: static;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -1692,8 +1808,9 @@ img {
 .feathered-plate {
   position: relative;
   width: 100%;
-  max-width: 520px;
-  border-radius: 28px;
+  max-width: 580px;
+  border-radius: 24px;
+  overflow: hidden;
   display: block;
   margin: 0 auto;
 }
@@ -1702,9 +1819,9 @@ img {
   width: 100%;
   height: auto;
   display: block;
-  -webkit-mask-image: radial-gradient(ellipse 65% 60% at 50% 50%, #000 15%, rgba(0, 0, 0, 0.75) 45%, rgba(0, 0, 0, 0.25) 70%, transparent 92%);
-  mask-image: radial-gradient(ellipse 65% 60% at 50% 50%, #000 15%, rgba(0, 0, 0, 0.75) 45%, rgba(0, 0, 0, 0.25) 70%, transparent 92%);
-  filter: contrast(1.08) brightness(0.95);
+  -webkit-mask-image: radial-gradient(ellipse 90% 86% at 50% 50%, #000 68%, rgba(0, 0, 0, 0.75) 84%, transparent 100%);
+  mask-image: radial-gradient(ellipse 90% 86% at 50% 50%, #000 68%, rgba(0, 0, 0, 0.75) 84%, transparent 100%);
+  filter: contrast(1.05) brightness(0.96);
   transition: transform 0.6s var(--ease);
 }
 .feathered-plate:hover img {
@@ -1717,7 +1834,7 @@ img {
   left: 28px;
   right: 28px;
   padding: 12px 18px;
-  background: rgba(10, 16, 26, 0.78);
+  background: rgba(10, 18, 29, 0.82);
   border: 1px solid var(--glass-border-light);
   border-radius: var(--radius-pill);
   -webkit-backdrop-filter: var(--glass-blur-sm);
@@ -1734,50 +1851,124 @@ img {
   color: var(--amber);
 }
 
-/* ---------- Video Elements (Nkora Style Ambient Loops) ---------- */
-.ambient-video-card {
+/* ---------- Taxi Avenue Stage (Scroll-Driven NYC Taxi Motion) ---------- */
+.taxi-avenue-stage {
   position: relative;
   border-radius: var(--radius-xl);
   overflow: hidden;
   border: 1px solid var(--glass-border-light);
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.2);
   aspect-ratio: 16 / 11;
-  background: #030508;
+  background: #0A121D;
+  transform: translateZ(0);
 }
 
-.ambient-video-card video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  filter: contrast(1.06) brightness(0.92);
-}
-
-.ambient-video-card__overlay {
+.taxi-avenue-backdrop {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(7, 11, 17, 0.15) 0%, rgba(7, 11, 17, 0.8) 100%);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 24px;
+  width: 100%;
+  height: 100%;
 }
 
-/* Embedded Card Video for Food Distribution */
-.program-card__video {
-  position: relative;
-  height: 160px;
-  overflow: hidden;
-  background: #030508;
-}
-.program-card__video video {
+.taxi-avenue-backdrop img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 80%;
-  display: block;
-  filter: contrast(1.08) brightness(0.9);
+  filter: brightness(0.92) contrast(1.04);
 }
+
+.taxi-avenue-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10, 18, 29, 0.12) 0%, rgba(10, 18, 29, 0.35) 60%, rgba(10, 18, 29, 0.85) 100%);
+  pointer-events: none;
+}
+
+.taxi-road-stage {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.taxi-cab {
+  position: absolute;
+  will-change: transform, opacity;
+  filter: drop-shadow(0 14px 20px rgba(0, 0, 0, 0.75));
+  transition: opacity 0.3s ease;
+}
+
+.taxi-cab img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.taxi-cab--lead {
+  bottom: 8%;
+  right: 16%;
+  width: clamp(140px, 16vw, 190px);
+  z-index: 3;
+}
+
+.taxi-cab--chase {
+  bottom: 22%;
+  left: 24%;
+  width: clamp(105px, 12vw, 140px);
+  z-index: 2;
+  opacity: 0.95;
+}
+
+.taxi-taillights {
+  position: absolute;
+  bottom: 12%;
+  left: 12%;
+  right: 12%;
+  height: 12px;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 15% 50%, rgba(255, 30, 30, 0.7) 0%, transparent 65%),
+              radial-gradient(ellipse at 85% 50%, rgba(255, 30, 30, 0.7) 0%, transparent 65%);
+  filter: blur(2px);
+  opacity: 0.75;
+  transition: opacity 0.2s ease;
+}
+
+.taxi-stage-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.taxi-badge {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(10, 18, 29, 0.78);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+  -webkit-backdrop-filter: var(--glass-blur-sm);
+  backdrop-filter: var(--glass-blur-sm);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--amber);
+}
+
+.taxi-badge__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--amber);
+  box-shadow: 0 0 8px var(--amber);
+}
+
 .live-badge {
   position: absolute;
   top: 10px;
@@ -1803,44 +1994,6 @@ img {
   border-radius: 50%;
   background: var(--green);
   box-shadow: 0 0 6px var(--green);
-}
-
-/* ---------- 3D Cube Real Document Samples ---------- */
-.face__sample-wrap {
-  width: 100%;
-  height: 180px;
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-  margin: 8px 0;
-  background: #070B11;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6);
-  position: relative;
-}
-.face__sample-wrap img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
-  display: block;
-  transition: transform 0.4s var(--ease);
-}
-.face:hover .face__sample-wrap img {
-  transform: scale(1.05);
-}
-.sample-watermark {
-  position: absolute;
-  bottom: 6px;
-  right: 6px;
-  padding: 2px 6px;
-  background: rgba(7, 11, 17, 0.85);
-  border: 1px solid var(--glass-border);
-  border-radius: 4px;
-  font-family: var(--mono);
-  font-size: 9px;
-  color: var(--amber);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
 }
 
 </style>
@@ -1913,14 +2066,26 @@ img {
         </div>
       </div>
       <div class="hero-visual">
-        <div class="ambient-video-card">
-          <video autoplay loop muted playsinline poster="assets/nyc-avenue-e1.jpg">
-            <source src="assets/videos/nyc-traffic.mp4" type="video/mp4">
-            <source src="assets/videos/avenue-night.mp4" type="video/mp4">
-            <img src="assets/nyc-avenue-e1.jpg" alt="A sunlit New York City avenue with traffic and neighborhood store fronts.">
-          </video>
-          <div class="ambient-video-card__overlay">
-            <span class="photo-card__tag">New York City &bull; FY2028</span>
+        <div class="taxi-avenue-stage" id="taxiStage">
+          <div class="taxi-avenue-backdrop">
+            <img src="assets/nyc-avenue-e1.jpg" alt="A sunlit New York City avenue with traffic and neighborhood store fronts." width="1200" height="750">
+            <div class="taxi-avenue-gradient"></div>
+          </div>
+          <div class="taxi-road-stage" aria-hidden="true">
+            <div class="taxi-cab taxi-cab--lead" id="taxiLead">
+              <img src="assets/taxi.svg" alt="NYC Yellow Cab">
+              <div class="taxi-taillights"></div>
+            </div>
+            <div class="taxi-cab taxi-cab--chase" id="taxiChase">
+              <img src="assets/taxi.svg" alt="NYC Yellow Cab">
+              <div class="taxi-taillights"></div>
+            </div>
+          </div>
+          <div class="taxi-stage-overlay">
+            <div class="taxi-badge">
+              <span class="taxi-badge__dot"></span>
+              <span>NYC Medallion Fleet &bull; Scroll to Drive</span>
+            </div>
             <span class="photo-card__caption">Municipal funding, delivered to your neighborhood.</span>
           </div>
         </div>
@@ -1998,16 +2163,12 @@ img {
         </div>
 
         <div class="program-card">
-          <div class="program-card__video">
-            <video autoplay loop muted playsinline poster="assets/partner-pantry-c1.jpg">
-              <source src="assets/videos/food-distribution.mp4" type="video/mp4">
-              <img src="assets/partner-pantry-c1.jpg" alt="Volunteers handing fresh groceries at a community food pantry.">
-            </video>
-            <span class="live-badge"><span class="live-badge__dot"></span> On The Ground</span>
+          <div class="program-card__img">
+            <img src="assets/partner-pantry-c1.jpg" alt="Volunteers handing fresh groceries at a New York City community food pantry." width="600" height="400">
           </div>
           <div class="program-card__body">
             <h3 class="program-card__title">Food Security &amp; Pantries</h3>
-            <p class="program-card__desc">Community food pantries, emergency grocery distributions, and hot meal kitchens.</p>
+            <p class="program-card__desc">Community food pantries, emergency grocery distributions, and hot meal kitchens across NYC neighborhoods.</p>
           </div>
         </div>
 
@@ -2069,29 +2230,37 @@ img {
   </section>
 
   <!-- ========================================================================
-       Scene 4: The 13-Document Compliance Dossier & Interactive 3D Cube
+       Scene 4: The 13-Document Compliance Dossier & Document Showcase
        ======================================================================== -->
   <section class="scene scene--dossier" id="dossier">
     <div class="wrap dossier-grid">
       <div class="dossier-info">
         <div class="stop-badge">
           <span class="stop-bullet">4</span>
-          <span>Stop 04 &bull; The Dossier</span>
+          <span>Stop 04 &bull; Compliance Dossier</span>
         </div>
         <h2>Thirteen documents. One pre-cleared filing.</h2>
         <p class="lead">
-          Every NYC Council Member uses the exact same compliance rules. We package all 13 required filings once. Any Council Member whose district you serve can fund you from that one dossier.
+          Every NYC Council Member uses the exact same compliance criteria. We assemble, pre-audit, and format all 13 required filings once. We submit directly to the Council Member who represents your neighborhood so your non-profit clears review without delays.
         </p>
 
-        <div class="dossier-pills">
-          <button type="button" class="cube-btn is-active" data-face="front">501(c)(3) Letter</button>
-          <button type="button" class="cube-btn" data-face="right">Incorporation</button>
-          <button type="button" class="cube-btn" data-face="back">Form 990</button>
-          <button type="button" class="cube-btn" data-face="left">CHAR410 / State</button>
-          <button type="button" class="cube-btn" data-face="top">By-Laws</button>
-          <button type="button" class="cube-btn" data-face="bottom">EIN Letter</button>
+        <!-- Category Tabs -->
+        <div class="dossier-category-tabs" role="tablist">
+          <button type="button" class="dossier-tab is-active" data-group="legal">
+            <span class="tab-dot amber"></span> 01 Legal (4)
+          </button>
+          <button type="button" class="dossier-tab" data-group="financial">
+            <span class="tab-dot green"></span> 02 Financial (4)
+          </button>
+          <button type="button" class="dossier-tab" data-group="governance">
+            <span class="tab-dot blue"></span> 03 Governance (3)
+          </button>
+          <button type="button" class="dossier-tab" data-group="insurance">
+            <span class="tab-dot purple"></span> 04 Insurance (2)
+          </button>
         </div>
 
+        <!-- 4 Categorized Document Lists -->
         <div class="doc-groups">
           <div class="doc-group is-highlighted" id="group-legal">
             <div class="doc-group__head">
@@ -2099,10 +2268,26 @@ img {
               <span class="doc-group__badge">4 Papers</span>
             </div>
             <ul>
-              <li>Certificate of Incorporation</li>
-              <li>IRS 501(c)(3) Determination</li>
-              <li>Organizational By-Laws</li>
-              <li>NYS Charities Registration</li>
+              <li class="doc-item is-selected" data-sample="501c3">
+                <span class="doc-item__bullet">&bull;</span>
+                <span class="doc-item__name">IRS 501(c)(3) Determination Letter</span>
+                <span class="doc-item__action">Inspect Sample &rarr;</span>
+              </li>
+              <li class="doc-item" data-sample="incorporation">
+                <span class="doc-item__bullet">&bull;</span>
+                <span class="doc-item__name">NYS Certificate of Incorporation</span>
+                <span class="doc-item__action">Inspect Sample &rarr;</span>
+              </li>
+              <li class="doc-item" data-sample="bylaws">
+                <span class="doc-item__bullet">&bull;</span>
+                <span class="doc-item__name">Organizational By-Laws</span>
+                <span class="doc-item__action">Inspect Sample &rarr;</span>
+              </li>
+              <li class="doc-item" data-sample="char410">
+                <span class="doc-item__bullet">&bull;</span>
+                <span class="doc-item__name">NYS Charities Registration (CHAR410 / CHAR500)</span>
+                <span class="doc-item__action">Inspect Sample &rarr;</span>
+              </li>
             </ul>
           </div>
 
@@ -2112,10 +2297,26 @@ img {
               <span class="doc-group__badge">4 Papers</span>
             </div>
             <ul>
-              <li>IRS Form 990 / 990-EZ</li>
-              <li>NYS CHAR500 Annual Filing</li>
-              <li>Certified Financial Audit/Review</li>
-              <li>Current Operating Budget</li>
+              <li class="doc-item" data-sample="form990">
+                <span class="doc-item__bullet">&bull;</span>
+                <span class="doc-item__name">IRS Form 990 / 990-EZ Annual Return</span>
+                <span class="doc-item__action">Inspect Sample &rarr;</span>
+              </li>
+              <li class="doc-item">
+                <span class="doc-item__bullet">&bull;</span>
+                <span class="doc-item__name">NYS CHAR500 Annual Filing Schedule</span>
+                <span class="doc-item__status">Audit Ready</span>
+              </li>
+              <li class="doc-item">
+                <span class="doc-item__bullet">&bull;</span>
+                <span class="doc-item__name">Certified Independent Financial Audit/Review</span>
+                <span class="doc-item__status">Audit Ready</span>
+              </li>
+              <li class="doc-item">
+                <span class="doc-item__bullet">&bull;</span>
+                <span class="doc-item__name">Board-Approved Current Operating Budget</span>
+                <span class="doc-item__status">Audit Ready</span>
+              </li>
             </ul>
           </div>
 
@@ -2125,9 +2326,21 @@ img {
               <span class="doc-group__badge">3 Papers</span>
             </div>
             <ul>
-              <li>Board of Directors Roster</li>
-              <li>Conflict of Interest Policy</li>
-              <li>Signed Board Resolution</li>
+              <li class="doc-item">
+                <span class="doc-item__bullet">&bull;</span>
+                <span class="doc-item__name">Current Board of Directors Roster</span>
+                <span class="doc-item__status">Verified</span>
+              </li>
+              <li class="doc-item">
+                <span class="doc-item__bullet">&bull;</span>
+                <span class="doc-item__name">Adopted Conflict of Interest Policy</span>
+                <span class="doc-item__status">Verified</span>
+              </li>
+              <li class="doc-item" data-sample="bylaws">
+                <span class="doc-item__bullet">&bull;</span>
+                <span class="doc-item__name">Signed Board Authorization Resolution</span>
+                <span class="doc-item__action">Inspect Sample &rarr;</span>
+              </li>
             </ul>
           </div>
 
@@ -2137,140 +2350,60 @@ img {
               <span class="doc-group__badge">2 Papers</span>
             </div>
             <ul>
-              <li>General Liability ($1M+ CGL)</li>
-              <li>Workers' Comp &amp; City Disclosure</li>
+              <li class="doc-item">
+                <span class="doc-item__bullet">&bull;</span>
+                <span class="doc-item__name">Commercial General Liability (M+ CGL)</span>
+                <span class="doc-item__status">Required</span>
+              </li>
+              <li class="doc-item" data-sample="ein">
+                <span class="doc-item__bullet">&bull;</span>
+                <span class="doc-item__name">Federal EIN Assignment Letter (CP 575)</span>
+                <span class="doc-item__action">Inspect Sample &rarr;</span>
+              </li>
             </ul>
           </div>
         </div>
       </div>
 
+      <!-- Right Column: Apple Glass Document Showcase Card -->
       <div class="dossier-visual">
-        <div class="stage" id="cubeStage">
-          <div class="cube" id="cube">
-            <!-- Front Face: Legal 501(c)(3) -->
-            <div class="face face--front" data-face="front">
-              <div class="face__header">
-                <span class="face__tag">SAMPLE &bull; 01 OF 13</span>
-                <span class="face__count">IRS Exemption</span>
-              </div>
-              <div class="face__sample-wrap">
-                <img src="assets/cube-samples/face-501c3.jpg" alt="Sample IRS 501(c)(3) Determination Letter">
-                <span class="sample-watermark">Actual Document Sample</span>
-              </div>
-              <div>
-                <h3 class="face__title" style="margin:2px 0;font-size:15px;">501(c)(3) Letter</h3>
-                <p style="font-size:11.5px;color:var(--cream-2);line-height:1.35;">IRS letter confirming federal tax-exempt charitable status.</p>
-              </div>
-              <div class="face__foot">
-                <span>IRS Determination</span>
-                <span style="color:var(--green);">&check; Required</span>
-              </div>
+        <div class="doc-showcase-card" id="docShowcase">
+          <div class="doc-showcase-header">
+            <div class="doc-showcase-tags">
+              <span class="doc-showcase-badge" id="docShowcaseBadge">SAMPLE 01 &bull; IRS EXEMPTION</span>
+              <span class="doc-showcase-req">&check; Required by City Council</span>
             </div>
-
-            <!-- Right Face: Certificate of Incorporation -->
-            <div class="face face--right" data-face="right">
-              <div class="face__header">
-                <span class="face__tag">SAMPLE &bull; 02 OF 13</span>
-                <span class="face__count">NYS Incorporation</span>
-              </div>
-              <div class="face__sample-wrap">
-                <img src="assets/cube-samples/face-incorporation.jpg" alt="Sample NYS Certificate of Incorporation">
-                <span class="sample-watermark">Actual Document Sample</span>
-              </div>
-              <div>
-                <h3 class="face__title" style="margin:2px 0;font-size:15px;">Incorporation Certificate</h3>
-                <p style="font-size:11.5px;color:var(--cream-2);line-height:1.35;">NYS Department of State certificate of not-for-profit filing.</p>
-              </div>
-              <div class="face__foot">
-                <span>NYS Dept. of State</span>
-                <span style="color:var(--green);">&check; Required</span>
-              </div>
-            </div>
-
-            <!-- Back Face: IRS Form 990-EZ -->
-            <div class="face face--back" data-face="back">
-              <div class="face__header">
-                <span class="face__tag">SAMPLE &bull; 03 OF 13</span>
-                <span class="face__count">Form 990 Return</span>
-              </div>
-              <div class="face__sample-wrap">
-                <img src="assets/cube-samples/face-form990.jpg" alt="Sample IRS Form 990-EZ Return">
-                <span class="sample-watermark">Actual Document Sample</span>
-              </div>
-              <div>
-                <h3 class="face__title" style="margin:2px 0;font-size:15px;">IRS Form 990 / 990-EZ</h3>
-                <p style="font-size:11.5px;color:var(--cream-2);line-height:1.35;">Most recently filed annual informational tax return.</p>
-              </div>
-              <div class="face__foot">
-                <span>Financial Review</span>
-                <span style="color:var(--green);">&check; Required</span>
-              </div>
-            </div>
-
-            <!-- Left Face: NYS CHAR410 Registration -->
-            <div class="face face--left" data-face="left">
-              <div class="face__header">
-                <span class="face__tag">SAMPLE &bull; 04 OF 13</span>
-                <span class="face__count">State Charities</span>
-              </div>
-              <div class="face__sample-wrap">
-                <img src="assets/cube-samples/face-char410.jpg" alt="Sample NYS CHAR410 Charities Registration">
-                <span class="sample-watermark">Actual Document Sample</span>
-              </div>
-              <div>
-                <h3 class="face__title" style="margin:2px 0;font-size:15px;">CHAR410 / CHAR500</h3>
-                <p style="font-size:11.5px;color:var(--cream-2);line-height:1.35;">Active registration with the NYS Attorney General Charities Bureau.</p>
-              </div>
-              <div class="face__foot">
-                <span>NYS Charities Bureau</span>
-                <span style="color:var(--green);">&check; Required</span>
-              </div>
-            </div>
-
-            <!-- Top Face: By-Laws & Board Resolution -->
-            <div class="face face--top" data-face="top">
-              <div class="face__header">
-                <span class="face__tag">SAMPLE &bull; 05 OF 13</span>
-                <span class="face__count">Governance</span>
-              </div>
-              <div class="face__sample-wrap">
-                <img src="assets/cube-samples/face-bylaws.jpg" alt="Sample Organizational Bylaws">
-                <span class="sample-watermark">Actual Document Sample</span>
-              </div>
-              <div>
-                <h3 class="face__title" style="margin:2px 0;font-size:15px;">By-Laws &amp; Resolution</h3>
-                <p style="font-size:11.5px;color:var(--cream-2);line-height:1.35;">Signed board governance resolution and by-laws.</p>
-              </div>
-              <div class="face__foot">
-                <span>Board Governance</span>
-                <span style="color:var(--green);">&check; Required</span>
-              </div>
-            </div>
-
-            <!-- Bottom Face: Federal EIN Letter -->
-            <div class="face face--bottom" data-face="bottom">
-              <div class="face__header">
-                <span class="face__tag">SAMPLE &bull; 06 OF 13</span>
-                <span class="face__count">Federal EIN</span>
-              </div>
-              <div class="face__sample-wrap">
-                <img src="assets/cube-samples/face-ein.jpg" alt="Sample Federal EIN Assignment Letter">
-                <span class="sample-watermark">Actual Document Sample</span>
-              </div>
-              <div>
-                <h3 class="face__title" style="margin:2px 0;font-size:15px;">EIN Letter (CP 575)</h3>
-                <p style="font-size:11.5px;color:var(--cream-2);line-height:1.35;">Federal Tax Identification number assignment notice from the IRS.</p>
-              </div>
-              <div class="face__foot">
-                <span>Federal Tax ID</span>
-                <span style="color:var(--green);">&check; Required</span>
-              </div>
+            <!-- Quick Picker Pills -->
+            <div class="doc-picker-pills">
+              <button type="button" class="picker-btn is-active" data-sample="501c3">501(c)(3)</button>
+              <button type="button" class="picker-btn" data-sample="incorporation">Incorporation</button>
+              <button type="button" class="picker-btn" data-sample="form990">Form 990</button>
+              <button type="button" class="picker-btn" data-sample="char410">CHAR410</button>
+              <button type="button" class="picker-btn" data-sample="bylaws">By-Laws</button>
+              <button type="button" class="picker-btn" data-sample="ein">EIN Letter</button>
             </div>
           </div>
-        </div>
-        <div class="cube-hint">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
-          <span>Drag cube to rotate or select categories above</span>
+
+          <div class="doc-preview-frame">
+            <div class="doc-preview-img-wrap">
+              <img id="docPreviewImg" src="assets/samples/sample-irs-501c3.png" alt="IRS 501(c)(3) Determination Letter Sample" width="800" height="1050">
+              <span class="doc-sample-tag">Verified Municipal Sample</span>
+            </div>
+          </div>
+
+          <div class="doc-showcase-details">
+            <div class="doc-meta-head">
+              <h3 class="doc-title" id="docTitle">IRS 501(c)(3) Determination Letter</h3>
+              <span class="doc-authority" id="docAuthority">Internal Revenue Service &bull; Federal Exemption</span>
+            </div>
+            <p class="doc-desc" id="docDesc">
+              Official determination letter from the IRS granting federal tax-exempt charitable organization status under section 501(c)(3). Required by New York City Council to verify non-profit eligibility.
+            </p>
+            <div class="doc-preaudit-callout">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+              <span><b>OneNYC Pre-Audit:</b> We verify your active tax exemption on IRS EO Select Check before filing.</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -2646,123 +2779,182 @@ img {
     if (!sky) return;
     var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
     var progress = maxScroll > 0 ? Math.min(Math.max(window.scrollY / maxScroll, 0), 1) : 0;
-    var r = Math.round(23 - progress * 14);
-    var g = Math.round(40 - progress * 24);
-    var b = Math.round(62 - progress * 38);
-    sky.style.background = 'radial-gradient(ellipse 90% 60% at 50% -10%, rgb(' + r + ',' + g + ',' + b + ') 0%, #080D15 65%, #030508 100%)';
+    var r = Math.round(26 - progress * 16);
+    var g = Math.round(46 - progress * 28);
+    var b = Math.round(76 - progress * 48);
+    sky.style.background = 'radial-gradient(130% 90% at 50% 15%, rgb(' + r + ',' + g + ',' + b + ') 0%, #101E30 45%, #060B14 100%)';
   }
   window.addEventListener('scroll', updateSky, { passive: true });
 
-  // 4. Interactive 3D Dossier Cube
-  var stage = $('#cubeStage');
-  var cube = $('#cube');
-  var cubeBtns = $$('.cube-btn');
-  var docGroups = $$('.doc-group');
+  // 4. Scroll-Driven Taxi Avenue Animation
+  var taxiLead = $('#taxiLead');
+  var taxiChase = $('#taxiChase');
+  var taxiStage = $('#taxiStage');
 
-  if (cube && stage) {
-    var rotX = -12, rotY = 24;
-    var targetRotX = -12, targetRotY = 24;
-    var dragging = false, pointerId = null;
-    var lastX = 0, lastY = 0;
-    var velX = 0, velY = 0;
-    var autoRevolve = true;
+  if (taxiLead && taxiChase && taxiStage) {
+    var targetScroll = 0;
+    var currentScroll = 0;
+    var lastScrollY = window.scrollY;
+    var scrollSpeed = 0;
+    var idleOffset = 0;
 
-    var faceAngles = {
-      front:  { rx: -10, ry: 0 },
-      right:  { rx: -10, ry: -90 },
-      back:   { rx: -10, ry: -180 },
-      left:   { rx: -10, ry: 90 },
-      top:    { rx: -85, ry: 0 },
-      bottom: { rx: 85,  ry: 0 }
-    };
-
-    function setFace(faceName) {
-      if (!faceAngles[faceName]) return;
-      autoRevolve = false;
-      targetRotX = faceAngles[faceName].rx;
-      targetRotY = faceAngles[faceName].ry;
-
-      cubeBtns.forEach(function (btn) {
-        btn.classList.toggle('is-active', btn.getAttribute('data-face') === faceName);
-      });
-
-      docGroups.forEach(function (grp) {
-        var grpId = grp.getAttribute('id');
-        grp.classList.toggle('is-highlighted', grpId === 'group-' + faceName);
-      });
+    function onScrollTaxi() {
+      targetScroll = window.scrollY;
     }
+    window.addEventListener('scroll', onScrollTaxi, { passive: true });
 
-    cubeBtns.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var face = btn.getAttribute('data-face');
-        setFace(face);
-      });
-    });
+    function taxiLoop() {
+      currentScroll += (targetScroll - currentScroll) * 0.08;
+      var delta = targetScroll - lastScrollY;
+      lastScrollY = targetScroll;
+      scrollSpeed += (Math.abs(delta) - scrollSpeed) * 0.1;
 
-    stage.addEventListener('pointerdown', function (e) {
-      dragging = true;
-      autoRevolve = false;
-      pointerId = e.pointerId;
-      lastX = e.clientX;
-      lastY = e.clientY;
-      velX = 0;
-      velY = 0;
-      cube.classList.add('is-dragging');
-      if (stage.setPointerCapture) stage.setPointerCapture(e.pointerId);
-    });
+      idleOffset += 0.5 + scrollSpeed * 0.08;
 
-    window.addEventListener('pointermove', function (e) {
-      if (!dragging || e.pointerId !== pointerId) return;
-      var dx = e.clientX - lastX;
-      var dy = e.clientY - lastY;
-      lastX = e.clientX;
-      lastY = e.clientY;
+      var cycleLen = 280;
+      var leadProgress = (currentScroll * 0.35 + idleOffset) % cycleLen;
+      var chaseProgress = (currentScroll * 0.25 + idleOffset + 140) % cycleLen;
 
-      velY = dx * 0.45;
-      velX = -dy * 0.45;
+      var leadY = -leadProgress;
+      var leadX = leadProgress * 0.12;
+      var leadScale = Math.max(0.65, 1.0 - (leadProgress / cycleLen) * 0.35);
+      var leadOpacity = leadProgress > 240 ? (cycleLen - leadProgress) / 40 : 1;
 
-      targetRotY += velY;
-      targetRotX += velX;
-      targetRotX = Math.max(-85, Math.min(85, targetRotX));
-    });
+      var chaseY = -chaseProgress;
+      var chaseX = -chaseProgress * 0.08;
+      var chaseScale = Math.max(0.55, 0.85 - (chaseProgress / cycleLen) * 0.3);
+      var chaseOpacity = chaseProgress > 240 ? (cycleLen - chaseProgress) / 40 : 0.95;
 
-    function endDrag(e) {
-      if (!dragging) return;
-      if (pointerId !== null && stage.releasePointerCapture) {
-        try { stage.releasePointerCapture(pointerId); } catch (err) {}
-      }
-      dragging = false;
-      pointerId = null;
-      cube.classList.remove('is-dragging');
+      taxiLead.style.transform = 'translate3d(' + leadX.toFixed(1) + 'px, ' + leadY.toFixed(1) + 'px, 0) scale(' + leadScale.toFixed(3) + ')';
+      taxiLead.style.opacity = leadOpacity.toFixed(2);
+
+      taxiChase.style.transform = 'translate3d(' + chaseX.toFixed(1) + 'px, ' + chaseY.toFixed(1) + 'px, 0) scale(' + chaseScale.toFixed(3) + ')';
+      taxiChase.style.opacity = chaseOpacity.toFixed(2);
+
+      requestAnimationFrame(taxiLoop);
     }
-
-    window.addEventListener('pointerup', endDrag);
-    window.addEventListener('pointercancel', endDrag);
-
-    // Render loop
-    function cubeLoop() {
-      if (autoRevolve && !reduce) {
-        targetRotY += 0.18;
-      }
-
-      if (!dragging) {
-        velX *= 0.92;
-        velY *= 0.92;
-        targetRotX += velX;
-        targetRotY += velY;
-        targetRotX = Math.max(-85, Math.min(85, targetRotX));
-      }
-
-      rotX += (targetRotX - rotX) * 0.12;
-      rotY += (targetRotY - rotY) * 0.12;
-
-      cube.style.transform = 'rotateX(' + rotX.toFixed(2) + 'deg) rotateY(' + rotY.toFixed(2) + 'deg)';
-      requestAnimationFrame(cubeLoop);
-    }
-    requestAnimationFrame(cubeLoop);
+    requestAnimationFrame(taxiLoop);
   }
 
-  // 5. Intake Form Validation & Success State
+  // 5. Apple Glass Document Showcase Switcher
+  var DOC_SAMPLES = {
+    '501c3': {
+      badge: 'SAMPLE 01 • IRS EXEMPTION',
+      title: 'IRS 501(c)(3) Determination Letter',
+      authority: 'Internal Revenue Service • Federal Exemption',
+      img: 'assets/samples/sample-irs-501c3.png',
+      desc: 'Official determination letter from the IRS granting federal tax-exempt charitable status under Section 501(c)(3). Confirms your non-profit is exempt from federal income tax and eligible to receive municipal grants.',
+      preaudit: 'We verify active tax-exempt standing on IRS Tax Exempt Organization Search (TEOS) before submission.'
+    },
+    'incorporation': {
+      badge: 'SAMPLE 02 • STATE CHARTER',
+      title: 'NYS Certificate of Incorporation',
+      authority: 'NYS Department of State • Division of Corporations',
+      img: 'assets/samples/sample-cert-incorporation.png',
+      desc: 'The official charter establishing your organization as a not-for-profit corporation in New York State. Contains corporate filing date, legal entity name, and state seal required for city contracting.',
+      preaudit: 'We verify corporate status is Active on the NYS Department of State Corporation & Business Entity Database.'
+    },
+    'form990': {
+      badge: 'SAMPLE 03 • FINANCIAL DISCLOSURE',
+      title: 'IRS Form 990 / 990-EZ Annual Return',
+      authority: 'Internal Revenue Service • Annual Information Return',
+      img: 'assets/samples/sample-form-990ez.png',
+      desc: 'Annual informational return filed with the IRS reporting revenue, program expenses, officer compensation, and public service activities. City Council uses this to verify fiscal solvency and program investment.',
+      preaudit: 'We cross-reference financial schedules and verify that public revenue tiers match municipal allocation limits.'
+    },
+    'char410': {
+      badge: 'SAMPLE 04 • STATE CHARITIES',
+      title: 'NYS Charities Registration (CHAR410 / CHAR500)',
+      authority: 'Office of the NYS Attorney General • Charities Bureau',
+      img: 'assets/samples/sample-char410.png',
+      desc: 'Certificate of registration with the NYS Attorney General Charities Bureau under Article 7-A and EPTL. NYC Council requires active registered status before contracting.',
+      preaudit: 'We verify your organization status is in good standing on the NYS Charities Bureau Registry Search portal.'
+    },
+    'bylaws': {
+      badge: 'SAMPLE 05 • GOVERNANCE',
+      title: 'Organizational By-Laws & Board Resolution',
+      authority: 'Board of Directors • Corporate Governance',
+      img: 'assets/samples/sample-bylaws.png',
+      desc: 'Internal governance rules establishing board officer roles, meeting quorum, fiscal oversight, and signed board authorization resolution for City Council discretionary funding.',
+      preaudit: 'We review board officer rosters, term limits, and ensure resolutions match Council Member district filing criteria.'
+    },
+    'ein': {
+      badge: 'SAMPLE 06 • TAX IDENTIFIER',
+      title: 'Federal EIN Assignment Letter (CP 575 / 147C)',
+      authority: 'Internal Revenue Service • Federal Tax Identification',
+      img: 'assets/samples/sample-ein-letter.png',
+      desc: 'Official IRS notice confirming your unique 9-digit Employer Identification Number (EIN). Required to verify the organization applies under its own identity, not a third-party sponsor.',
+      preaudit: 'We confirm matching EIN records across NYC Payee Information Portal (PIP) and PASSPort city contracting systems.'
+    }
+  };
+
+  var pickerBtns = $$('.picker-btn');
+  var docItems = $$('.doc-item[data-sample]');
+  var docTabs = $$('.dossier-tab');
+  var docGroups = $$('.doc-group');
+
+  function setDocSample(key) {
+    var data = DOC_SAMPLES[key];
+    if (!data) return;
+
+    var badgeEl = $('#docShowcaseBadge');
+    var titleEl = $('#docTitle');
+    var authEl = $('#docAuthority');
+    var imgEl = $('#docPreviewImg');
+    var descEl = $('#docDesc');
+    var preauditEl = $('.doc-preaudit-callout span');
+
+    if (badgeEl) badgeEl.textContent = data.badge;
+    if (titleEl) titleEl.textContent = data.title;
+    if (authEl) authEl.textContent = data.authority;
+    if (imgEl) {
+      imgEl.src = data.img;
+      imgEl.alt = data.title;
+    }
+    if (descEl) descEl.textContent = data.desc;
+    if (preauditEl) preauditEl.innerHTML = '<b>OneNYC Pre-Audit:</b> ' + data.preaudit;
+
+    pickerBtns.forEach(function (btn) {
+      btn.classList.toggle('is-active', btn.getAttribute('data-sample') === key);
+    });
+
+    docItems.forEach(function (item) {
+      item.classList.toggle('is-selected', item.getAttribute('data-sample') === key);
+    });
+  }
+
+  pickerBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var key = btn.getAttribute('data-sample');
+      setDocSample(key);
+    });
+  });
+
+  docItems.forEach(function (item) {
+    item.addEventListener('click', function () {
+      var key = item.getAttribute('data-sample');
+      if (key) setDocSample(key);
+    });
+  });
+
+  docTabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      var groupName = tab.getAttribute('data-group');
+      docTabs.forEach(function (t) { t.classList.remove('is-active'); });
+      tab.classList.add('is-active');
+
+      docGroups.forEach(function (grp) {
+        if (grp.getAttribute('id') === 'group-' + groupName) {
+          grp.classList.add('is-highlighted');
+          grp.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        } else {
+          grp.classList.remove('is-highlighted');
+        }
+      });
+    });
+  });
+
+  // 6. Intake Form Validation & Success State
   var form = $('#eligibilityForm');
   var successView = $('#successView');
   var submitBtn = $('#submitBtn');
