@@ -1031,6 +1031,65 @@ details[data-stop][open] .panel__in{animation:panelIn .55s cubic-bezier(.16,1,.3
   details[data-stop][open] .panel__in{animation:none}
 }
 </style>
+
+<style id="anim-pass">
+/* ============ animation pass (qwen3.8-max design model) ============ */
+@media (prefers-reduced-motion: no-preference){
+
+  /* 1. hero load cascade: h1 mask-reveal, sub + acts rise */
+  #heroTitle{
+    clip-path:inset(0 0 100% -6%);
+    translate:0 .75em;
+    animation:heroMask 1.05s var(--ease) .12s both;
+  }
+  .hero__sub{opacity:0;translate:0 22px;animation:heroRise .8s var(--ease) .62s both}
+  .hero__acts .btn{opacity:0;translate:0 22px;animation:heroRise .8s var(--ease) .8s both}
+  .hero__acts .btn:nth-child(2){animation-delay:.92s}
+  @keyframes heroMask{
+    0%{clip-path:inset(0 0 100% -6%);translate:0 .75em}
+    100%{clip-path:inset(-8% 0 -8% -6%);translate:0 0}
+  }
+  @keyframes heroRise{to{opacity:1;translate:0 0}}
+
+  /* 2. staggered children inside each stop */
+  .stop .sign,.stop h2,.stop .cue{
+    opacity:0;translate:0 26px;
+    transition:opacity .7s var(--ease),translate .7s var(--ease);
+  }
+  .stop.is-in .sign,.stop.is-in h2,.stop.is-in .cue{opacity:1;translate:0 0}
+  .stop.is-in .sign{transition-delay:.06s}
+  .stop.is-in h2{transition-delay:.18s}
+  .stop.is-in .cue{transition-delay:.3s}
+
+  /* 3. image wipe-in (clip-path only; transform stays parallax-owned) */
+  .stop .plate__img img{clip-path:inset(0 100% 0 0);transition:clip-path .95s var(--ease) .35s,filter .6s}
+  .stop:nth-of-type(even) .plate__img img{clip-path:inset(0 0 0 100%)}
+  .stop.is-in .plate__img img{clip-path:inset(0 0 0 0)}
+
+  /* 4. strip figures cascade */
+  .strip figure{opacity:0;translate:0 46px;transition:opacity .8s var(--ease),translate .8s var(--ease)}
+  .stop.is-in .strip figure{opacity:1;translate:0 0}
+  .stop.is-in .strip figure:nth-child(1){transition-delay:.4s}
+  .stop.is-in .strip figure:nth-child(2){transition-delay:.51s}
+  .stop.is-in .strip figure:nth-child(3){transition-delay:.62s}
+  .stop.is-in .strip figure:nth-child(4){transition-delay:.73s}
+  .stop.is-in .strip figure:nth-child(5){transition-delay:.84s}
+
+  /* 5. button arrow nudge + press squash */
+  .btn svg{transition:transform .18s var(--ease)}
+  .btn:hover svg,.btn:focus-visible svg{transform:translateX(4px)}
+  .btn:active svg{transform:translateX(4px) scale(.85)}
+
+  /* 6. cue pill micro-interaction (+ rotates, tint lifts) */
+  .cue{transition:background .25s,border-color .25s}
+  .cue i{transition:transform .35s var(--ease);display:inline-block}
+  .cue:hover{background:rgba(253,185,19,.14);border-color:rgba(253,185,19,.5)}
+  .cue:hover i{transform:rotate(90deg)}
+  details[open] .cue i{transform:rotate(45deg)}
+}
+/* days counter: stable digits */
+.head__days [data-days]{font-variant-numeric:tabular-nums;display:inline-block;min-width:2ch}
+</style>
 </head>
 <body id="top">
 <a class="skip" href="#main">Skip to content</a>
@@ -2510,6 +2569,26 @@ details[data-stop][open] .panel__in{animation:panelIn .55s cubic-bezier(.16,1,.3
     g.className='ghost'; g.setAttribute('aria-hidden','true');
     g.textContent=words[i]||'OneNYC';
     d.appendChild(g);
+  });
+})();
+</script>
+
+<script id="anim-pass-js">
+/* days count-up (respects reduced motion; runs after deadline JS set the real value) */
+(function(){
+  var el = document.querySelector('.head__days [data-days]');
+  if(!el) return;
+  var target = parseInt(el.textContent, 10);
+  if(!isFinite(target) || target <= 0) return;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  el.textContent = '0';
+  var t0 = null, D = 850;
+  requestAnimationFrame(function tick(t){
+    if(t0 === null) t0 = t;
+    var p = Math.min((t - t0) / D, 1);
+    var e = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(e * target);
+    if(p < 1) requestAnimationFrame(tick);
   });
 })();
 </script>
