@@ -79,7 +79,7 @@ html {
 body {
   position: relative;
   overflow-x: hidden;
-  min-height: 100vh;
+  min-height: clamp(600px, 92vh, 900px);
 }
 
 /* Background Atmosphere */
@@ -284,7 +284,7 @@ img {
    ========================================================================== */
 .scene {
   position: relative;
-  min-height: 100vh;
+  min-height: clamp(600px, 92vh, 900px);
   display: flex;
   align-items: center;
   padding: clamp(80px, 12vh, 140px) 0;
@@ -328,7 +328,7 @@ img {
    -------------------------------------------------------------------------- */
 .scene--hero {
   padding-top: calc(var(--head-h) + 40px);
-  min-height: 100vh;
+  min-height: clamp(600px, 92vh, 900px);
 }
 
 .hero-grid {
@@ -2137,7 +2137,7 @@ img {
                       </div>
                       <div class="timeline-step">
                         <h4>Which district do I apply in?</h4>
-                        <p>The district your programs serve. Not where you live. Not where your office sits. Serve several districts? One application covers them all.</p>
+                        <p>The district your programs serve. Not where you live. Not where your office sits. Serve several districts? One application covers them all. And the first award is not the ceiling: funding renews yearly, so a funded project can request more the following January.</p>
                       </div>
         </div>
       </div>
