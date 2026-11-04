@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000" role="img" aria-label="Specimen IRS Determination Letter">
+  <rect width="800" height="1000" fill="#f8fafc"/>
+  <rect x="60" y="40" width="680" height="920" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+  <rect x="60" y="40" width="680" height="6" fill="#1d4ed8"/>
+  <text x="400" y="110" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="26" fill="#0f172a" font-weight="bold">Department of the Treasury · Internal Revenue Service</text>
+  <line x1="160" y1="128" x2="640" y2="128" stroke="#94a3b8" stroke-width="1"/>
+  <text x="400" y="180" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="34" fill="#0f172a" font-weight="bold">IRS Determination Letter</text>
+  <text x="400" y="215" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="17" fill="#475569">Application for Recognition of Exemption under Section 501(c)(3)</text>
+  <rect x="140" y="440" width="380" height="14" rx="3" fill="#1f2937" opacity="0.82"/>
+  <rect x="140" y="470" width="300" height="14" rx="3" fill="#1f2937" opacity="0.82"/>
+  <rect x="140" y="516" width="420" height="14" rx="3" fill="#1f2937" opacity="0.82"/>
+  <rect x="140" y="546" width="260" height="14" rx="3" fill="#1f2937" opacity="0.82"/>
+  <rect x="140" y="592" width="400" height="14" rx="3" fill="#1f2937" opacity="0.82"/>
+  <rect x="140" y="622" width="330" height="14" rx="3" fill="#1f2937" opacity="0.82"/>
+  <rect x="140" y="668" width="360" height="14" rx="3" fill="#1f2937" opacity="0.82"/>
+  <rect x="140" y="698" width="290" height="14" rx="3" fill="#1f2937" opacity="0.82"/>
+  <text x="400" y="720" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="15" fill="#64748b">Organization name, numbers, and addresses appear here on the real document.</text>
+  <g transform="rotate(-24 400 500)">
+    <text x="400" y="512" text-anchor="middle" font-family="Verdana, Arial, sans-serif" font-size="72" fill="#dc2626" opacity="0.14" font-weight="bold" letter-spacing="14">SPECIMEN</text>
+  </g>
+  <text x="400" y="920" text-anchor="middle" font-family="Verdana, Arial, sans-serif" font-size="15" fill="#94a3b8">Synthetic illustration — not a real document</text>
+</svg>
