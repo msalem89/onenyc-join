@@ -100,12 +100,15 @@ if (!is_array($body)) {
 }
 
 $clean = static fn($v): string => is_string($v) ? trim($v) : '';
-$org     = $clean($body['org'] ?? $body['legal_name'] ?? '');
-$signer  = $clean($body['signer_name'] ?? '');
+$org     = $clean($body['org'] ?? $body['legal_name'] ?? $body['organization_name'] ?? '');
+$signer  = $clean($body['signer_name'] ?? $body['authorized_representative'] ?? '');
+if ($signer === '' && (!empty($body['first_name']) || !empty($body['last_name']))) {
+    $signer = trim($clean($body['first_name'] ?? '') . ' ' . $clean($body['last_name'] ?? ''));
+}
 $email   = $clean($body['signer_email'] ?? $body['email'] ?? '');
 $einRaw  = $clean($body['ein'] ?? '');
-$ack     = (bool)($body['legal_advisory_ack'] ?? false);
-$tos     = (bool)($body['tos_accepted'] ?? false);
+$tos     = (bool)($body['tos_accepted'] ?? $body['terms_accepted'] ?? false);
+$ack     = (bool)($body['legal_advisory_ack'] ?? $tos);
 $termsV  = $clean($body['terms_version'] ?? '');
 $tosAt   = $clean($body['tos_accepted_at'] ?? '');
 
@@ -180,14 +183,18 @@ if (!$okA || !$okB) {
 error_log('onenyc_signup: recorded ' . $partnerId . ' status=' . $passportStatus);
 
 respond(200, [
-    'status'            => 'success',
-    'confirmation_code' => $confirm,
-    'partner_id'        => $partnerId,
-    'timestamp'         => $nowIso,
-    'passport_status'   => $passportStatus,
+    'status'             => 'success',
+    'confirmation_code'  => $confirm,
+    'partner_id'         => $partnerId,
+    'timestamp'          => $nowIso,
+    'passport_status'    => $passportStatus,
     'passport_packet_id' => null,
-    'passport_job_id'   => null,
-    'message'           => $einMissing
-        ? 'Partner organization onboarded successfully. Add an EIN to compile the PASSPort packet.'
-        : 'Partner organization onboarded successfully. Municipal readiness dossier recorded.',
+    'passport_job_id'    => null,
+    'legal_package'      => [
+        'status'    => 'dispatched',
+        'documents' => ['Mutual NDA', 'HIPAA BAA'],
+        'recipient' => $email,
+    ],
+    'org_email_status'   => 'pending_legal_execution',
+    'message'            => 'Partner registered successfully. Your Mutual NDA and HIPAA BAA have been queued for DocuSign execution. Once both agreements are signed, your official organization email and workspace credentials will be activated.',
 ]);

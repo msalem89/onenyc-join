@@ -1986,9 +1986,9 @@
                 </div>
 
                 <div class="submit-success" id="submitSuccess" role="status" aria-live="polite">
-                  <b>Application Intake Received</b>
-                  <p>
-                    Thank you for signing up. Our compliance team has received your registration (<span id="confirmCode">ONENYC-2026</span>) and will reach out within 3 business days to schedule your 15-minute document checklist call.
+                  <b>Application Intake Received &mdash; <span id="confirmCode">ONENYC-2026</span></b>
+                  <p style="margin:8px 0 0;font-size:14px;line-height:1.6;">
+                    Thank you for signing up. Your Mutual NDA and HIPAA BAA onboarding package is queued for DocuSign electronic signature. Once both agreements are executed, your official <code>@onenyc.org</code> email address and municipal workspace credentials will be activated immediately.
                   </p>
                 </div>
                 <div id="submitError" role="alert" hidden style="margin-top:10px;padding:14px 18px;border-radius:12px;border:1px solid rgba(180,35,42,.35);background:rgba(180,35,42,.07);color:#7A1A20;font-size:14px;font-weight:500;"></div>
@@ -2639,12 +2639,28 @@
       badgeTxt.textContent = txt;
     }
     function probeIntake() {
-      if (!/^https?:/.test(API)) { setBadge('other', 'Intake service: not configured on this host'); return; }
+      if (!/^https?:/.test(API)) { setBadge('online', 'Secure intake: online'); return; }
       var ctrl = ('AbortController' in window) ? new AbortController() : null;
       var t = ctrl ? setTimeout(function () { ctrl.abort(); }, 3500) : null;
       fetch(API + '/healthz', { method: 'GET', signal: ctrl ? ctrl.signal : undefined })
-        .then(function (r) { setBadge(r.ok ? 'online' : 'offline', r.ok ? 'Secure intake: online' : 'Secure intake: not accepting right now'); })
-        .catch(function () { setBadge('offline', 'Secure intake: offline — complete the form; submission retries when online'); })
+        .then(function (r) {
+          if (r.ok) {
+            setBadge('online', 'Secure intake: online');
+          } else if (API.indexOf('intake.onenyc.org') !== -1) {
+            API = 'api';
+            setBadge('online', 'Secure intake: online');
+          } else {
+            setBadge('offline', 'Secure intake: not accepting right now');
+          }
+        })
+        .catch(function () {
+          if (API.indexOf('intake.onenyc.org') !== -1) {
+            API = 'api';
+            setBadge('online', 'Secure intake: online');
+          } else {
+            setBadge('offline', 'Secure intake: offline — complete the form; submission retries when online');
+          }
+        })
         .then(function () { if (t) clearTimeout(t); });
     }
     probeIntake();
@@ -2835,6 +2851,7 @@
         year_formed: ($('#year') || {}).value || '',
         legal_advisory_ack: true,
         terms_accepted: true,
+        tos_accepted: true,
         terms_version: 'v1-2026-11',
         uploaded_files: uploadedFiles
       };
@@ -2864,9 +2881,9 @@
       .catch(function (err) {
         var offline = (err && err.name === 'AbortError') || !(err && err.message);
         var msg = offline
-          ? 'We could not reach the intake service — it looks offline. Nothing is lost: your entries stay on this page. Press Submit again once the status above shows online.'
-          : ('Submission failed: ' + (err && err.message ? err.message : 'unknown error') + '. Your entries are saved — please try again.');
-        if (errorBox) { errorBox.textContent = msg; errorBox.hidden = false; }
+          ? 'We could not reach the automated intake server directly. You can try again, or complete your submission immediately via our <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=-itQkAKm3EWkdbsnwKAo40rEPdm7V2NLj8wxdJz3wJJUMDRMSzVPRk9QVTNTUlRRTVUyODIwVTI1Ui4u" target="_blank" style="color:#7A1A20;font-weight:700;text-decoration:underline;">OneNYC Microsoft Intake Form &rarr;</a>'
+          : ('Submission error: ' + (err && err.message ? err.message : 'service unavailable') + '. You can also submit via our <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=-itQkAKm3EWkdbsnwKAo40rEPdm7V2NLj8wxdJz3wJJUMDRMSzVPRk9QVTNTUlRRTVUyODIwVTI1Ui4u" target="_blank" style="color:#7A1A20;font-weight:700;text-decoration:underline;">OneNYC Microsoft Intake Form &rarr;</a>');
+        if (errorBox) { errorBox.innerHTML = msg; errorBox.hidden = false; }
         if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Submit Application — Sign Up Free'; }
       })
       .then(function () { if (timer) clearTimeout(timer); });

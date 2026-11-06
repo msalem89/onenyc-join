@@ -216,18 +216,23 @@
     if (!tos)            return fail('Please agree to the Terms and Privacy Notice.');
 
     btn.disabled = true; btn.textContent = 'Sending…';
+    const apiBase = (window.NAFS_OCR_INTAKE_URL || '/api').replace(/\/$/, '');
     try {
-      const res = await fetch('/api/signup', {
+      const res = await fetch(`${apiBase}/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           org,
+          organization_name: org,
           signer_name: `${first} ${last}`,
+          authorized_representative: `${first} ${last}`,
+          email,
           signer_email: email,
           borough: answers.borough,
           prog_narrative: [answers.focus && `Focus: ${answers.focus}`, answers.blocker && `Blocker: ${answers.blocker}`]
                             .filter(Boolean).join(' · '),
           legal_advisory_ack: true,
+          terms_accepted: true,
           tos_accepted: true,
           terms_version: TERMS_VERSION,
           tos_accepted_at: new Date().toISOString()
@@ -238,9 +243,9 @@
       status.className = 'status ok';
       status.innerHTML = `✓ You're in. Confirmation <span class="code">${data.confirmation_code}</span>` +
         `<ul class="next">` +
-        `<li><i class="dot">1</i><span>Check your inbox — the NDA arrives for electronic signature.</span></li>` +
-        `<li><i class="dot">2</i><span>If health data is involved, the BAA follows.</span></li>` +
-        `<li><i class="dot">3</i><span>Once both are signed, we open your workspace and start PASSPort enrollment.</span></li>` +
+        `<li><i class="dot">1</i><span>Check your inbox (${email}) — your Mutual NDA &amp; HIPAA BAA package arrives via DocuSign.</span></li>` +
+        `<li><i class="dot">2</i><span>Review and sign both agreements electronically in DocuSign.</span></li>` +
+        `<li><i class="dot">3</i><span>Once both are executed, your official onenyc.org email and workspace credentials will be activated immediately.</span></li>` +
         `</ul>`;
       form.querySelectorAll('input').forEach(i => { if (i.type !== 'checkbox') i.value = ''; });
       document.getElementById('tos').checked = false;
