@@ -1,0 +1,18 @@
+# Local databases & exports
+database/
+*.db
+*.sqlite
+*.sqlite3
+
+# OS / Editor artifacts
+.DS_Store
+Thumbs.db
+*.swp
+*.bak
+*~
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
