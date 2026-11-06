@@ -1892,24 +1892,6 @@
           <div class="signup-form-wrap">
             <form novalidate id="intakeForm">
               <div class="form-grid">
-                <div class="field">
-                  <label for="org">Organization Legal Name *</label>
-                  <input id="org" name="org" type="text" autocomplete="organization" placeholder="e.g. Bed-Stuy Youth Initiative Inc" required>
-                  <span class="err" id="err-org">Please enter your organization&rsquo;s legal name.</span>
-                </div>
-
-                <div class="form-row-2">
-                  <div class="field">
-                    <label for="ein">Federal EIN *</label>
-                    <input id="ein" name="ein" type="text" inputmode="numeric" autocomplete="off" placeholder="XX-XXXXXXX" required>
-                    <span class="err" id="err-ein">Enter your 9-digit federal EIN (format XX-XXXXXXX).</span>
-                  </div>
-                  <div class="field">
-                    <label for="year">Year Formed</label>
-                    <input id="year" name="yearFormed" type="text" inputmode="numeric" autocomplete="off" placeholder="e.g. 2019">
-                  </div>
-                </div>
-
                 <div class="form-row-2">
                   <div class="field">
                     <label for="fn">First Name *</label>
@@ -1923,51 +1905,24 @@
                   </div>
                 </div>
 
+                <div class="field">
+                  <label for="org">Name of Organization *</label>
+                  <input id="org" name="org" type="text" autocomplete="organization" placeholder="e.g. Bed-Stuy Youth Initiative Inc" required>
+                  <span class="err" id="err-org">Please enter your organization&rsquo;s legal name.</span>
+                </div>
+
                 <div class="form-row-2">
+                  <div class="field">
+                    <label for="phone">Phone Number *</label>
+                    <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="(212) 555-0199" required>
+                    <span class="err" id="err-phone">Please enter your phone number.</span>
+                  </div>
                   <div class="field">
                     <label for="email">Contact Email *</label>
                     <input id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="director@yourcharity.org" required>
                     <span class="err" id="err-email">Please enter a valid email address.</span>
                   </div>
-                  <div class="field">
-                    <label for="phone">Phone Number</label>
-                    <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="(718) 555-0199">
-                  </div>
                 </div>
-
-                <div class="field">
-                  <label for="boro">Borough or Neighborhood Served *</label>
-                  <select id="boro" name="borough" required>
-                    <option value="">Select the borough your program serves</option>
-                    <option value="Brooklyn">Brooklyn</option>
-                    <option value="Queens">Queens</option>
-                    <option value="The Bronx">The Bronx</option>
-                    <option value="Manhattan">Manhattan</option>
-                    <option value="Staten Island">Staten Island</option>
-                    <option value="Citywide">Citywide (Multiple Boroughs)</option>
-                  </select>
-                  <span class="err" id="err-boro">Please select the borough your program serves.</span>
-                </div>
-
-                <div class="field">
-                  <label for="addr">Executive Office Address</label>
-                  <input id="addr" name="address" type="text" autocomplete="street-address" placeholder="Street address, City, NY ZIP">
-                </div>
-
-                <div class="field" style="margin-top:4px;">
-                  <label>Add Documents <span style="font-weight:400;color:#475569;">(optional &mdash; we read the fields for you)</span></label>
-                  <div style="border:2px dashed rgba(12,31,57,.25);border-radius:12px;padding:16px;text-align:center;background:rgba(255,255,255,.55);">
-                    <button type="button" id="docScanBtn" style="padding:9px 18px;font-size:14px;font-weight:600;border-radius:999px;border:1.5px solid #0C1F39;background:#0C1F39;color:#fff;cursor:pointer;">Upload documents</button>
-                    <input id="docScanInput" type="file" multiple accept=".pdf,.png,.jpg,.jpeg,.tif,.tiff,.webp" hidden>
-                    <p style="margin:10px 0 0;font-size:12.5px;color:#475569;">501(c)(3) letter &middot; Incorporation &middot; Bylaws &middot; CHAR410 &middot; EIN letter &middot; Form 990 &mdash; whatever you have ready. Details we can read are filled into the form so you can verify them.</p>
-                  </div>
-                  <div id="scanLog" aria-live="polite"></div>
-                </div>
-
-                <label class="check-field">
-                  <input type="checkbox" name="is501c3" value="yes" checked>
-                  <span>Our organization is an incorporated 501(c)(3) or charitable non-profit in New York State, or is currently registering.</span>
-                </label>
 
                 <div>
                   <label class="check-field">
@@ -1991,6 +1946,14 @@
                   </p>
                 </div>
                 <div id="submitError" role="alert" hidden style="margin-top:10px;padding:14px 18px;border-radius:12px;border:1px solid rgba(180,35,42,.35);background:rgba(180,35,42,.07);color:#7A1A20;font-size:14px;font-weight:500;"></div>
+                <div id="msFormsFallback" role="alert" hidden style="margin-top:12px;padding:18px 20px;border-radius:12px;border:2px solid var(--orange);background:rgba(248,164,48,.10);color:var(--navy);font-size:14.5px;line-height:1.6;">
+                  <b style="display:block;font-size:16px;margin-bottom:4px;">We saved your entries &mdash; finish your sign-up here:</b>
+                  <p style="margin:0 0 14px;">Everything you typed is kept safely on this device, so nothing is lost. Complete your application on our secure intake form &mdash; it only takes a minute.</p>
+                  <a class="btn btn--orange" href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=-itQkAKm3EWkdbsnwKAo40rEPdm7V2NLj8wxdJz3wJJUMDRMSzVPRk9QVTNTUlRRTVUyODIwVTI1Ui4u" target="_blank" rel="noopener">
+                    Finish Sign-Up on the Secure Intake Form
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+                  </a>
+                </div>
               </div>
             </form>
           </div>
@@ -2665,26 +2628,18 @@
     probeIntake();
     window.setInterval(probeIntake, 60000);
 
-    function normEin(v) {
-      var d = String(v || '').replace(/\D/g, '');
-      return d.length === 9 ? d.slice(0, 2) + '-' + d.slice(2) : String(v || '').trim();
-    }
-
     var fields = {
-      org: { el: $('#org'), test: function (v) { return v.trim().length > 1; } },
       fn: { el: $('#fn'), test: function (v) { return v.trim().length > 0; } },
       ln: { el: $('#ln'), test: function (v) { return v.trim().length > 0; } },
-      email: { el: $('#email'), test: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()); } },
-      ein: { el: $('#ein'), test: function (v) { return /^\d{2}-\d{7}$/.test(normEin(v)); } },
-      boro: { el: $('#boro'), test: function (v) { return v.trim() !== ''; } }
+      org: { el: $('#org'), test: function (v) { return v.trim().length > 1; } },
+      phone: { el: $('#phone'), test: function (v) { return v.trim().length >= 7; } },
+      email: { el: $('#email'), test: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()); } }
     };
-    if (fields.ein.el) fields.ein.el.addEventListener('blur', function () { fields.ein.el.value = normEin(fields.ein.el.value); });
 
     Object.keys(fields).forEach(function (k) {
       var cfg = fields[k];
       if (!cfg.el) return;
-      var ev = cfg.el.tagName === 'SELECT' ? 'change' : 'input';
-      cfg.el.addEventListener(ev, function () {
+      cfg.el.addEventListener('input', function () {
         if (cfg.test(cfg.el.value)) {
           var wrap = cfg.el.closest('.field');
           if (wrap) wrap.classList.remove('is-invalid');
@@ -2693,17 +2648,17 @@
     });
 
     var DRAFT_KEY = 'onenyc-join-draft-v1';
-    ['org', 'ein', 'addr', 'phone', 'year'].forEach(function (id) {
+    ['fn', 'ln', 'org', 'phone', 'email'].forEach(function (id) {
       var el = document.getElementById(id);
       if (!el) return;
-      el.addEventListener('input', function () { el.setAttribute('data-dirty', '1'); saveDraftSoon(); });
+      el.addEventListener('input', function () { saveDraftSoon(); });
     });
     var draftTimer = null;
     function saveDraftSoon() { if (draftTimer) return; draftTimer = setTimeout(function () { draftTimer = null; saveDraft(); }, 400); }
     function saveDraft() {
       try {
         var d = {};
-        ['org', 'fn', 'ln', 'email', 'phone', 'boro', 'ein', 'addr', 'year'].forEach(function (id) {
+        ['fn', 'ln', 'org', 'phone', 'email'].forEach(function (id) {
           var el = document.getElementById(id); if (el) d[id] = el.value;
         });
         localStorage.setItem(DRAFT_KEY, JSON.stringify(d));
@@ -2719,89 +2674,6 @@
         });
       } catch (e) { /* ignore */ }
     })();
-
-    var FIELD_MAP = {
-      org_name: { id: 'org', label: 'organization name' },
-      ein: { id: 'ein', label: 'EIN' },
-      address: { id: 'addr', label: 'address' },
-      phone: { id: 'phone', label: 'phone' },
-      year_formed: { id: 'year', label: 'year formed' }
-    };
-    var uploadedFiles = [];
-    var scanInput = $('#docScanInput');
-    var scanLog = $('#scanLog');
-    var scanBtn = $('#docScanBtn');
-    function scanRow(file) {
-      var row = document.createElement('div');
-      row.style.cssText = 'display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:9px 12px;border:1px solid rgba(12,31,57,.14);border-radius:10px;margin-top:8px;background:rgba(255,255,255,.8);font-size:13.5px';
-      var name = document.createElement('span');
-      name.textContent = file.name;
-      name.style.cssText = 'font-weight:600;max-width:42%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap';
-      var sel = document.createElement('select');
-      sel.style.cssText = 'flex:none;padding:5px 8px;border-radius:8px;border:1px solid rgba(12,31,57,.2);font-size:12.5px;background:#fff';
-      [['501c3', '501(c)(3) letter'], ['incorporation', 'Incorporation'], ['bylaws', 'Bylaws'], ['char410', 'CHAR410'], ['ein', 'EIN letter'], ['form990', 'Form 990'], ['other', 'Other']].forEach(function (o) {
-        var op = document.createElement('option'); op.value = o[0]; op.textContent = o[1]; sel.appendChild(op);
-      });
-      var status = document.createElement('span');
-      status.style.cssText = 'color:#475569;flex:1;min-width:140px';
-      status.textContent = 'Reading…';
-      row.appendChild(name); row.appendChild(sel); row.appendChild(status);
-      scanLog.appendChild(row);
-      return { sel: sel, status: status };
-    }
-    function markPrefilled(el) {
-      el.style.borderColor = '#1E6F50';
-      el.style.background = 'rgba(30,111,80,.06)';
-      el.title = 'Read from your document — please verify';
-    }
-    function applyPrefill(fieldsData) {
-      var found = [];
-      Object.keys(FIELD_MAP).forEach(function (k) {
-        var v = String((fieldsData && fieldsData[k]) || '').trim();
-        if (!v) return;
-        var cfg = FIELD_MAP[k];
-        var el = document.getElementById(cfg.id);
-        if (!el) return;
-        if (el.getAttribute('data-dirty') === '1' || String(el.value || '').trim() !== '') return;
-        if (k === 'ein') v = normEin(v);
-        el.value = v; markPrefilled(el); found.push(cfg.label);
-      });
-      return found;
-    }
-    function scanFile(file) {
-      var ui = scanRow(file);
-      var fd = new FormData();
-      fd.append('file', file, file.name);
-      var orgEl = $('#org');
-      if (orgEl && orgEl.value.trim()) fd.append('org_hint', orgEl.value.trim());
-      var entry = { name: file.name, type: ui.sel.value, ok: false };
-      uploadedFiles.push(entry);
-      ui.sel.addEventListener('change', function () { entry.type = ui.sel.value; });
-      fetch(API + '/ocr', { method: 'POST', body: fd })
-        .then(function (r) { if (!r.ok) throw new Error('http ' + r.status); return r.json(); })
-        .then(function (data) {
-          entry.ok = true;
-          var found = applyPrefill(data.fields);
-          if (found.length) {
-            ui.status.textContent = '✓ Read — filled: ' + found.join(', ') + ' (check them)';
-            ui.status.style.color = '#1E6F50';
-          } else {
-            ui.status.textContent = '✓ Received — no recognizable fields; type them below';
-            ui.status.style.color = '#1E6F50';
-          }
-        })
-        .catch(function () {
-          ui.status.textContent = '⚠ Could not read this document (service offline or unreadable scan) — please type the details below';
-          ui.status.style.color = '#B4232A';
-        });
-    }
-    if (scanInput && scanLog) {
-      scanInput.addEventListener('change', function () {
-        Array.prototype.slice.call(scanInput.files || []).forEach(scanFile);
-        scanInput.value = '';
-      });
-      if (scanBtn) scanBtn.addEventListener('click', function () { scanInput.click(); });
-    }
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -2833,21 +2705,20 @@
       var successBox = $('#submitSuccess');
       var confirmCode = $('#confirmCode');
       var errorBox = $('#submitError');
+      var fallbackBox = $('#msFormsFallback');
       if (errorBox) errorBox.hidden = true;
+      if (fallbackBox) fallbackBox.hidden = true;
       if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Submitting Application…'; }
 
       var payload = {
-        org: ($('#org') || {}).value || '',
-        first_name: ($('#fn') || {}).value || '',
-        last_name: ($('#ln') || {}).value || '',
-        signer_name: ((($('#fn') || {}).value || '') + ' ' + (($('#ln') || {}).value || '')).trim(),
-        email: ($('#email') || {}).value || '',
-        signer_email: ($('#email') || {}).value || '',
-        phone: ($('#phone') || {}).value || '',
-        borough: ($('#boro') || {}).value || '',
-        ein: normEin(($('#ein') || {}).value || ''),
-        address: ($('#addr') || {}).value || '',
-        year_formed: ($('#year') || {}).value || '',
+        org: (($('#org') || {}).value || '').trim(),
+        organization_name: (($('#org') || {}).value || '').trim(),
+        first_name: (($('#fn') || {}).value || '').trim(),
+        last_name: (($('#ln') || {}).value || '').trim(),
+        signer_name: (((($('#fn') || {}).value || '') + ' ' + (($('#ln') || {}).value || '')).trim()),
+        phone: (($('#phone') || {}).value || '').trim(),
+        email: (($('#email') || {}).value || '').trim(),
+        signer_email: (($('#email') || {}).value || '').trim(),
         legal_advisory_ack: true,
         terms_accepted: true,
         tos_accepted: true,
@@ -2878,11 +2749,13 @@
         throw new Error((r.data && (r.data.detail || r.data.message)) || 'server rejected the submission');
       })
       .catch(function (err) {
+        saveDraft(); /* persist entries so nothing is lost before the fallback */
         var offline = (err && err.name === 'AbortError') || !(err && err.message);
         var msg = offline
-          ? 'We could not reach the automated intake server directly. You can try again, or complete your submission immediately via our <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=-itQkAKm3EWkdbsnwKAo40rEPdm7V2NLj8wxdJz3wJJUMDRMSzVPRk9QVTNTUlRRTVUyODIwVTI1Ui4u" target="_blank" style="color:#7A1A20;font-weight:700;text-decoration:underline;">OneNYC Microsoft Intake Form &rarr;</a>'
-          : ('Submission error: ' + (err && err.message ? err.message : 'service unavailable') + '. You can also submit via our <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=-itQkAKm3EWkdbsnwKAo40rEPdm7V2NLj8wxdJz3wJJUMDRMSzVPRk9QVTNTUlRRTVUyODIwVTI1Ui4u" target="_blank" style="color:#7A1A20;font-weight:700;text-decoration:underline;">OneNYC Microsoft Intake Form &rarr;</a>');
+          ? 'We could not reach the automated intake server directly. Your entries are saved &mdash; finish your sign-up below.'
+          : ('Submission error: ' + (err && err.message ? err.message : 'service unavailable') + '. Your entries are saved &mdash; you can retry, or finish your sign-up below.');
         if (errorBox) { errorBox.innerHTML = msg; errorBox.hidden = false; }
+        if (fallbackBox) fallbackBox.hidden = false;
         if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Submit Application — Sign Up Free'; }
       })
       .then(function () { if (timer) clearTimeout(timer); });

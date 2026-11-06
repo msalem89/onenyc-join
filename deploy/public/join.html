@@ -86,61 +86,20 @@
       NYC Council discretionary funding. We draft, advise and prepare; you submit under your own account.
       No cost, no funding promises — just the work that gets you ready.</p>
     <div class="hero-cta">
-      <button class="cta" onclick="document.getElementById('questions').scrollIntoView()">See if you qualify</button>
+      <button class="cta" onclick="document.getElementById('signup').scrollIntoView()">Start free</button>
       <button class="ghost" onclick="document.getElementById('signup').scrollIntoView()">Skip to sign-up</button>
     </div>
     <div class="trust">
-      <div><b>3 minutes</b> to start</div>
-      <div><b>4 fields</b> to sign up</div>
+      <div><b>2 minutes</b> to start</div>
+      <div><b>5 fields</b> to sign up</div>
       <div><b>Free</b> for eligible 501(c)(3)s</div>
     </div>
   </div>
 </div>
 
-<section id="questions">
+<section id="signup">
   <div class="wrap">
-    <h2>Three quick questions</h2>
-    <p class="sub">Answer these and we'll tell you what your onboarding looks like. Nothing here is binding.</p>
-    <div class="qgrid">
-      <div class="qcard">
-        <h3>1. Where do you work?</h3>
-        <div class="chips" data-q="borough">
-          <button class="chip" type="button" aria-pressed="false">Manhattan</button>
-          <button class="chip" type="button" aria-pressed="false">Brooklyn</button>
-          <button class="chip" type="button" aria-pressed="false">Queens</button>
-          <button class="chip" type="button" aria-pressed="false">Bronx</button>
-          <button class="chip" type="button" aria-pressed="false">Staten Island</button>
-          <button class="chip" type="button" aria-pressed="false">Citywide</button>
-        </div>
-      </div>
-      <div class="qcard">
-        <h3>2. What do you run?</h3>
-        <div class="chips" data-q="focus">
-          <button class="chip" type="button" aria-pressed="false">Arts &amp; culture</button>
-          <button class="chip" type="button" aria-pressed="false">Youth</button>
-          <button class="chip" type="button" aria-pressed="false">Housing</button>
-          <button class="chip" type="button" aria-pressed="false">Health</button>
-          <button class="chip" type="button" aria-pressed="false">Workforce</button>
-          <button class="chip" type="button" aria-pressed="false">Other</button>
-        </div>
-      </div>
-      <div class="qcard">
-        <h3>3. What gets in the way?</h3>
-        <div class="chips" data-q="blocker">
-          <button class="chip" type="button" aria-pressed="false">Paperwork</button>
-          <button class="chip" type="button" aria-pressed="false">Eligibility rules</button>
-          <button class="chip" type="button" aria-pressed="false">Budget &amp; docs</button>
-          <button class="chip" type="button" aria-pressed="false">PASSPort account</button>
-          <button class="chip" type="button" aria-pressed="false">Not sure where to start</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="signup" style="padding-top:0">
-  <div class="wrap">
-    <h2>Sign up in four fields</h2>
+    <h2>Sign up in five fields</h2>
     <p class="sub">We'll email you the next step. An NDA and, where health data is involved, a BAA come after —
       workspace access is granted once both are signed.</p>
 
@@ -148,20 +107,26 @@
       <div class="grid2">
         <div class="field">
           <label for="first">First name</label>
-          <input id="first" name="first" type="text" autocomplete="given-name" required>
+          <input id="first" name="first" type="text" autocomplete="given-name" placeholder="First name" required>
         </div>
         <div class="field">
           <label for="last">Last name</label>
-          <input id="last" name="last" type="text" autocomplete="family-name" required>
+          <input id="last" name="last" type="text" autocomplete="family-name" placeholder="Last name" required>
         </div>
       </div>
       <div class="field">
-        <label for="org">Organization</label>
-        <input id="org" name="org" type="text" autocomplete="organization" required>
+        <label for="org">Name of organization</label>
+        <input id="org" name="org" type="text" autocomplete="organization" placeholder="e.g. Bed-Stuy Youth Initiative Inc" required>
       </div>
-      <div class="field">
-        <label for="email">Work email</label>
-        <input id="email" name="email" type="email" autocomplete="email" required>
+      <div class="grid2">
+        <div class="field">
+          <label for="phone">Phone number</label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="(212) 555-0199" required>
+        </div>
+        <div class="field">
+          <label for="email">Work email</label>
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="director@yourcharity.org" required>
+        </div>
       </div>
 
       <label class="consent">
@@ -186,16 +151,6 @@
 </footer>
 
 <script>
-  const answers = { borough: '', focus: '', blocker: '' };
-  document.querySelectorAll('.chips').forEach(group => {
-    group.addEventListener('click', e => {
-      const chip = e.target.closest('.chip'); if (!chip) return;
-      group.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', 'false'));
-      chip.setAttribute('aria-pressed', 'true');
-      answers[group.dataset.q] = chip.textContent.trim();
-    });
-  });
-
   const form = document.getElementById('signupForm');
   const status = document.getElementById('status');
   const btn = document.getElementById('submitBtn');
@@ -207,11 +162,13 @@
     const first = document.getElementById('first').value.trim();
     const last  = document.getElementById('last').value.trim();
     const org   = document.getElementById('org').value.trim();
+    const phone = document.getElementById('phone').value.trim();
     const email = document.getElementById('email').value.trim();
     const tos   = document.getElementById('tos').checked;
 
     if (!first || !last) return fail('Please add your first and last name.');
-    if (!org)            return fail('Please add your organization.');
+    if (!org)            return fail('Please add your organization name.');
+    if (!phone)          return fail('Please add your phone number.');
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return fail('Please add a valid email address.');
     if (!tos)            return fail('Please agree to the Terms and Privacy Notice.');
 
@@ -224,13 +181,15 @@
         body: JSON.stringify({
           org,
           organization_name: org,
+=======
+          first_name: first,
+          last_name: last,
           signer_name: `${first} ${last}`,
           authorized_representative: `${first} ${last}`,
+=======
+          phone,
           email,
           signer_email: email,
-          borough: answers.borough,
-          prog_narrative: [answers.focus && `Focus: ${answers.focus}`, answers.blocker && `Blocker: ${answers.blocker}`]
-                            .filter(Boolean).join(' · '),
           legal_advisory_ack: true,
           terms_accepted: true,
           tos_accepted: true,
