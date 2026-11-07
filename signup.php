@@ -192,9 +192,9 @@ respond(200, [
     'passport_job_id'    => null,
     'legal_package'      => [
         'status'    => 'dispatched',
-        'documents' => ['Mutual NDA', 'HIPAA BAA'],
+        'documents' => ['Mutual NDA', 'Impact Partner Agreement'],
         'recipient' => $email,
     ],
     'org_email_status'   => 'pending_legal_execution',
-    'message'            => 'Partner registered successfully. Your Mutual NDA and HIPAA BAA have been queued for DocuSign execution. Once both agreements are signed, your official organization email and workspace credentials will be activated.',
+    'message'            => 'Partner registered successfully. Your Mutual NDA and Impact Partner Agreement have been queued for DocuSign execution. Once both agreements are signed, your official organization email and workspace credentials will be activated.',
 ]);
