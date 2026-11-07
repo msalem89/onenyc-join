@@ -2608,20 +2608,12 @@
         .then(function (r) {
           if (r.ok) {
             setBadge('online', 'Secure intake: online');
-          } else if (API.indexOf('intake.onenyc.org') !== -1) {
-            API = 'api';
-            setBadge('online', 'Secure intake: online');
           } else {
             setBadge('offline', 'Secure intake: not accepting right now');
           }
         })
         .catch(function () {
-          if (API.indexOf('intake.onenyc.org') !== -1) {
-            API = 'api';
-            setBadge('online', 'Secure intake: online');
-          } else {
-            setBadge('offline', 'Secure intake: offline — complete the form; submission retries when online');
-          }
+          setBadge('offline', 'Secure intake: offline — complete the form; submission retries when online');
         })
         .then(function () { if (t) clearTimeout(t); });
     }
