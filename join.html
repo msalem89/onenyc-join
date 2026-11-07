@@ -173,7 +173,7 @@
     if (!tos)            return fail('Please agree to the Terms and Privacy Notice.');
 
     btn.disabled = true; btn.textContent = 'Sending…';
-    const apiBase = (window.NAFS_OCR_INTAKE_URL || '/api').replace(/\/$/, '');
+    const apiBase = (window.NAFS_OCR_INTAKE_URL || (/(^|\.)onenyc\.org$/.test(location.hostname) ? 'https://intake.onenyc.org' : 'http://127.0.0.1:8890')).replace(/\/$/, '');
     try {
       const res = await fetch(`${apiBase}/signup`, {
         method: 'POST',
@@ -181,12 +181,10 @@
         body: JSON.stringify({
           org,
           organization_name: org,
-=======
           first_name: first,
           last_name: last,
           signer_name: `${first} ${last}`,
           authorized_representative: `${first} ${last}`,
-=======
           phone,
           email,
           signer_email: email,
