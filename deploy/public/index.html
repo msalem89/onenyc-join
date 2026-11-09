@@ -1927,9 +1927,9 @@
                 <div>
                   <label class="check-field">
                     <input type="checkbox" id="ack" name="ack" required>
-                    <span>I have read and agree to the <a href="/terms.html" target="_blank" rel="noopener">Terms of Service</a> and <a href="/privacy.html" target="_blank" rel="noopener">Privacy Notice</a>, and to the <a href="/agreements.html#nda" target="_blank" rel="noopener">Mutual NDA</a>, <a href="/agreements.html#baa" target="_blank" rel="noopener">HIPAA BAA</a>, and <a href="/agreements.html#indemnity" target="_blank" rel="noopener">Indemnity &amp; Disclaimer (no guarantee of funding)</a>, and I agree to execute all of them electronically by click-through.</span>
+                    <span>I have read and agree to the <a href="/terms.html" target="_blank" rel="noopener">Terms &amp; Conditions</a> and <a href="/privacy.html" target="_blank" rel="noopener">Privacy Notice</a>, including the <a href="/agreements.html#indemnity" target="_blank" rel="noopener">Indemnity &amp; Disclaimer (no guarantee of funding)</a>, and I agree to execute them electronically by click-through.</span>
                   </label>
-                  <span class="err" id="err-ack" style="display:none;color:var(--danger);font-size:13px;font-weight:600;margin-top:6px;">Please read and agree to the Terms of Service, Privacy Notice, Mutual NDA, HIPAA BAA, and Indemnity &amp; Disclaimer (no guarantee of funding) before submitting.</span>
+                  <span class="err" id="err-ack" style="display:none;color:var(--danger);font-size:13px;font-weight:600;margin-top:6px;">Please read and agree to the Terms &amp; Conditions, Privacy Notice, and Indemnity &amp; Disclaimer (no guarantee of funding) before submitting.</span>
                 </div>
 
                 <div style="margin-top:6px;">
@@ -1942,7 +1942,7 @@
                 <div class="submit-success" id="submitSuccess" role="status" aria-live="polite">
                   <b>Application Received &mdash; <span id="confirmCode">ONENYC-2026</span></b>
                   <p style="margin:8px 0 0;font-size:14px;line-height:1.6;">
-                    Your Mutual NDA, HIPAA BAA and Indemnity &amp; Disclaimer were executed by click-through when you submitted. A welcome email with your confirmation code is on its way to <b id="successEmail"></b>.
+                    Your Terms &amp; Conditions and Indemnity &amp; Disclaimer were executed by click-through when you submitted. A welcome email with your confirmation code is on its way to <b id="successEmail"></b>.
                   </p>
                   <ol style="margin:10px 0 0;padding-left:22px;font-size:14px;line-height:1.75;">
                     <li>Watch your inbox for the welcome email with your confirmation code.</li>
@@ -1962,6 +1962,14 @@
                   </ul>
                 </div>
                 <div id="submitError" role="alert" hidden style="margin-top:10px;padding:14px 18px;border-radius:12px;border:1px solid rgba(180,35,42,.35);background:rgba(180,35,42,.07);color:#7A1A20;font-size:14px;font-weight:500;"></div>
+                <div id="msFormsFallback" role="alert" hidden style="margin-top:12px;padding:18px 20px;border-radius:12px;border:2px solid var(--orange);background:rgba(248,164,48,.10);color:var(--navy);font-size:14.5px;line-height:1.6;">
+                  <b style="display:block;font-size:16px;margin-bottom:4px;">We saved your entries &mdash; finish your sign-up here:</b>
+                  <p style="margin:0 0 14px;">Everything you typed is kept safely on this device, so nothing is lost. Complete your application on our secure intake form &mdash; it only takes a minute.</p>
+                  <a class="btn btn--orange" href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=-itQkAKm3EWkdbsnwKAo40rEPdm7V2NLj8wxdJz3wJJUMDRMSzVPRk9QVTNTUlRRTVUyODIwVTI1Ui4u" target="_blank" rel="noopener">
+                    Finish Sign-Up on the Secure Intake Form
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
+                  </a>
+                </div>
               </div>
             </form>
           </div>
@@ -2616,20 +2624,12 @@
         .then(function (r) {
           if (r.ok) {
             setBadge('online', 'Secure intake: online');
-          } else if (API.indexOf('intake.onenyc.org') !== -1) {
-            API = 'api';
-            setBadge('online', 'Secure intake: online');
           } else {
             setBadge('offline', 'Secure intake: not accepting right now');
           }
         })
         .catch(function () {
-          if (API.indexOf('intake.onenyc.org') !== -1) {
-            API = 'api';
-            setBadge('online', 'Secure intake: online');
-          } else {
-            setBadge('offline', 'Secure intake: offline — complete the form; submission retries when online');
-          }
+          setBadge('offline', 'Secure intake: offline — complete the form; submission retries when online');
         })
         .then(function () { if (t) clearTimeout(t); });
     }
@@ -2728,7 +2728,9 @@
       var successBox = $('#submitSuccess');
       var confirmCode = $('#confirmCode');
       var errorBox = $('#submitError');
+      var fallbackBox = $('#msFormsFallback');
       if (errorBox) errorBox.hidden = true;
+      if (fallbackBox) fallbackBox.hidden = true;
       if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Submitting Application…'; }
 
       var payload = {
@@ -2744,10 +2746,6 @@
         terms_accepted: true,
         tos_accepted: true,
         terms_version: 'v1-2026-11',
-        nda_accepted: true,
-        nda_version: 'v1-2026-11',
-        baa_accepted: true,
-        baa_version: 'v1-2026-11',
         indemnity_accepted: true,
         indemnity_version: 'v1-2026-11'
       };
@@ -2788,11 +2786,13 @@
         throw new Error((r.data && (r.data.detail || r.data.message)) || 'server rejected the submission');
       })
       .catch(function (err) {
+        saveDraft(); /* persist entries so nothing is lost before the fallback */
         var offline = (err && err.name === 'AbortError') || !(err && err.message);
         var msg = offline
-          ? 'We could not reach the automated intake server directly. You can try again, or complete your submission immediately via our <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=-itQkAKm3EWkdbsnwKAo40rEPdm7V2NLj8wxdJz3wJJUMDRMSzVPRk9QVTNTUlRRTVUyODIwVTI1Ui4u" target="_blank" style="color:#7A1A20;font-weight:700;text-decoration:underline;">OneNYC Microsoft Intake Form &rarr;</a>'
-          : ('Submission error: ' + (err && err.message ? err.message : 'service unavailable') + '. You can also submit via our <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=-itQkAKm3EWkdbsnwKAo40rEPdm7V2NLj8wxdJz3wJJUMDRMSzVPRk9QVTNTUlRRTVUyODIwVTI1Ui4u" target="_blank" style="color:#7A1A20;font-weight:700;text-decoration:underline;">OneNYC Microsoft Intake Form &rarr;</a>');
+          ? 'We could not reach the automated intake server directly. Your entries are saved &mdash; finish your sign-up below.'
+          : ('Submission error: ' + (err && err.message ? err.message : 'service unavailable') + '. Your entries are saved &mdash; you can retry, or finish your sign-up below.');
         if (errorBox) { errorBox.innerHTML = msg; errorBox.hidden = false; }
+        if (fallbackBox) fallbackBox.hidden = false;
         if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Submit Application — Sign Up Free'; }
       })
       .then(function () { if (timer) clearTimeout(timer); });
