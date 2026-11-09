@@ -514,7 +514,12 @@
           var s = j.documents[id] || {};
           var row = state[id] || {};
           if (s.state === 'verified' && row.status !== 'verified') {
-            state[id] = Object.assign({}, row, { status: 'verified', verified_at: s.at || '' });
+            state[id] = Object.assign({}, row, {
+              status: 'verified',
+              verified_at: s.at || '',
+              name: row.name || s.name || 'on file',
+              size: row.size || (s.size ? Math.round(s.size / 1024) + ' KB' : ''),
+            });
           } else if (s.state === 'needs_attention' && row.status === 'pending') {
             state[id] = Object.assign({}, row, { status: 'failed', error: 'the reader could not make sense of this file' });
           }
