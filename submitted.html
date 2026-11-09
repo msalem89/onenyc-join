@@ -493,6 +493,39 @@
   // Load existing uploaded files state
   window.currentCode = code;
   window.currentEmail = (q.get('email') || (saved && saved.email) || '').toLowerCase();
+
+  /* The Mac worker writes _status.json beside the documents. Pull it so a row moves
+     from Pending Review to Verified only when something has actually read the file. */
+  window.syncFromServer = function syncFromServer() {
+    var c = window.currentCode, e = window.currentEmail;
+    if (!c || !e) return;
+    var base = (function () {
+      var h = location.hostname || '';
+      if (/(^|\.)onenyc\.org$/.test(h)) return 'https://intake.onenyc.org';
+      if (h === 'localhost' || h === '127.0.0.1') return 'http://127.0.0.1:8890';
+      return '';
+    })();
+    fetch(base + '/api/status?code=' + encodeURIComponent(c) + '&email=' + encodeURIComponent(e))
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) {
+        if (!j || !j.documents) return;
+        var state = loadDocsState();
+        Object.keys(j.documents).forEach(function (id) {
+          var s = j.documents[id] || {};
+          var row = state[id] || {};
+          if (s.state === 'verified' && row.status !== 'verified') {
+            state[id] = Object.assign({}, row, { status: 'verified', verified_at: s.at || '' });
+          } else if (s.state === 'needs_attention' && row.status === 'pending') {
+            state[id] = Object.assign({}, row, { status: 'failed', error: 'the reader could not make sense of this file' });
+          }
+        });
+        saveDocsState(state);
+        Object.keys(j.documents).forEach(function (id) { renderDocItem(id, state[id]); });
+      })
+      .catch(function () { /* offline: the local state stands, nothing is lost */ });
+  };
+  window.syncFromServer();
+  setInterval(window.syncFromServer, 60000);
   renderStoredDocs();
 })();
 
