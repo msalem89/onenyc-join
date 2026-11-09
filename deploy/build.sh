@@ -11,7 +11,7 @@ DEST="$ROOT/deploy/public"
 mkdir -p "$DEST"
 cp "$ROOT/index.html" "$DEST/index.html"
 cp "$ROOT/onenyc_logo.png" "$DEST/onenyc_logo.png"
-for page in join.html terms.html privacy.html; do
+for page in join.html terms.html privacy.html agreements.html; do
   [ -f "$ROOT/$page" ] && cp "$ROOT/$page" "$DEST/$page"
 done
 
