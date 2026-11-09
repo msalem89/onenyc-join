@@ -524,8 +524,12 @@
       })
       .catch(function () { /* offline: the local state stands, nothing is lost */ });
   };
-  window.syncFromServer();
+  /* Fire more than once: the first call can lose a race with page load, and a
+     swallowed failure would leave a Verified row looking unread. */
+  [500, 2500, 6000].forEach(function (t) { setTimeout(window.syncFromServer, t); });
   setInterval(window.syncFromServer, 60000);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) window.syncFromServer(); });
+  window.addEventListener('online', function () { window.syncFromServer(); });
   renderStoredDocs();
 })();
 
