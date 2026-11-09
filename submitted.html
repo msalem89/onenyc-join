@@ -527,13 +527,14 @@
           }
         });
         saveDocsState(state);
-        /* Re-render every row from the saved state. A per-id render can lose a race
-           with the first paint, which left a verified row showing undefined. */
-        if (typeof renderStoredDocs === 'function') {
-          renderStoredDocs();
-        } else {
-          Object.keys(j.documents).forEach(function (id) { renderDocItem(id, state[id]); });
-        }
+        /* Paint the rows we know about, one at a time. The page's full renderer can
+           throw on this page (and the throw was being swallowed by this catch), so
+           each row renders independently and a failure cannot hide the others. */
+        Object.keys(j.documents).forEach(function (id) {
+          try { renderDocItem(id, state[id]); } catch (e) {}
+        });
+        try { if (typeof updateCounters === 'function') updateCounters(state); } catch (e) {}
+        try { if (typeof renderStoredDocs === 'function') renderStoredDocs(); } catch (e) {}
       })
       .catch(function () { /* offline: the local state stands, nothing is lost */ });
   };
