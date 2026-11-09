@@ -1015,6 +1015,20 @@
     line-height: 1.5;
   }
 
+  /* ---------- Click-through agreements (Mutual NDA / HIPAA BAA / Indemnity) ---------- */
+  .agreements { margin-top: 18px; }
+  .agreements-title { font-size: 15px; font-weight: 700; color: var(--navy); margin: 0 0 4px; }
+  .agreements-note { font-size: 13px; color: var(--text-muted-on-light); margin: 0 0 14px; line-height: 1.5; }
+  .agreement-block { margin-bottom: 14px; }
+  .agreement-box { max-height: 260px; overflow-y: auto; border: 1px solid #CBD5E1; border-radius: 6px; background: #F8FAFC; padding: 12px 16px; font-size: 13px; line-height: 1.55; color: #1E293B; }
+  .agreement-box h4 { margin: 0 0 8px; font-size: 14px; color: var(--navy); }
+  .agreement-box p { margin: 0 0 10px; }
+  .agreement-box ol { margin: 0 0 10px; padding-left: 20px; }
+  .agreement-box ol li { margin-bottom: 8px; }
+  .agreement-exec { font-weight: 600; color: var(--navy); border-top: 1px solid #E2E8F0; padding-top: 10px; margin-bottom: 0; }
+  .agree-check { display: flex; align-items: flex-start; gap: 10px; font-size: 14.5px; line-height: 1.45; color: var(--text-muted-on-light); cursor: pointer; margin: 10px 0 0; }
+  .agree-check input[type="checkbox"] { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--navy); flex-shrink: 0; }
+
   /* ==========================================================================
      SECTION 1: DOES YOUR CHARITY QUALIFY? + DOCUMENTS TO GATHER (Light Surface)
      ========================================================================== */
@@ -1932,6 +1946,81 @@
                   <span class="err" id="err-ack" style="display:none;color:var(--danger);font-size:13px;font-weight:600;margin-top:6px;">Please confirm the Terms and Privacy Notice before submitting.</span>
                 </div>
 
+                <div id="agreements" class="agreements">
+                  <h3 class="agreements-title">Review and sign the three agreements</h3>
+                  <p class="agreements-note">All three are executed electronically by click-through when you submit this form &mdash; the submission timestamp and your confirmation code are retained as the executed record. No separate e-signature package is sent.</p>
+                  <div class="agreement-block">
+                    <div class="agreement-box" role="region" aria-label="Mutual Non-Disclosure Agreement v1-2026-11">
+                      <h4>Mutual Non-Disclosure Agreement — v1-2026-11</h4>
+                      <p>This Mutual Non-Disclosure Agreement ("Agreement") is entered into between the nonprofit organization identified in the signup form below ("the Organization") and OneNYC Inc., 1779 2nd Ave Apt 4F, New York, NY 10128 ("OneNYC"), each a "Party." Because it is mutual, each Party may act as the "Disclosing Party" or the "Receiving Party." By checking the box below and submitting this form, you execute this agreement electronically; the timestamp and your confirmation code are retained as the executed record.</p>
+                      <ol>
+                      <li><strong>Purpose.</strong> The Parties will exchange information to evaluate and prepare the Organization's participation in New York City Council discretionary funding and related compliance work (the "Purpose").</li>
+                      <li><strong>Confidential Information.</strong> "Confidential Information" means non-public information a Party discloses to the other for the Purpose, in any form, including organization records, financial information, draft funding applications, program documents, beneficiary or member information, and the existence and contents of the Parties' discussions.</li>
+                      <li><strong>Obligations.</strong> Each Receiving Party will (a) use Confidential Information only for the Purpose; (b) protect it with at least reasonable care; and (c) share it only with its own officers, employees, and advisors who need it for the Purpose and who are bound by confidentiality obligations no less protective than this Agreement.</li>
+                      <li><strong>Exclusions.</strong> Confidential Information does not include information that (a) is or becomes publicly available through no fault of the Receiving Party; (b) was lawfully known to the Receiving Party before disclosure; (c) is independently developed without use of the other Party's Confidential Information; or (d) must be disclosed by law, regulation, or court order, with prompt notice to the Disclosing Party where legally permitted.</li>
+                      <li><strong>No license.</strong> Nothing here transfers any intellectual property or ownership rights; all Confidential Information remains the property of the Disclosing Party.</li>
+                      <li><strong>Term.</strong> This Agreement takes effect on execution and lasts two (2) years. Confidentiality obligations survive for two (2) years after the Receiving Party returns or destroys the information.</li>
+                      <li><strong>Return of information.</strong> On a Party's written request, the Receiving Party will return or destroy the Disclosing Party's Confidential Information, except copies retained in routine backups, legal holds, or records required by law, which remain protected by this Agreement.</li>
+                      <li><strong>No obligation to proceed.</strong> This Agreement does not obligate either Party to enter into any further arrangement, creates no partnership, agency, or joint venture, and promises no funding or other outcome.</li>
+                      <li><strong>No warranty.</strong> Confidential Information is provided "as is." The Disclosing Party makes no representation or warranty about its accuracy or completeness.</li>
+                      <li><strong>Governing law.</strong> This Agreement is governed by the laws of the State of New York, without regard to its conflict-of-law rules.</li>
+                      </ol>
+                      <p class="agreement-exec">Executed electronically via click-through on [submission date] — Confirmation code: [code]</p>
+                    </div>
+                    <label class="check-field agree-check" for="ndaAgree">
+                      <input type="checkbox" id="ndaAgree" name="ndaAgree" required>
+                      <span>I have read and agree to the Mutual NDA (v1-2026-11)</span>
+                    </label>
+                    <span class="err" id="err-nda" style="display:none;color:var(--danger);font-size:13px;font-weight:600;margin-top:6px;">Please read and agree to the Mutual NDA before submitting.</span>
+                  </div>
+                  <div class="agreement-block">
+                    <div class="agreement-box" role="region" aria-label="HIPAA Business Associate Agreement v1-2026-11">
+                      <h4>Business Associate Agreement (HIPAA) — v1-2026-11</h4>
+                      <p>This Business Associate Agreement ("BAA") is entered into between the nonprofit organization identified in the signup form below ("the Organization," as Covered Entity) and OneNYC Inc., 1779 2nd Ave Apt 4F, New York, NY 10128 ("OneNYC," as Business Associate). It applies where documents the Organization shares with OneNYC contain Protected Health Information ("PHI") as defined by HIPAA, 45 C.F.R. Parts 160 and 164. OneNYC performs document intake and processing (receipt, review, organization, and preparation support) on the Organization's behalf. By checking the box below and submitting this form, you execute this agreement electronically; the timestamp and your confirmation code are retained as the executed record.</p>
+                      <ol>
+                      <li><strong>Permitted uses.</strong> OneNYC may create, receive, maintain, or transmit PHI only to provide document intake and processing support for the Organization's funding and compliance work, and as required by law. OneNYC will not use or disclose PHI for any other purpose.</li>
+                      <li><strong>Safeguards.</strong> OneNYC will apply administrative, physical, and technical safeguards that reasonably protect the confidentiality, integrity, and availability of PHI, including encryption of PHI in transit and at rest, and access limited to workforce members who need it to perform the services.</li>
+                      <li><strong>Minimum necessary.</strong> OneNYC will limit uses and disclosures of PHI to the minimum necessary for the services, except where HIPAA permits or requires otherwise.</li>
+                      <li><strong>Misuse reporting.</strong> OneNYC will report to the Organization any use or disclosure of PHI not permitted by this BAA, and any security incident of which it becomes aware, without unreasonable delay.</li>
+                      <li><strong>Subcontractors (service providers).</strong> OneNYC will bind any subcontractor or service provider that creates, receives, maintains, or transmits PHI on its behalf to written obligations at least as protective as this BAA, and remains responsible for their compliance.</li>
+                      <li><strong>Individual rights.</strong> OneNYC will make PHI available to the Organization when needed for an individual's access, amendment, or accounting-of-disclosures request, and will provide information the Organization reasonably needs to fulfill its duties under HIPAA.</li>
+                      <li><strong>Government access.</strong> OneNYC will make its internal practices and records relating to PHI available to the U.S. Secretary of Health and Human Services for purposes of determining HIPAA compliance.</li>
+                      <li><strong>Breach notification.</strong> OneNYC will notify the Organization without unreasonable delay, and no later than five (5) business days after discovering, any breach of unsecured PHI, and will provide the details the Organization needs to meet its own notification obligations.</li>
+                      <li><strong>Termination and return.</strong> The Organization may terminate this BAA on written notice if OneNYC materially breaches it and fails to cure within thirty (30) days. On termination or at the end of the engagement, OneNYC will return or destroy all PHI; if return or destruction is infeasible, protections continue for as long as PHI is retained.</li>
+                      <li><strong>Governing law.</strong> This BAA is governed by the laws of the State of New York; where HIPAA and its regulations apply, they control in case of conflict.</li>
+                      </ol>
+                      <p class="agreement-exec">Executed electronically via click-through on [submission date] — Confirmation code: [code]</p>
+                    </div>
+                    <label class="check-field agree-check" for="baaAgree">
+                      <input type="checkbox" id="baaAgree" name="baaAgree" required>
+                      <span>I have read and agree to the HIPAA Business Associate Agreement (v1-2026-11) &mdash; applies where documents contain health information</span>
+                    </label>
+                    <span class="err" id="err-baa" style="display:none;color:var(--danger);font-size:13px;font-weight:600;margin-top:6px;">Please read and agree to the HIPAA Business Associate Agreement before submitting.</span>
+                  </div>
+                  <div class="agreement-block">
+                    <div class="agreement-box" role="region" aria-label="Indemnity and Disclaimer v1-2026-11">
+                      <h4>Indemnification and Disclaimer — v1-2026-11</h4>
+                      <p>This Indemnification and Disclaimer ("Agreement") is entered into between the nonprofit organization identified in the signup form below ("the Organization") and OneNYC Inc., 1779 2nd Ave Apt 4F, New York, NY 10128 ("OneNYC"). By checking the box below and submitting this form, you execute this agreement electronically; the timestamp and your confirmation code are retained as the executed record.</p>
+                      <ol>
+                      <li><strong>Free services; no promise of funding.</strong> OneNYC provides preparation and advisory support free of charge. OneNYC makes no promise, guarantee, or representation that the Organization will receive funding, an award, or a favorable decision from any funder, city agency, or official. All funding decisions rest solely with those third parties.</li>
+                      <li><strong>The Organization submits its own applications.</strong> The Organization submits all applications and filings itself, under its own legal accounts. The Organization is solely responsible for the accuracy, completeness, and timeliness of every application and document it submits.</li>
+                      <li><strong>No legal or financial advice.</strong> The services are practical preparation and process support. They are not legal, accounting, tax, or financial advice, and they create no attorney-client or fiduciary relationship. The Organization should consult its own licensed professionals where it needs advice.</li>
+                      <li><strong>Representation about documents.</strong> The Organization represents that all documents and information it provides to OneNYC are lawfully obtained and lawfully shared with OneNYC for this engagement, and do not violate any law or the rights of any person.</li>
+                      <li><strong>Indemnification.</strong> The Organization will defend and indemnify OneNYC Inc. and its officers, directors, employees, and volunteers against third-party claims, damages, losses, and reasonable costs (including attorneys' fees) arising from documents or information the Organization provides, or from applications the Organization submits.</li>
+                      <li><strong>Services provided as-is.</strong> All services, materials, and workspace access are provided "as is" and "as available," without warranties of any kind, express or implied, including warranties of merchantability, fitness for a particular purpose, or success in obtaining funding.</li>
+                      <li><strong>Limitation of liability.</strong> To the maximum extent permitted by law, OneNYC is not liable for indirect, incidental, consequential, special, or punitive damages, or for lost funding, data, or profits, arising from the services or this relationship. OneNYC's total aggregate liability is limited to one hundred dollars ($100). Nothing in this Agreement limits liability that cannot be limited by law.</li>
+                      <li><strong>Governing law.</strong> This Agreement is governed by the laws of the State of New York.</li>
+                      </ol>
+                      <p class="agreement-exec">Executed electronically via click-through on [submission date] — Confirmation code: [code]</p>
+                    </div>
+                    <label class="check-field agree-check" for="indemnityAgree">
+                      <input type="checkbox" id="indemnityAgree" name="indemnityAgree" required>
+                      <span>I have read and agree to the Indemnity &amp; Disclaimer (v1-2026-11)</span>
+                    </label>
+                    <span class="err" id="err-indemnity" style="display:none;color:var(--danger);font-size:13px;font-weight:600;margin-top:6px;">Please read and agree to the Indemnity &amp; Disclaimer before submitting.</span>
+                  </div>
+                </div>
+
                 <div style="margin-top:6px;">
                   <button class="submit-btn" type="submit" id="submitBtn">
                     Submit Application &mdash; Sign Up Free
@@ -1940,10 +2029,26 @@
                 </div>
 
                 <div class="submit-success" id="submitSuccess" role="status" aria-live="polite">
-                  <b>Application Intake Received &mdash; <span id="confirmCode">ONENYC-2026</span></b>
+                  <b>Application Received &mdash; <span id="confirmCode">ONENYC-2026</span></b>
                   <p style="margin:8px 0 0;font-size:14px;line-height:1.6;">
-                    Thank you for signing up. Your Mutual NDA and HIPAA BAA onboarding package is queued for DocuSign electronic signature. Once both agreements are executed, your official <code>@onenyc.org</code> email address and municipal workspace credentials will be activated immediately.
+                    Your Mutual NDA, HIPAA BAA and Indemnity &amp; Disclaimer were executed by click-through when you submitted. A welcome email with your confirmation code is on its way to <b id="successEmail"></b>.
                   </p>
+                  <ol style="margin:10px 0 0;padding-left:22px;font-size:14px;line-height:1.75;">
+                    <li>Watch your inbox for the welcome email with your confirmation code.</li>
+                    <li>After review, your onenyc.org workspace is activated.</li>
+                    <li>Once activated, log in at <a href="https://login.microsoftonline.com/" target="_blank" rel="noopener">login.microsoftonline.com</a>.</li>
+                  </ol>
+                </div>
+                <div id="welcomeBack" role="status" aria-live="polite" hidden style="margin-top:18px;padding:18px 20px;border-radius:4px;border:2px solid #1D4ED8;background:#EFF5FF;color:#173A6B;">
+                  <b style="display:block;font-size:16px;margin-bottom:4px;color:#1D4ED8;">Welcome back &mdash; an application is already on file</b>
+                  <p style="margin:0;font-size:14.5px;line-height:1.6;">
+                    An application for this organization and email is already on file (first submitted <b id="wbDate"></b>). Your confirmation code is <b id="wbCode" style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;"></b>.
+                  </p>
+                  <ul style="margin:12px 0 0;padding:0;list-style:none;font-size:14px;line-height:1.9;">
+                    <li><a href="https://login.microsoftonline.com/" target="_blank" rel="noopener">Workspace login &rarr;</a></li>
+                    <li><a href="https://passwordreset.microsoftonline.com/" target="_blank" rel="noopener">Reset your onenyc.org password &rarr;</a></li>
+                    <li><a id="wbMail" href="mailto:info@onenyc.com">Need help or forgot your code &mdash; email info@onenyc.com &rarr;</a></li>
+                  </ul>
                 </div>
                 <div id="submitError" role="alert" hidden style="margin-top:10px;padding:14px 18px;border-radius:12px;border:1px solid rgba(180,35,42,.35);background:rgba(180,35,42,.07);color:#7A1A20;font-size:14px;font-weight:500;"></div>
                 <div id="msFormsFallback" role="alert" hidden style="margin-top:12px;padding:18px 20px;border-radius:12px;border:2px solid var(--orange);background:rgba(248,164,48,.10);color:var(--navy);font-size:14.5px;line-height:1.6;">
@@ -2639,6 +2744,22 @@
       });
     });
 
+    [['ndaAgree', 'err-nda'], ['baaAgree', 'err-baa'], ['indemnityAgree', 'err-indemnity']].forEach(function (pair) {
+      var box = document.getElementById(pair[0]);
+      var err = document.getElementById(pair[1]);
+      if (!box) return;
+      box.addEventListener('change', function () {
+        if (box.checked && err) err.style.display = 'none';
+      });
+    });
+
+    function fmtDate(v) {
+      if (!v) return 'an earlier date';
+      var d = new Date(v);
+      if (isNaN(d.getTime())) return String(v);
+      try { return d.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }); } catch (e) { return String(v); }
+    }
+
     var DRAFT_KEY = 'onenyc-join-draft-v1';
     ['fn', 'ln', 'org', 'phone', 'email'].forEach(function (id) {
       var el = document.getElementById(id);
@@ -2691,6 +2812,22 @@
         errAck.style.display = 'none';
       }
 
+      var agreementChecks = [
+        { box: $('#ndaAgree'), err: $('#err-nda') },
+        { box: $('#baaAgree'), err: $('#err-baa') },
+        { box: $('#indemnityAgree'), err: $('#err-indemnity') }
+      ];
+      agreementChecks.forEach(function (ac) {
+        if (!ac.box) return;
+        if (!ac.box.checked) {
+          if (ac.err) ac.err.style.display = 'block';
+          if (!firstBad) firstBad = ac.box;
+          valid = false;
+        } else if (ac.err) {
+          ac.err.style.display = 'none';
+        }
+      });
+
       if (!valid) { if (firstBad) firstBad.focus(); return; }
 
       var submitBtn = $('#submitBtn');
@@ -2714,7 +2851,13 @@
         legal_advisory_ack: true,
         terms_accepted: true,
         tos_accepted: true,
-        terms_version: 'v1-2026-11'
+        terms_version: 'v1-2026-11',
+        nda_accepted: true,
+        nda_version: 'v1-2026-11',
+        baa_accepted: true,
+        baa_version: 'v1-2026-11',
+        indemnity_accepted: true,
+        indemnity_version: 'v1-2026-11'
       };
 
       var ctrl = ('AbortController' in window) ? new AbortController() : null;
@@ -2730,8 +2873,21 @@
       })
       .then(function (r) {
         var code = r.data && r.data.confirmation_code;
-        if (r.ok && r.data && r.data.status === 'success' && code) {
+        if (r.ok && r.data && (r.data.status === 'success' || r.data.status === 'exists') && code) {
+          if (r.data.status === 'exists') {
+            var wb = $('#welcomeBack'), wbDate = $('#wbDate'), wbCode = $('#wbCode'), wbMail = $('#wbMail');
+            if (wbDate) wbDate.textContent = fmtDate(r.data.first_submitted_at);
+            if (wbCode) wbCode.textContent = code;
+            if (wbMail) wbMail.setAttribute('href', 'mailto:info@onenyc.com?subject=' + encodeURIComponent('OneNYC application help — confirmation code ' + code));
+            if (successBox) successBox.style.display = 'none';
+            if (wb) wb.hidden = false;
+            if (submitBtn) { submitBtn.textContent = 'Application Already on File'; submitBtn.style.background = '#1D4ED8'; submitBtn.style.color = '#FFFFFF'; }
+            try { localStorage.removeItem(DRAFT_KEY); } catch (e2) {}
+            return;
+          }
           if (confirmCode) confirmCode.textContent = code;
+          var successEmailEl = $('#successEmail');
+          if (successEmailEl) successEmailEl.textContent = payload.email;
           if (successBox) successBox.style.display = 'block';
           if (submitBtn) { submitBtn.textContent = 'Application Submitted ✓'; submitBtn.style.background = '#1E6F50'; submitBtn.style.color = '#FFFFFF'; }
           try { localStorage.removeItem(DRAFT_KEY); } catch (e2) {}
