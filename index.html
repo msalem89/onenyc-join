@@ -2765,22 +2765,17 @@
         var code = r.data && r.data.confirmation_code;
         if (r.ok && r.data && (r.data.status === 'success' || r.data.status === 'exists') && code) {
           if (r.data.status === 'exists') {
-            var wb = $('#welcomeBack'), wbDate = $('#wbDate'), wbCode = $('#wbCode'), wbMail = $('#wbMail');
-            if (wbDate) wbDate.textContent = fmtDate(r.data.first_submitted_at);
-            if (wbCode) wbCode.textContent = code;
-            if (wbMail) wbMail.setAttribute('href', 'mailto:info@onenyc.com?subject=' + encodeURIComponent('OneNYC application help — confirmation code ' + code));
-            if (successBox) successBox.style.display = 'none';
-            if (wb) wb.hidden = false;
-            if (submitBtn) { submitBtn.textContent = 'Application Already on File'; submitBtn.style.background = '#1D4ED8'; submitBtn.style.color = '#FFFFFF'; }
             try { localStorage.removeItem(DRAFT_KEY); } catch (e2) {}
+            location.assign('submitted.html?state=exists'
+              + '&code=' + encodeURIComponent(code)
+              + '&email=' + encodeURIComponent(payload.email || '')
+              + '&first=' + encodeURIComponent(fmtDate(r.data.first_submitted_at)));
             return;
           }
-          if (confirmCode) confirmCode.textContent = code;
-          var successEmailEl = $('#successEmail');
-          if (successEmailEl) successEmailEl.textContent = payload.email;
-          if (successBox) successBox.style.display = 'block';
-          if (submitBtn) { submitBtn.textContent = 'Application Submitted ✓'; submitBtn.style.background = '#1E6F50'; submitBtn.style.color = '#FFFFFF'; }
           try { localStorage.removeItem(DRAFT_KEY); } catch (e2) {}
+          location.assign('submitted.html'
+            + '?code=' + encodeURIComponent(code)
+            + '&email=' + encodeURIComponent(payload.email || ''));
           return;
         }
         throw new Error((r.data && (r.data.detail || r.data.message)) || 'server rejected the submission');
