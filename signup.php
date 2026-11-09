@@ -192,9 +192,9 @@ respond(200, [
     'passport_job_id'    => null,
     'legal_package'      => [
         'status'    => 'dispatched',
-        'documents' => ['Mutual NDA', 'Impact Partner Agreement'],
+        'documents' => ['Terms & Conditions', 'Privacy Notice', 'Indemnity & Disclaimer'],
         'recipient' => $email,
     ],
     'org_email_status'   => 'pending_legal_execution',
-    'message'            => 'Partner registered successfully. Your Mutual NDA and Impact Partner Agreement have been queued for DocuSign execution. Once both agreements are signed, your official organization email and workspace credentials will be activated.',
+    'message'            => 'Partner registered successfully. The Terms & Conditions, Privacy Notice, and Indemnity & Disclaimer (no guarantee of funding) were executed electronically by click-through when you submitted. Your workspace credentials will be activated once your application is reviewed.',
 ]);

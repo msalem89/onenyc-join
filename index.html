@@ -1913,9 +1913,9 @@
 
                 <div class="form-row-2">
                   <div class="field">
-                    <label for="phone">Phone Number *</label>
-                    <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="(212) 555-0199" required>
-                    <span class="err" id="err-phone">Please enter your phone number.</span>
+                    <label for="phone">Phone Number (optional)</label>
+                    <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="(212) 555-0199">
+                    <span class="err" id="err-phone">Phone number looks incomplete &mdash; please enter a valid number or leave this field blank.</span>
                   </div>
                   <div class="field">
                     <label for="email">Contact Email *</label>
@@ -2640,7 +2640,7 @@
       fn: { el: $('#fn'), test: function (v) { return v.trim().length > 0; } },
       ln: { el: $('#ln'), test: function (v) { return v.trim().length > 0; } },
       org: { el: $('#org'), test: function (v) { return v.trim().length > 1; } },
-      phone: { el: $('#phone'), test: function (v) { return v.trim().length >= 7; } },
+      phone: { el: $('#phone'), test: function (v) { var t = v.trim(); return t.length === 0 || t.length >= 7; } },
       email: { el: $('#email'), test: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()); } }
     };
 
