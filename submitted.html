@@ -513,11 +513,13 @@
         Object.keys(j.documents).forEach(function (id) {
           var s = j.documents[id] || {};
           var row = state[id] || {};
-          if (s.state === 'verified' && row.status !== 'verified') {
+          if (s.state === 'verified') {
+            /* The server knows the file name and size; local state may be older or
+               may have been created by a status sync that had no name yet. */
             state[id] = Object.assign({}, row, {
               status: 'verified',
-              verified_at: s.at || '',
-              name: row.name || s.name || 'on file',
+              verified_at: s.at || row.verified_at || '',
+              name: s.name || row.name || 'on file',
               size: row.size || (s.size ? Math.round(s.size / 1024) + ' KB' : ''),
             });
           } else if (s.state === 'needs_attention' && row.status === 'pending') {
