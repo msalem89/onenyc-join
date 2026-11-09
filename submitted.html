@@ -84,6 +84,15 @@
   .remove-btn{background:transparent;border:0;color:#94A3B8;cursor:pointer;padding:4px;font-size:12px;text-decoration:underline}
   .remove-btn:hover{color:#DC2626}
 
+  /* Template Action Links & Notary Tags */
+  .tpl-actions{margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:12px}
+  .tpl-link{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:6px;background:#F1F5F9;color:var(--navy);text-decoration:none;font-weight:600;border:1px solid #CBD5E1;transition:all .15s}
+  .tpl-link:hover{background:#E2E8F0;color:var(--orange-deep);border-color:var(--orange)}
+  .notary-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border-radius:4px;background:#FEF3C7;color:#92400E;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+  .notary-card{background:#FFFBEB;border:1px solid #FCD34D;border-radius:14px;padding:20px 22px;margin-bottom:28px}
+  .notary-card h4{margin:0 0 6px;color:#92400E;font-size:16px;display:flex;align-items:center;gap:8px}
+  .notary-card p{margin:0 0 10px;font-size:13.5px;color:#78350F;line-height:1.5}
+
   .note{margin-top:34px;background:#fff;border-left:4px solid var(--orange);border-radius:10px;padding:18px 20px;color:#2D3E52}
   .exists{display:none;background:#fff;border:1px solid var(--cream-border);border-radius:12px;padding:18px 20px;margin:0 0 22px;color:#2D3E52}
   .exists b{color:var(--navy)}
@@ -164,6 +173,20 @@
     </p>
   </div>
 
+  <!-- No Notarization Guidance Box -->
+  <div class="template-card" style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:14px;padding:20px 22px;margin-bottom:28px">
+    <h4 style="margin:0 0 6px;color:#166534;font-size:16px;display:flex;align-items:center;gap:8px">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      None of the 13 Compliance Documents Require Notarization
+    </h4>
+    <p style="margin:0 0 10px;font-size:13.5px;color:#14532D;line-height:1.5">
+      You <strong>do not need to visit a Notary Public</strong> to complete this compliance checklist. Non-profit qualification relies on official government/tax records (IRS letters, NYS Certificate of Incorporation, ACORD insurance certificates) and internal board-signed governance records.
+    </p>
+    <p style="margin:0;font-size:13px;color:#166534;line-height:1.5">
+      <strong>Missing any governance or budget documents?</strong> Click the <strong>Download Template</strong> buttons below to use OneNYC's pre-formatted templates for your Bylaws, Board Roster, Conflict of Interest Policy, Board Resolution, and Budgets.
+    </p>
+  </div>
+
   <div class="groups">
     <!-- Group 1: Legal Standing -->
     <div class="group">
@@ -217,7 +240,7 @@
         <li class="doc-item" data-id="doc_charities">
           <div class="doc-info">
             <h4 class="doc-title">NYS Charities Bureau Registration (CHAR410 / CHAR500)</h4>
-            <p class="doc-desc">Current state registration with NY Attorney General Charities Bureau.</p>
+            <p class="doc-desc">Current state registration with NY Attorney General Charities Bureau (Registration Certificate or Annual Filing Receipt).</p>
             <div class="doc-meta"><b class="doc-filename"></b> &middot; <span class="doc-time"></span> <button type="button" class="remove-btn" onclick="removeDoc('doc_charities')">Remove</button></div>
           </div>
           <div class="doc-status">
@@ -242,6 +265,10 @@
           <div class="doc-info">
             <h4 class="doc-title">Organizational By-Laws</h4>
             <p class="doc-desc">Governing rules detailing quorum, officer positions, and board voting authority.</p>
+            <div class="tpl-actions">
+              <span style="color:#64748B">Don't have bylaws?</span>
+              <a href="templates/Standard_NYS_Not_for_Profit_Bylaws_Template.docx" download class="tpl-link">📥 Download NYS Bylaws Template (.docx)</a>
+            </div>
             <div class="doc-meta"><b class="doc-filename"></b> &middot; <span class="doc-time"></span> <button type="button" class="remove-btn" onclick="removeDoc('doc_bylaws')">Remove</button></div>
           </div>
           <div class="doc-status">
@@ -256,6 +283,10 @@
           <div class="doc-info">
             <h4 class="doc-title">Board of Directors Roster</h4>
             <p class="doc-desc">List of voting board members with officer titles, terms, and professional affiliations.</p>
+            <div class="tpl-actions">
+              <span style="color:#64748B">Need roster format?</span>
+              <a href="templates/Board_of_Directors_Roster_Template.docx" download class="tpl-link">📥 Download Board Roster Template (.docx)</a>
+            </div>
             <div class="doc-meta"><b class="doc-filename"></b> &middot; <span class="doc-time"></span> <button type="button" class="remove-btn" onclick="removeDoc('doc_board_roster')">Remove</button></div>
           </div>
           <div class="doc-status">
@@ -269,7 +300,11 @@
         <li class="doc-item" data-id="doc_coi_policy">
           <div class="doc-info">
             <h4 class="doc-title">Conflict of Interest Policy &amp; Disclosures</h4>
-            <p class="doc-desc">Board-adopted conflict policy and signed annual disclosure statements.</p>
+            <p class="doc-desc">Board-adopted conflict policy and signed annual disclosure statements (NY N-PCL § 715-a).</p>
+            <div class="tpl-actions">
+              <span style="color:#64748B">Need policy &amp; disclosure?</span>
+              <a href="templates/Conflict_of_Interest_Policy_and_Disclosure_Template.docx" download class="tpl-link">📥 Download NY COI Policy &amp; Disclosure (.docx)</a>
+            </div>
             <div class="doc-meta"><b class="doc-filename"></b> &middot; <span class="doc-time"></span> <button type="button" class="remove-btn" onclick="removeDoc('doc_coi_policy')">Remove</button></div>
           </div>
           <div class="doc-status">
@@ -283,7 +318,12 @@
         <li class="doc-item" data-id="doc_board_resolution">
           <div class="doc-info">
             <h4 class="doc-title">Board Authorization Resolution</h4>
-            <p class="doc-desc">Formal resolution granting the Executive Director signing authority for grants.</p>
+            <p class="doc-desc">Corporate resolution certified by the Secretary granting the Executive Officer signing authority for grants.</p>
+            <div class="tpl-actions">
+              <span style="color:#64748B">Don't have a resolution?</span>
+              <a href="templates/Board_Authorization_Resolution_Template.docx" download class="tpl-link">📥 Download Resolution Template (.docx)</a>
+              <a href="templates/Board_Authorization_Resolution_Template.pdf" target="_blank" class="tpl-link">PDF</a>
+            </div>
             <div class="doc-meta"><b class="doc-filename"></b> &middot; <span class="doc-time"></span> <button type="button" class="remove-btn" onclick="removeDoc('doc_board_resolution')">Remove</button></div>
           </div>
           <div class="doc-status">
@@ -322,6 +362,10 @@
           <div class="doc-info">
             <h4 class="doc-title">Current Annual Operating Budget</h4>
             <p class="doc-desc">Organization-wide annual revenue and expense budget for the current fiscal period.</p>
+            <div class="tpl-actions">
+              <span style="color:#64748B">Need budget format?</span>
+              <a href="templates/Operating_and_Program_Budget_Template.docx" download class="tpl-link">📥 Download Budget Template (.docx)</a>
+            </div>
             <div class="doc-meta"><b class="doc-filename"></b> &middot; <span class="doc-time"></span> <button type="button" class="remove-btn" onclick="removeDoc('doc_operating_budget')">Remove</button></div>
           </div>
           <div class="doc-status">
@@ -336,6 +380,10 @@
           <div class="doc-info">
             <h4 class="doc-title">Program Line-Item Budget</h4>
             <p class="doc-desc">Detailed budget breakdown for the specific community program seeking Council funding.</p>
+            <div class="tpl-actions">
+              <span style="color:#64748B">Need line-item format?</span>
+              <a href="templates/Operating_and_Program_Budget_Template.docx" download class="tpl-link">📥 Download Program Budget (.docx)</a>
+            </div>
             <div class="doc-meta"><b class="doc-filename"></b> &middot; <span class="doc-time"></span> <button type="button" class="remove-btn" onclick="removeDoc('doc_program_budget')">Remove</button></div>
           </div>
           <div class="doc-status">
@@ -374,6 +422,10 @@
           <div class="doc-info">
             <h4 class="doc-title">Proof of Workers’ Comp &amp; Disability (or Exemption CE-200)</h4>
             <p class="doc-desc">NYS Form C-105.2, DB-120.1, or Form CE-200 if organization has no paid employees.</p>
+            <div class="tpl-actions">
+              <span style="color:#64748B">No paid employees?</span>
+              <a href="https://www.wcb.ny.gov/content/ebiz/ce200/ce200.jsp" target="_blank" rel="noopener" class="tpl-link">🔗 Get Free CE-200 Exemption on NYS WCB Portal &rarr;</a>
+            </div>
             <div class="doc-meta"><b class="doc-filename"></b> &middot; <span class="doc-time"></span> <button type="button" class="remove-btn" onclick="removeDoc('doc_workers_comp')">Remove</button></div>
           </div>
           <div class="doc-status">
