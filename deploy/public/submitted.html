@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Application Received & Document Checklist — OneNYC Impact Partners</title>
+<meta name="description" content="Your OneNYC Impact Partners application is on file. Upload and track your 13 compliance documents here.">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="onenyc_logo.png">
+<style>
+  :root{
+    --navy:#0C1F39; --navy-deep:#081528; --slate:#23374F;
+    --orange:#F8A430; --orange-deep:#C97A0E; --mint:#C1DED3; --mint-deep:#1E5E4A;
+    --cream:#FEF4EF; --cream-border:#EAD9CF; --gray:#5F6974;
+    --border-light:#D5DEE8; --success:#1E6F50; --success-bg:#EBF7F0; --pending-bg:#FEF5E7;
+    --f-display:"Quasimoda","Outfit",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    --f-body:"Work Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:var(--f-body);color:var(--navy);background:var(--cream);line-height:1.6}
+  a{color:var(--orange-deep)}
+  .bar{background:var(--navy);color:#fff;padding:16px 20px}
+  .bar__in{max-width:1080px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .bar img{height:34px;width:auto;background:#fff;border-radius:6px;padding:4px}
+  .bar a{color:#fff;text-decoration:none;font-size:14px;font-weight:600}
+  .hero{background:var(--navy);color:#fff;padding:0 20px 54px}
+  .hero__in{max-width:1080px;margin:0 auto}
+  .eyebrow{display:inline-block;margin:34px 0 14px;padding:6px 12px;border-radius:999px;background:rgba(248,164,48,.16);color:var(--orange);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+  h1{font-family:var(--f-display);font-size:clamp(30px,4.4vw,46px);line-height:1.12;margin:0 0 14px;letter-spacing:-.01em}
+  .lede{font-size:18px;color:#DCE5F0;max-width:680px;margin:0 0 24px}
+  .code{display:inline-flex;align-items:center;gap:12px;background:#fff;color:var(--navy);border-radius:12px;padding:14px 18px;margin:0 0 24px}
+  .code span{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gray)}
+  .code b{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:20px}
+  .steps{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin:0}
+  .step{background:rgba(255,255,255,.06);border:1px solid rgba(193,222,211,.22);border-radius:12px;padding:16px 18px}
+  .step b{display:block;color:var(--orange);font-size:12px;letter-spacing:.1em;margin-bottom:6px}
+  .step span{font-size:15px;color:#DCE5F0}
+  main{max-width:1080px;margin:0 auto;padding:48px 20px 80px}
+  h2{font-family:var(--f-display);font-size:clamp(22px,3vw,30px);margin:0 0 8px}
+  .sub{color:var(--gray);margin:0 0 24px;max-width:720px}
+  
+  /* Progress Tracker Box */
+  .tracker-card{background:#fff;border:1px solid var(--cream-border);border-radius:16px;padding:24px 28px;margin-bottom:34px;box-shadow:0 4px 20px rgba(12,31,57,.04)}
+  .tracker-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:14px}
+  .tracker-title{font-size:18px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:10px}
+  .tracker-stats{display:flex;gap:16px;font-size:13px;font-weight:600}
+  .stat-pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px}
+  .stat-pill--needed{background:#F1F4F8;color:var(--gray)}
+  .stat-pill--pending{background:var(--pending-bg);color:var(--orange-deep)}
+  .stat-pill--verified{background:var(--success-bg);color:var(--success)}
+  .progress-bar-wrap{height:8px;background:#E7EDF3;border-radius:999px;overflow:hidden;margin-bottom:10px}
+  .progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--orange),var(--success));width:0%;transition:width .4s ease}
+  .tracker-hint{font-size:13.5px;color:var(--gray);margin:0}
+
+  /* Document Groups & Rows */
+  .groups{display:grid;gap:24px}
+  .group{background:#fff;border:1px solid var(--cream-border);border-radius:16px;padding:24px 26px;box-shadow:0 4px 16px rgba(12,31,57,.03)}
+  .group-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px;border-bottom:1px solid #F1F4F8;padding-bottom:12px}
+  .group h3{margin:0;font-size:18px;color:var(--navy)}
+  .group .k{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--orange-deep)}
+  
+  .doc-list{display:grid;gap:12px;margin:0;padding:0;list-style:none}
+  .doc-item{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 16px;border-radius:12px;background:#FAFBFC;border:1px solid #E8ECEF;transition:all .2s ease}
+  .doc-item:hover{background:#F6F8FA;border-color:var(--border-light)}
+  .doc-item.is-pending{background:var(--pending-bg);border-color:#FCD89C}
+  .doc-item.is-verified{background:var(--success-bg);border-color:#BDE3CE}
+  
+  .doc-info{flex:1;min-width:0}
+  .doc-title{font-size:15px;font-weight:600;color:var(--navy);margin:0 0 4px;display:flex;align-items:center;gap:8px}
+  .doc-desc{font-size:13px;color:var(--gray);margin:0}
+  .doc-meta{font-size:12px;color:var(--navy);margin-top:6px;display:none;align-items:center;gap:10px;font-weight:500}
+  .doc-meta span{color:var(--gray)}
+  
+  .doc-status{flex:0 0 auto;display:flex;align-items:center;gap:12px}
+  .badge{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.02em;text-transform:uppercase}
+  .badge--needed{background:#ECEFF2;color:#6A7785}
+  .badge--pending{background:#FDE8C7;color:#9E5502}
+  .badge--verified{background:#D1EFE0;color:#0F5A3E}
+  
+  .upload-btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:600;background:#fff;border:1px solid #CBD5E1;color:var(--navy);cursor:pointer;transition:all .15s ease}
+  .upload-btn:hover{background:#F8FAFC;border-color:var(--navy)}
+  .upload-btn input[type="file"]{position:absolute;left:0;top:0;opacity:0;width:100%;height:100%;cursor:pointer}
+  .remove-btn{background:transparent;border:0;color:#94A3B8;cursor:pointer;padding:4px;font-size:12px;text-decoration:underline}
+  .remove-btn:hover{color:#DC2626}
+
+  .note{margin-top:34px;background:#fff;border-left:4px solid var(--orange);border-radius:10px;padding:18px 20px;color:#2D3E52}
+  .exists{display:none;background:#fff;border:1px solid var(--cream-border);border-radius:12px;padding:18px 20px;margin:0 0 22px;color:#2D3E52}
+  .exists b{color:var(--navy)}
+  .foot{border-top:1px solid var(--cream-border);margin-top:46px;padding-top:20px;color:var(--gray);font-size:13.5px}
+  .foot a{color:var(--orange-deep)}
+  
+  @media (max-width:768px){
+    .doc-item{flex-direction:column;align-items:flex-start;gap:12px}
+    .doc-status{width:100%;justify-content:space-between}
+  }
+  @media (max-width:560px){.hero{padding-bottom:44px}.bar__in{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="bar__in">
+    <a href="/"><img src="onenyc_logo.png" alt="OneNYC"></a>
+    <a href="/">Back to the website</a>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="hero__in">
+    <span class="eyebrow" id="stateEyebrow">Application received</span>
+    <h1 id="stateHeadline">You are on file.</h1>
+    <p class="lede" id="stateLede">A welcome email with your confirmation code was sent to <b id="stateEmail">the address you provided</b> from mohamed@onenyc.com. Upload your compliance files below so our specialists can prepare your filing.</p>
+
+    <div class="code">
+      <span>Confirmation code</span>
+      <b id="stateCode">ONENYC-2026</b>
+    </div>
+
+    <div id="existsPanel" class="exists">
+      <b>This organisation and email are already on file.</b>
+      <span id="existsCopy">Nothing new was created and no new welcome email was sent — the Terms &amp; Conditions and Indemnity &amp; Disclaimer you accepted the first time still stand.</span>
+    </div>
+
+    <div class="steps">
+      <div class="step"><b>Step 01</b><span>Upload available documents below. Files mark as <i>Pending Review</i>.</span></div>
+      <div class="step"><b>Step 02</b><span>15-minute review call. We verify each file and mark it with a checkmark.</span></div>
+      <div class="step"><b>Step 03</b><span>OneNYC generates City packets &amp; files with your Council Member at no cost.</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <h2>Document Upload &amp; Review Checklist</h2>
+  <p class="sub">Non-profit discretionary grant applications require 13 standard compliance documents across four areas. You do not need all 13 ready today &mdash; upload whatever you have on hand, and we will review the rest together on your call.</p>
+
+  <!-- Progress Tracker -->
+  <div class="tracker-card">
+    <div class="tracker-header">
+      <div class="tracker-title">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--orange-deep)"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <span>13-Document Compliance Progress</span>
+      </div>
+      <div class="tracker-stats">
+        <span class="stat-pill stat-pill--verified" id="countVerified">0 Verified ✓</span>
+        <span class="stat-pill stat-pill--pending" id="countPending">0 Pending Review ⏳</span>
+        <span class="stat-pill stat-pill--needed" id="countNeeded">13 Needed</span>
+      </div>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progressBar"></div>
+    </div>
+    <p class="tracker-hint">
+      <strong>Review Policy:</strong> Once uploaded, your files immediately list as <strong>Pending Review</strong>. Following review by our compliance team during your introductory call, they will be marked with a green <strong>Verified ✓</strong> checkmark.
+    </p>
+  </div>
+
+  <div class="groups">
+    <!-- Group 1: Legal Standing -->
+    <div class="group">
+      <div class="group-head">
+        <h3>Legal Standing &amp; Entity Identity</h3>
+        <span class="k">Group 01 &middot; 4 Documents</span>
+      </div>
+      <ul class="doc-list" id="group1">
+        <li class="doc-item" data-id="doc_501c3">
+          <div class="doc-info">
+            <h4 class="doc-title">IRS 501(c)(3) Determination Letter</h4>
+            <p class="doc-desc">Federal tax-exemption approval letter confirming non-profit status.</p>
+            <div class="doc-meta"><b class="doc-filename"></b> &middot; <span class="doc-time"></span> <button type="button" class="remove-btn" onclick="removeDoc('doc_501c3')">Remove</button></div>
+          </div>
+          <div class="doc-status">
+            <span class="badge badge--needed">Needed</span>
+            <label class="upload-btn">
+              <span>Upload</span>
+              <input type="file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" onchange="uploadDoc('doc_501c3', this)">
+            </label>
+          </div>
+        </li>
+        <li class="doc-item" data-id="doc_incorporation">
+          <div class="doc-info">
+            <h4 class="doc-title">NYS Certificate of Incorporation</h4>
+            <p class="doc-desc">Official filing with the NYS Department of State proving corporate formation.</p>
+            <div class="doc-meta"><b class="doc-filename"></b> &middot; <span class="doc-time"></span> <button type="button" class="remove-btn" onclick="removeDoc('doc_incorporation')">Remove</button></div>
+          </div>
+          <div class="doc-status">
+            <span class="badge badge--needed">Needed</span>
+            <label class="upload-btn">
+              <span>Upload</span>
+              <input type="file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" onchange="uploadDoc('doc_incorporation', this)">
+            </label>
+          </div>
+        </li>
+        <li class="doc-item" data-id="doc_ein">
+          <div class="doc-info">
+            <h4 class="doc-title">IRS EIN Assignment Notice (CP 575 / 147C)</h4>
+            <p class="doc-desc">Official IRS documentation confirming your Federal Tax ID number.</p>
+            <div class="doc-meta"><b class="doc-filename"></b> &middot; <span class="doc-time"></span> <button type="button" class="remove-btn" onclick="removeDoc('doc_ein')">Remove</button></div>
+          </div>
+          <div class="doc-status">
+            <span class="badge badge--needed">Needed</span>
+            <label class="upload-btn">
+              <span>Upload</span>
+              <input type="file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" onchange="uploadDoc('doc_ein', this)">
+            </label>
+          </div>
+        </li>
+        <li class="doc-item" data-id="doc_charities">
+          <div class="doc-info">
+            <h4 class="doc-title">NYS Charities Bureau Registration (CHAR410 / CHAR500)</h4>
+            <p class="doc-desc">Current state registration with NY Attorney General Charities Bureau.</p>
+            <div class="doc-meta"><b class="doc-filename"></b> &middot; <span class="doc-time"></span> <button type="button" class="remove-btn" onclick="removeDoc('doc_charities')">Remove</button></div>
+          </div>
+          <div class="doc-status">
+            <span class="badge badge--needed">Needed</span>
+            <label class="upload-btn">
+              <span>Upload</span>
+              <input type="file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" onchange="uploadDoc('doc_charities', this)">
+            </label>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Group 2: Governance -->
+    <div class="group">
+      <div class="group-head">
+        <h3>Board Governance &amp; Authority</h3>
+        <span class="k">Group 02 &middot; 4 Documents</span>
+      </div>
+      <ul class="doc-list" id="group2">
+        <li class="doc-item" data-id="doc_bylaws">
+          <div class="doc-info">
+            <h4 class="doc-title">Organizational By-Laws</h4>
+            <p class="doc-desc">Governing rules detailing quorum, officer positions, and board voting authority.</p>
+            <div class="doc-meta"><b class="doc-filename"></b> &middot; <span class="doc-time"></span> <button type="button" class="remove-btn" onclick="removeDoc('doc_bylaws')">Remove</button></div>
+          </div>
+          <div class="doc-status">
+            <span class="badge badge--needed">Needed</span>
+            <label class="upload-btn">
+              <span>Upload</span>
+              <input type="file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" onchange="uploadDoc('doc_bylaws', this)">
+            </label>
+          </div>
+        </li>
+        <li class="doc-item" data-id="doc_board_roster">
+          <div class="doc-info">
+            <h4 class="doc-title">Board of Directors Roster</h4>
+            <p class="doc-desc">List of voting board members with officer titles, terms, and professional affiliations.</p>
+            <div class="doc-meta"><b class="doc-filename"></b> &middot; <span class="doc-time"></span> <button type="button" class="remove-btn" onclick="removeDoc('doc_board_roster')">Remove</button></div>
+          </div>
+          <div class="doc-status">
+            <span class="badge badge--needed">Needed</span>
+            <label class="upload-btn">
+              <span>Upload</span>
+              <input type="file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.xlsx" onchange="uploadDoc('doc_board_roster', this)">
+            </label>
+          </div>
+        </li>
+        <li class="doc-item" data-id="doc_coi_policy">
+          <div class="doc-info">
+            <h4 class="doc-title">Conflict of Interest Policy &amp; Disclosures</h4>
+            <p class="doc-desc">Board-adopted conflict policy and signed annual disclosure statements.</p>
+            <div class="doc-meta"><b class="doc-filename"></b> &middot; <span class="doc-time"></span> <button type="button" class="remove-btn" onclick="removeDoc('doc_coi_policy')">Remove</button></div>
+          </div>
+          <div class="doc-status">
+            <span class="badge badge--needed">Needed</span>
+            <label class="upload-btn">
+              <span>Upload</span>
+              <input type="file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" onchange="uploadDoc('doc_coi_policy', this)">
+            </label>
+          </div>
+        </li>
+        <li class="doc-item" data-id="doc_board_resolution">
+          <div class="doc-info">
+            <h4 class="doc-title">Board Authorization Resolution</h4>
+            <p class="doc-desc">Formal resolution granting the Executive Director signing authority for grants.</p>
+            <div class="doc-meta"><b class="doc-filename"></b> &middot; <span class="doc-time"></span> <button type="button" class="remove-btn" onclick="removeDoc('doc_board_resolution')">Remove</button></div>
+          </div>
+          <div class="doc-status">
+            <span class="badge badge--needed">Needed</span>
+            <label class="upload-btn">
+              <span>Upload</span>
+              <input type="file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" onchange="uploadDoc('doc_board_resolution', this)">
+            </label>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Group 3: Financial Records -->
+    <div class="group">
+      <div class="group-head">
+        <h3>Financial Records &amp; Budgets</h3>
+        <span class="k">Group 03 &middot; 3 Documents</span>
+      </div>
+      <ul class="doc-list" id="group3">
+        <li class="doc-item" data-id="doc_form990">
+          <div class="doc-info">
+            <h4 class="doc-title">Most Recent Form 990 / 990-EZ / 990-N</h4>
+            <p class="doc-desc">Federal informational tax return filed for the most recent completed fiscal year.</p>
+            <div class="doc-meta"><b class="doc-filename"></b> &middot; <span class="doc-time"></span> <button type="button" class="remove-btn" onclick="removeDoc('doc_form990')">Remove</button></div>
+          </div>
+          <div class="doc-status">
+            <span class="badge badge--needed">Needed</span>
+            <label class="upload-btn">
+              <span>Upload</span>
+              <input type="file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" onchange="uploadDoc('doc_form990', this)">
+            </label>
+          </div>
+        </li>
+        <li class="doc-item" data-id="doc_operating_budget">
+          <div class="doc-info">
+            <h4 class="doc-title">Current Annual Operating Budget</h4>
+            <p class="doc-desc">Organization-wide annual revenue and expense budget for the current fiscal period.</p>
+            <div class="doc-meta"><b class="doc-filename"></b> &middot; <span class="doc-time"></span> <button type="button" class="remove-btn" onclick="removeDoc('doc_operating_budget')">Remove</button></div>
+          </div>
+          <div class="doc-status">
+            <span class="badge badge--needed">Needed</span>
+            <label class="upload-btn">
+              <span>Upload</span>
+              <input type="file" accept=".pdf,.doc,.docx,.xlsx,.png,.jpg" onchange="uploadDoc('doc_operating_budget', this)">
+            </label>
+          </div>
+        </li>
+        <li class="doc-item" data-id="doc_program_budget">
+          <div class="doc-info">
+            <h4 class="doc-title">Program Line-Item Budget</h4>
+            <p class="doc-desc">Detailed budget breakdown for the specific community program seeking Council funding.</p>
+            <div class="doc-meta"><b class="doc-filename"></b> &middot; <span class="doc-time"></span> <button type="button" class="remove-btn" onclick="removeDoc('doc_program_budget')">Remove</button></div>
+          </div>
+          <div class="doc-status">
+            <span class="badge badge--needed">Needed</span>
+            <label class="upload-btn">
+              <span>Upload</span>
+              <input type="file" accept=".pdf,.doc,.docx,.xlsx,.png,.jpg" onchange="uploadDoc('doc_program_budget', this)">
+            </label>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Group 4: City Standing & Insurance -->
+    <div class="group">
+      <div class="group-head">
+        <h3>City Standing &amp; Insurance Coverage</h3>
+        <span class="k">Group 04 &middot; 2 Documents</span>
+      </div>
+      <ul class="doc-list" id="group4">
+        <li class="doc-item" data-id="doc_insurance_coi">
+          <div class="doc-info">
+            <h4 class="doc-title">Certificate of Liability Insurance (COI)</h4>
+            <p class="doc-desc">ACORD certificate naming the City of New York as additional insured ($1M min).</p>
+            <div class="doc-meta"><b class="doc-filename"></b> &middot; <span class="doc-time"></span> <button type="button" class="remove-btn" onclick="removeDoc('doc_insurance_coi')">Remove</button></div>
+          </div>
+          <div class="doc-status">
+            <span class="badge badge--needed">Needed</span>
+            <label class="upload-btn">
+              <span>Upload</span>
+              <input type="file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" onchange="uploadDoc('doc_insurance_coi', this)">
+            </label>
+          </div>
+        </li>
+        <li class="doc-item" data-id="doc_workers_comp">
+          <div class="doc-info">
+            <h4 class="doc-title">Proof of Workers’ Comp &amp; Disability (or Exemption CE-200)</h4>
+            <p class="doc-desc">NYS Form C-105.2, DB-120.1, or Form CE-200 if organization has no paid employees.</p>
+            <div class="doc-meta"><b class="doc-filename"></b> &middot; <span class="doc-time"></span> <button type="button" class="remove-btn" onclick="removeDoc('doc_workers_comp')">Remove</button></div>
+          </div>
+          <div class="doc-status">
+            <span class="badge badge--needed">Needed</span>
+            <label class="upload-btn">
+              <span>Upload</span>
+              <input type="file" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg" onchange="uploadDoc('doc_workers_comp', this)">
+            </label>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>What OneNYC Prepares For You:</b> You do not need to create City administrative packets. OneNYC automatically builds your <strong>W-9</strong>, <strong>NYC PASSPort Vendor Packet</strong>, <strong>City Discretionary Schedules</strong>, and <strong>State Exemption / CHAR410 filings</strong> from the documents above.
+  </div>
+
+  <div class="foot">
+    OneNYC Inc. is a private nonpartisan 501(c)(3) organisation. We do not endorse any candidate, are not a City agency, and do not award public funds.
+    <br>
+    <a href="terms.html">Terms of Service</a> &middot; <a href="privacy.html">Privacy Notice</a> &middot; <a href="agreements.html">Indemnity &amp; Disclaimer</a> &middot; <a href="mailto:info@onenyc.com">info@onenyc.com</a>
+  </div>
+</main>
+
+<script>
+(function () {
+  var q = new URLSearchParams(location.search);
+  var state = q.get('state') || 'success';
+  var code = q.get('code') || 'ONENYC-2026';
+  var email = q.get('email');
+  var first = q.get('first');
+
+  if (code) document.getElementById('stateCode').textContent = code;
+  if (email) document.getElementById('stateEmail').textContent = email;
+
+  if (state === 'exists') {
+    document.getElementById('stateEyebrow').textContent = 'Already on file';
+    document.getElementById('stateHeadline').textContent = 'We already have your application.';
+    document.getElementById('stateLede').textContent = 'Your confirmation code is below. You can upload or update your compliance documents at any time before your review call.';
+    var panel = document.getElementById('existsPanel');
+    panel.style.display = 'block';
+    if (first) {
+      var copy = document.getElementById('existsCopy');
+      copy.textContent = 'This organisation and email were first submitted on ' + first + '. The Terms & Conditions and Indemnity & Disclaimer you accepted then still stand.';
+    }
+  }
+
+  // Load existing uploaded files state
+  window.currentCode = code;
+  renderStoredDocs();
+})();
+
+function getStorageKey() {
+  return 'onenyc_docs_' + (window.currentCode || 'default');
+}
+
+function loadDocsState() {
+  try {
+    return JSON.parse(localStorage.getItem(getStorageKey()) || '{}');
+  } catch (e) {
+    return {};
+  }
+}
+
+function saveDocsState(state) {
+  try {
+    localStorage.setItem(getStorageKey(), JSON.stringify(state));
+  } catch (e) {}
+  updateCounters(state);
+}
+
+function uploadDoc(docId, input) {
+  if (!input.files || !input.files[0]) return;
+  var file = input.files[0];
+  var state = loadDocsState();
+  
+  // Format readable size
+  var sizeKb = Math.round(file.size / 1024);
+  var sizeStr = sizeKb >= 1024 ? (sizeKb / 1024).toFixed(1) + ' MB' : sizeKb + ' KB';
+  var now = new Date();
+  var timeStr = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+  // Store file metadata (Status is always "pending" immediately upon upload)
+  state[docId] = {
+    name: file.name,
+    size: sizeStr,
+    uploaded_at: timeStr,
+    status: 'pending' // 'pending' once uploaded before review; 'verified' after review
+  };
+
+  saveDocsState(state);
+  renderDocItem(docId, state[docId]);
+  input.value = '';
+}
+
+function removeDoc(docId) {
+  var state = loadDocsState();
+  delete state[docId];
+  saveDocsState(state);
+  renderDocItem(docId, null);
+}
+
+function renderDocItem(docId, data) {
+  var li = document.querySelector('[data-id="' + docId + '"]');
+  if (!li) return;
+
+  var statusDiv = li.querySelector('.doc-status');
+  var metaDiv = li.querySelector('.doc-meta');
+  var filenameEl = li.querySelector('.doc-filename');
+  var timeEl = li.querySelector('.doc-time');
+  var uploadBtnSpan = li.querySelector('.upload-btn span');
+
+  li.classList.remove('is-pending', 'is-verified');
+
+  if (data && data.status === 'verified') {
+    li.classList.add('is-verified');
+    statusDiv.querySelector('.badge').className = 'badge badge--verified';
+    statusDiv.querySelector('.badge').innerHTML = 'Verified ✓';
+    uploadBtnSpan.textContent = 'Replace';
+    if (filenameEl) filenameEl.textContent = data.name + ' (' + data.size + ')';
+    if (timeEl) timeEl.textContent = 'Verified & Approved';
+    metaDiv.style.display = 'flex';
+  } else if (data && data.status === 'pending') {
+    li.classList.add('is-pending');
+    statusDiv.querySelector('.badge').className = 'badge badge--pending';
+    statusDiv.querySelector('.badge').innerHTML = '⏳ Pending Review';
+    uploadBtnSpan.textContent = 'Replace';
+    if (filenameEl) filenameEl.textContent = data.name + ' (' + data.size + ')';
+    if (timeEl) timeEl.textContent = 'Uploaded ' + data.uploaded_at;
+    metaDiv.style.display = 'flex';
+  } else {
+    statusDiv.querySelector('.badge').className = 'badge badge--needed';
+    statusDiv.querySelector('.badge').innerHTML = 'Needed';
+    uploadBtnSpan.textContent = 'Upload';
+    metaDiv.style.display = 'none';
+  }
+}
+
+function renderStoredDocs() {
+  var state = loadDocsState();
+  var items = document.querySelectorAll('.doc-item');
+  items.forEach(function (item) {
+    var id = item.getAttribute('data-id');
+    renderDocItem(id, state[id] || null);
+  });
+  updateCounters(state);
+}
+
+function updateCounters(state) {
+  var total = 13;
+  var verified = 0;
+  var pending = 0;
+
+  for (var k in state) {
+    if (state[k].status === 'verified') verified++;
+    else if (state[k].status === 'pending') pending++;
+  }
+
+  var needed = total - (verified + pending);
+  if (needed < 0) needed = 0;
+
+  document.getElementById('countVerified').textContent = verified + ' Verified ✓';
+  document.getElementById('countPending').textContent = pending + ' Pending Review ⏳';
+  document.getElementById('countNeeded').textContent = needed + ' Needed';
+
+  var pct = Math.round(((verified + pending) / total) * 100);
+  document.getElementById('progressBar').style.width = pct + '%';
+}
+</script>
+</body>
+</html>

@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
+  <script>window.NAFS_OCR_INTAKE_URL = '/api';</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0C1F39">
@@ -1942,7 +1943,7 @@
                 <div class="submit-success" id="submitSuccess" role="status" aria-live="polite">
                   <b>Application Received &mdash; <span id="confirmCode">ONENYC-2026</span></b>
                   <p style="margin:8px 0 0;font-size:14px;line-height:1.6;">
-                    Your Terms &amp; Conditions and Indemnity &amp; Disclaimer were executed by click-through when you submitted. A welcome email with your confirmation code is on its way to <b id="successEmail"></b>.
+                    Your Terms &amp; Conditions and Indemnity &amp; Disclaimer were executed by click-through when you submitted &mdash; there is no separate document to sign. A welcome email with your confirmation code goes to <b id="successEmail"></b> from mohamed@onenyc.com, usually within a few minutes. If this address has applied before, we already hold that application and send nothing new &mdash; write to <a href="mailto:info@onenyc.com">info@onenyc.com</a> and we will resend it.
                   </p>
                   <ol style="margin:10px 0 0;padding-left:22px;font-size:14px;line-height:1.75;">
                     <li>Watch your inbox for the welcome email with your confirmation code.</li>
@@ -1953,7 +1954,7 @@
                 <div id="welcomeBack" role="status" aria-live="polite" hidden style="margin-top:18px;padding:18px 20px;border-radius:4px;border:2px solid #1D4ED8;background:#EFF5FF;color:#173A6B;">
                   <b style="display:block;font-size:16px;margin-bottom:4px;color:#1D4ED8;">Welcome back &mdash; an application is already on file</b>
                   <p style="margin:0;font-size:14.5px;line-height:1.6;">
-                    An application for this organization and email is already on file (first submitted <b id="wbDate"></b>). Your confirmation code is <b id="wbCode" style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;"></b>.
+                    An application for this organization and email is already on file (first submitted <b id="wbDate"></b>). Your confirmation code is <b id="wbCode" style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;"></b>. Nothing new was created and no new welcome email was sent &mdash; your Terms &amp; Conditions and Indemnity &amp; Disclaimer acceptance from that first submission still stands.
                   </p>
                   <ul style="margin:12px 0 0;padding:0;list-style:none;font-size:14px;line-height:1.9;">
                     <li><a href="https://login.microsoftonline.com/" target="_blank" rel="noopener">Workspace login &rarr;</a></li>
@@ -2765,22 +2766,17 @@
         var code = r.data && r.data.confirmation_code;
         if (r.ok && r.data && (r.data.status === 'success' || r.data.status === 'exists') && code) {
           if (r.data.status === 'exists') {
-            var wb = $('#welcomeBack'), wbDate = $('#wbDate'), wbCode = $('#wbCode'), wbMail = $('#wbMail');
-            if (wbDate) wbDate.textContent = fmtDate(r.data.first_submitted_at);
-            if (wbCode) wbCode.textContent = code;
-            if (wbMail) wbMail.setAttribute('href', 'mailto:info@onenyc.com?subject=' + encodeURIComponent('OneNYC application help — confirmation code ' + code));
-            if (successBox) successBox.style.display = 'none';
-            if (wb) wb.hidden = false;
-            if (submitBtn) { submitBtn.textContent = 'Application Already on File'; submitBtn.style.background = '#1D4ED8'; submitBtn.style.color = '#FFFFFF'; }
             try { localStorage.removeItem(DRAFT_KEY); } catch (e2) {}
+            location.assign('submitted.html?state=exists'
+              + '&code=' + encodeURIComponent(code)
+              + '&email=' + encodeURIComponent(payload.email || '')
+              + '&first=' + encodeURIComponent(fmtDate(r.data.first_submitted_at)));
             return;
           }
-          if (confirmCode) confirmCode.textContent = code;
-          var successEmailEl = $('#successEmail');
-          if (successEmailEl) successEmailEl.textContent = payload.email;
-          if (successBox) successBox.style.display = 'block';
-          if (submitBtn) { submitBtn.textContent = 'Application Submitted ✓'; submitBtn.style.background = '#1E6F50'; submitBtn.style.color = '#FFFFFF'; }
           try { localStorage.removeItem(DRAFT_KEY); } catch (e2) {}
+          location.assign('submitted.html'
+            + '?code=' + encodeURIComponent(code)
+            + '&email=' + encodeURIComponent(payload.email || ''));
           return;
         }
         throw new Error((r.data && (r.data.detail || r.data.message)) || 'server rejected the submission');

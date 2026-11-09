@@ -210,6 +210,7 @@
         status.className = 'status info';
         status.innerHTML = `<strong>Welcome back.</strong> An application for this organization and email is already on file ` +
           `(first submitted ${fmtDate(data.first_submitted_at)}). Your confirmation code is <span class="code">${data.confirmation_code}</span>.` +
+          `<div style="margin:14px 0;"><a href="submitted.html?state=exists&code=${encodeURIComponent(data.confirmation_code)}&email=${encodeURIComponent(email)}&first=${encodeURIComponent(fmtDate(data.first_submitted_at))}" class="cta" style="display:inline-block;text-decoration:none;padding:10px 18px;font-size:14px;">Open 13-Document Checklist &amp; Upload Portal →</a></div>` +
           `<ul class="next">` +
           `<li><i class="dot">1</i><span><a href="https://login.microsoftonline.com/" target="_blank" rel="noopener">Workspace login</a></span></li>` +
           `<li><i class="dot">2</i><span><a href="https://passwordreset.microsoftonline.com/" target="_blank" rel="noopener">Reset your onenyc.org password</a></span></li>` +
@@ -220,10 +221,11 @@
       status.className = 'status ok';
       status.innerHTML = `✓ You're in. Confirmation <span class="code">${data.confirmation_code}</span>` +
         `<p style="margin:10px 0 0;">Your Terms &amp; Conditions and Indemnity &amp; Disclaimer were executed by click-through when you submitted. A welcome email with your confirmation code is on its way to ${email}.</p>` +
+        `<div style="margin:14px 0;"><a href="submitted.html?code=${encodeURIComponent(data.confirmation_code)}&email=${encodeURIComponent(email)}&org=${encodeURIComponent(org)}" class="cta" style="display:inline-block;text-decoration:none;padding:10px 18px;font-size:14px;">Open 13-Document Checklist &amp; Upload Portal →</a></div>` +
         `<ul class="next">` +
-        `<li><i class="dot">1</i><span>Watch your inbox for the welcome email with your confirmation code.</span></li>` +
-        `<li><i class="dot">2</i><span>After review, your onenyc.org workspace is activated.</span></li>` +
-        `<li><i class="dot">3</i><span>Once activated, log in at <a href="https://login.microsoftonline.com/" target="_blank" rel="noopener">login.microsoftonline.com</a>.</span></li>` +
+        `<li><i class="dot">1</i><span>Upload available documents in the checklist portal — files display as <b>Pending Review</b> until verified.</span></li>` +
+        `<li><i class="dot">2</i><span>On your 15-minute call, we verify your files and mark them with green checkmarks.</span></li>` +
+        `<li><i class="dot">3</i><span>OneNYC automatically compiles your City Council packet &amp; files at zero cost.</span></li>` +
         `</ul>`;
       form.querySelectorAll('input').forEach(i => { if (i.type !== 'checkbox') i.value = ''; });
       document.getElementById('tos').checked = false;
