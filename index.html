@@ -1695,6 +1695,7 @@
         <li><a href="#work">Does Your Charity Qualify?</a></li>
         <li><a href="#packet">Documents to Gather</a></li>
         <li><a href="#how">How It Works</a></li>
+        <li><a href="submitted.html" id="navMyApplication">My Application</a></li>
         <li><a href="#intake" data-signup-link>Sign Up</a></li>
       </ul>
 
@@ -2396,6 +2397,7 @@
           <li><a href="#work">Does Your Charity Qualify?</a></li>
           <li><a href="#packet">Documents to Gather</a></li>
           <li><a href="#how">How It Works</a></li>
+          <li><a href="submitted.html">My Application</a></li>
         </ul>
       </div>
 
@@ -2589,6 +2591,30 @@
   (function initIntakeForm() {
     var form = $('#intakeForm');
     if (!form) return;
+
+    /* Returning visitor: the confirmation is kept in this browser, so the next-steps
+       page is one click away after a reload, a crash, or a closed tab. */
+    try {
+      var saved = JSON.parse(localStorage.getItem('onenyc-last-confirmation') || 'null');
+      if (saved && saved.code) {
+        var back = document.createElement('div');
+        back.style.cssText = 'display:flex;gap:10px 14px;align-items:baseline;flex-wrap:wrap;margin:0 0 18px;padding:14px 16px;border:1px solid #9FCDBB;background:#EFF8F3;border-radius:10px;font-size:14.5px;line-height:1.5;color:#0C1F39';
+        var backTxt = document.createElement('span');
+        backTxt.textContent = 'Already on file' + (saved.email ? ' for ' + saved.email : '') + ' — confirmation ' + saved.code + '. ';
+        var backLink = document.createElement('a');
+        backLink.href = 'submitted.html?code=' + encodeURIComponent(saved.code)
+          + '&email=' + encodeURIComponent(saved.email || '');
+        backLink.textContent = 'See what to prepare next';
+        backLink.style.cssText = 'font-weight:700;color:#1E5E4A;text-decoration:underline';
+        var backBookmark = document.createElement('span');
+        backBookmark.textContent = ' (bookmark that page)';
+        backBookmark.style.cssText = 'color:#5F6974';
+        back.appendChild(backTxt); back.appendChild(backLink); back.appendChild(backBookmark);
+        form.parentNode.insertBefore(back, form);
+      }
+    } catch (e) {}
+
+    /* A confirmed submit empties the form so a browser Back cannot silently resubmit. */
 
     var API = (function () {
       var qp = null;

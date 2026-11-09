@@ -28,6 +28,7 @@
   .eyebrow{display:inline-block;margin:34px 0 14px;padding:6px 12px;border-radius:999px;background:rgba(248,164,48,.16);color:var(--orange);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
   h1{font-family:var(--f-display);font-size:clamp(30px,4.4vw,46px);line-height:1.12;margin:0 0 14px;letter-spacing:-.01em}
   .lede{font-size:18px;color:#DCE5F0;max-width:680px;margin:0 0 24px}
+  .code[hidden]{display:none!important}
   .code{display:inline-flex;align-items:center;gap:12px;background:#fff;color:var(--navy);border-radius:12px;padding:14px 18px;margin:0 0 24px}
   .code span{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gray)}
   .code b{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:20px}
@@ -111,10 +112,19 @@
     <h1 id="stateHeadline">You are on file.</h1>
     <p class="lede" id="stateLede">A welcome email with your confirmation code was sent to <b id="stateEmail">the address you provided</b> from mohamed@onenyc.com. Upload your compliance files below so our specialists can prepare your filing.</p>
 
-    <div class="code">
+    <div class="code" id="codeBlock">
       <span>Confirmation code</span>
       <b id="stateCode">ONENYC-2026</b>
     </div>
+
+    <form id="findPanel" hidden style="margin:0 0 26px;max-width:520px">
+      <label for="findCode" style="display:block;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#F8A430;margin:0 0 8px">Application code</label>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <input id="findCode" name="code" type="text" autocomplete="off" spellcheck="false" placeholder="ONENYC-2026-12345" style="flex:1 1 220px;min-width:0;padding:13px 14px;border-radius:10px;border:1px solid #C1DED3;font-size:16px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:#0C1F39">
+        <button type="submit" style="padding:13px 18px;border:0;border-radius:10px;background:#F8A430;color:#0C1F39;font-weight:700;font-size:15px;cursor:pointer">Open my application</button>
+      </div>
+      <p style="margin:10px 0 0;font-size:13.5px;color:#B0C0D4">The code is in your welcome email. Once your organisation's OneNYC mailbox is created, you will sign in with that address instead of the code.</p>
+    </form>
 
     <div id="existsPanel" class="exists">
       <b>This organisation and email are already on file.</b>
@@ -393,11 +403,44 @@
 (function () {
   var q = new URLSearchParams(location.search);
   var state = q.get('state') || 'success';
-  var code = q.get('code') || 'ONENYC-2026';
-  var email = q.get('email');
+  var saved = null;
+  try { saved = JSON.parse(localStorage.getItem('onenyc-last-confirmation') || 'null'); } catch (e) {}
+  var code = q.get('code') || (saved && saved.code) || '';
+  var email = q.get('email') || (saved && saved.email) || '';
   var first = q.get('first');
 
-  if (code) document.getElementById('stateCode').textContent = code;
+  if (code) {
+    document.getElementById('stateCode').textContent = code;
+    try {
+      localStorage.setItem('onenyc-last-confirmation', JSON.stringify({ code: code, email: email, ts: Date.now() }));
+    } catch (e) {}
+  } else {
+    /* No code in the URL and none remembered: ask for it rather than showing a
+       placeholder code that would let anyone open someone else's checklist. */
+    var cb = document.getElementById('codeBlock');
+    if (cb) { cb.hidden = true; cb.style.display = 'none'; }
+    var fp = document.getElementById('findPanel');
+    if (fp) fp.hidden = false;
+    /* The checklist is per application. Until a code is known there is nothing to
+       hang it on, so it stays out of sight rather than accepting uploads under no id. */
+    var mainEl = document.querySelector('main');
+    if (mainEl) mainEl.hidden = true;
+    document.getElementById('stateEyebrow').textContent = 'Returning applicant';
+    document.getElementById('stateHeadline').textContent = 'Open your application.';
+    document.getElementById('stateLede').textContent = 'Enter the application code from your welcome email. Your uploaded documents and what is still outstanding are waiting on that page.';
+    var lede = document.getElementById('stateLede');
+    if (lede) lede.innerHTML = 'Enter the application code from your welcome email. Your uploaded documents and what is still outstanding are waiting on that page.';
+
+    var form = document.getElementById('findPanel');
+    if (form) {
+      form.addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        var v = (document.getElementById('findCode').value || '').trim().toUpperCase();
+        if (!v) return;
+        location.assign('submitted.html?code=' + encodeURIComponent(v));
+      });
+    }
+  }
   if (email) document.getElementById('stateEmail').textContent = email;
 
   if (state === 'exists') {
