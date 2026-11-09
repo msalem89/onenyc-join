@@ -527,7 +527,13 @@
           }
         });
         saveDocsState(state);
-        Object.keys(j.documents).forEach(function (id) { renderDocItem(id, state[id]); });
+        /* Re-render every row from the saved state. A per-id render can lose a race
+           with the first paint, which left a verified row showing undefined. */
+        if (typeof renderStoredDocs === 'function') {
+          renderStoredDocs();
+        } else {
+          Object.keys(j.documents).forEach(function (id) { renderDocItem(id, state[id]); });
+        }
       })
       .catch(function () { /* offline: the local state stands, nothing is lost */ });
   };
