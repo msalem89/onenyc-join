@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
 <title>Application Received & Document Checklist — OneNYC Impact Partners</title>
 <meta name="description" content="Your OneNYC Impact Partners application is on file. Upload and track your 13 compliance documents here.">
 <meta name="robots" content="noindex">
@@ -491,6 +492,7 @@
 
   // Load existing uploaded files state
   window.currentCode = code;
+  window.currentEmail = (q.get('email') || (saved && saved.email) || '').toLowerCase();
   renderStoredDocs();
 })();
 
@@ -554,7 +556,7 @@ function uploadDoc(docId, input) {
     fetch(UPLOAD_API + '/api/upload', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code: code, docId: docId, name: file.name, type: file.type || 'application/octet-stream', data: b64 })
+      body: JSON.stringify({ code: code, email: (window.currentEmail || ''), docId: docId, name: file.name, type: file.type || 'application/octet-stream', data: b64 })
     })
       .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
       .then(function (out) {
