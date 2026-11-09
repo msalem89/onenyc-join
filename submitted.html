@@ -539,10 +539,8 @@
   };
   /* Fire more than once: the first call can lose a race with page load, and a
      swallowed failure would leave a Verified row looking unread. */
-  [500, 2500, 6000].forEach(function (t) { setTimeout(window.syncFromServer, t); });
-  setInterval(window.syncFromServer, 60000);
-  document.addEventListener('visibilitychange', function () { if (!document.hidden) window.syncFromServer(); });
-  window.addEventListener('online', function () { window.syncFromServer(); });
+  /* Scheduling lives in initStatusSync at the end of the script: this block can be
+     skipped when anything above it throws, and then nothing ever polls. */
   renderStoredDocs();
 })();
 
@@ -716,6 +714,19 @@ function updateCounters(state) {
   var pct = Math.round(((verified + pending) / total) * 100);
   document.getElementById('progressBar').style.width = pct + '%';
 }
+</script>
+<script>
+/* Status sync, independent of the page's own IIFE so it always runs. */
+(function initStatusSync() {
+  function fire() {
+    if (typeof window.syncFromServer === 'function') window.syncFromServer();
+  }
+  [300, 1500, 4000].forEach(function (t) { setTimeout(fire, t); });
+  window.addEventListener('load', fire);
+  window.addEventListener('online', fire);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) fire(); });
+  setInterval(fire, 60000);
+})();
 </script>
 </body>
 </html>
