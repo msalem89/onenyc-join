@@ -122,8 +122,8 @@
       </div>
       <div class="grid2">
         <div class="field">
-          <label for="phone">Phone number (optional)</label>
-          <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="(212) 555-0199">
+          <label for="phone">Phone number</label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="(212) 555-0199" required>
         </div>
         <div class="field">
           <label for="email">Work email</label>
@@ -175,7 +175,7 @@
 
     if (!first || !last) return fail('Please add your first and last name.');
     if (!org)            return fail('Please add your organization name.');
-    if (phone && phone.replace(/[^0-9]/g, '').length < 7) return fail('That phone number looks incomplete — add a valid number or leave it blank.');
+    if (!phone)          return fail('Please add your phone number.');
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return fail('Please add a valid email address.');
     if (!tos)            return fail('Please read and agree to the Terms & Conditions, Privacy Notice, and Indemnity & Disclaimer (no guarantee of funding) before submitting.');
 
