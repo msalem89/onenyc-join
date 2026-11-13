@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer">
+<title>Impact Partners Console — OneNYC</title>
+<meta name="description" content="OneNYC Impact Partners staff console: every signed-up organization, its stage, contact information and uploaded documents.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" type="image/png" href="onenyc_logo.png">
+<style>
+  :root{
+    --navy:#0C1F39; --navy-deep:#081528; --slate:#23374F;
+    --orange:#F8A430; --orange-deep:#C97A0E; --mint:#C1DED3; --mint-deep:#1E5E4A;
+    --cream:#FEF4EF; --cream-border:#EAD9CF; --gray:#5F6974;
+    --border-light:#D5DEE8; --success:#1E6F50; --success-bg:#EBF7F0; --pending-bg:#FEF5E7;
+    --f-display:"Quasimoda","Outfit",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    --f-body:"Work Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:var(--f-body);color:var(--navy);background:var(--cream);line-height:1.6}
+  a{color:var(--orange-deep)}
+  .bar{background:var(--navy);color:#fff;padding:16px 20px}
+  .bar__in{max-width:1240px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .bar img{height:34px;width:auto;background:#fff;border-radius:6px;padding:4px}
+  .bar a{color:#fff;text-decoration:none;font-size:14px;font-weight:600}
+
+  /* Login gate */
+  .gate{max-width:460px;margin:12vh auto 0;background:#fff;border:1px solid var(--cream-border);border-radius:16px;padding:32px 30px;box-shadow:0 4px 20px rgba(12,31,57,.06)}
+  .gate h1{font-family:var(--f-display);font-size:26px;margin:0 0 6px}
+  .gate p{color:var(--gray);font-size:14px;margin:0 0 18px}
+  .gate label{display:block;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--orange-deep);margin-bottom:8px}
+  .gate input{width:100%;padding:13px 14px;border-radius:10px;border:1px solid #C1DED3;font-size:15px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--navy)}
+  .gate button{margin-top:14px;width:100%;padding:13px;border:0;border-radius:10px;background:var(--orange);color:var(--navy);font-weight:700;font-size:15px;cursor:pointer}
+  .gate .err{margin-top:12px;color:#B42318;font-size:13px;min-height:18px}
+  .gate .note{margin-top:16px;font-size:12.5px;color:var(--gray);border-top:1px solid #F1F4F8;padding-top:12px}
+
+  /* Dashboard */
+  #dash{display:none}
+  .hero{background:var(--navy);color:#fff;padding:0 20px 40px}
+  .hero__in{max-width:1240px;margin:0 auto}
+  .eyebrow{display:inline-block;margin:30px 0 12px;padding:6px 12px;border-radius:999px;background:rgba(248,164,48,.16);color:var(--orange);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+  h1{font-family:var(--f-display);font-size:clamp(26px,3.6vw,38px);line-height:1.12;margin:0 0 10px;letter-spacing:-.01em}
+  .lede{font-size:16px;color:#DCE5F0;max-width:720px;margin:0}
+  .meta-line{margin-top:10px;font-size:13px;color:#9FB2C6}
+
+  main{max-width:1240px;margin:0 auto;padding:36px 20px 80px}
+
+  /* KPI tiles */
+  .kpis{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin-bottom:28px}
+  .kpi{background:#fff;border:1px solid var(--cream-border);border-radius:14px;padding:18px 20px}
+  .kpi b{display:block;font-size:30px;font-family:var(--f-display);color:var(--navy);line-height:1.1}
+  .kpi span{font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--gray)}
+  .kpi em{font-style:normal;font-size:12px;color:var(--gray);display:block;margin-top:4px}
+
+  /* Working-group links */
+  .wg{background:#fff;border:1px solid var(--cream-border);border-radius:14px;padding:18px 22px;margin-bottom:28px}
+  .wg h2{font-family:var(--f-display);font-size:17px;margin:0 0 10px}
+  .wg-links{display:flex;flex-wrap:wrap;gap:10px}
+  .wg-links a{text-decoration:none;font-size:13px;font-weight:600;color:var(--navy);background:#F1F5F9;border:1px solid #CBD5E1;border-radius:8px;padding:8px 12px}
+  .wg-links a:hover{background:#E2E8F0;color:var(--orange-deep);border-color:var(--orange)}
+
+  /* Filters */
+  .filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;align-items:center}
+  .filters input{flex:1 1 260px;min-width:0;padding:11px 14px;border-radius:10px;border:1px solid #C1DED3;font-size:14px;color:var(--navy)}
+  .filters select{padding:11px 12px;border-radius:10px;border:1px solid #C1DED3;font-size:13.5px;color:var(--navy);background:#fff}
+
+  /* Table */
+  .table-wrap{background:#fff;border:1px solid var(--cream-border);border-radius:16px;overflow:auto;box-shadow:0 4px 16px rgba(12,31,57,.03)}
+  table{border-collapse:collapse;width:100%;min-width:1060px;font-size:13.5px}
+  thead th{position:sticky;top:0;background:#F6F8FA;text-align:left;padding:12px 14px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);border-bottom:1px solid var(--border-light);white-space:nowrap}
+  tbody td{padding:13px 14px;border-bottom:1px solid #F1F4F8;vertical-align:top}
+  tbody tr:hover{background:#FAFBFC}
+  tbody tr:last-child td{border-bottom:0}
+  .org{font-weight:700;color:var(--navy)}
+  .org small{display:block;font-weight:500;color:var(--gray);font-size:11.5px;margin-top:2px}
+  .code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:var(--slate)}
+  .contact small{display:block;color:var(--gray);font-size:12px}
+  .pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;white-space:nowrap}
+  .pill--signed{background:#D1EFE0;color:#0F5A3E}
+  .pill--intake{background:#FDE8C7;color:#9E5502}
+  .pill--pending{background:#ECEFF2;color:#6A7785}
+  .pill--probe{background:#F3E8FF;color:#6B21A8}
+  .docs b{color:var(--navy)}
+  .docs .v{color:var(--success);font-weight:700}
+  .docs .bar-mini{height:5px;width:64px;background:#E7EDF3;border-radius:999px;overflow:hidden;margin-top:4px}
+  .docs .bar-mini i{display:block;height:100%;background:linear-gradient(90deg,var(--orange),var(--success))}
+  .foot{border-top:1px solid var(--cream-border);margin-top:34px;padding-top:16px;color:var(--gray);font-size:12.5px}
+  .foot a{color:var(--orange-deep)}
+  .refresh{margin-left:auto;font-size:12.5px;color:var(--gray)}
+  .refresh button{background:#fff;border:1px solid #CBD5E1;border-radius:8px;padding:8px 14px;font-size:12.5px;font-weight:700;color:var(--navy);cursor:pointer}
+  .refresh button:hover{border-color:var(--orange);color:var(--orange-deep)}
+  .empty{padding:40px;text-align:center;color:var(--gray)}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <div class="bar__in">
+    <a href="/"><img src="onenyc_logo.png" alt="OneNYC"></a>
+    <a href="/">Back to the website</a>
+  </div>
+</div>
+
+<!-- Login gate: token stays in memory only; nothing is cached on disk. -->
+<div class="gate" id="gate">
+  <h1>Impact Partners Console</h1>
+  <p>Staff access. Enter the console token to view every organization, its stage and its documents.</p>
+  <label for="tok">Console token</label>
+  <input id="tok" type="password" autocomplete="off" spellcheck="false" placeholder="staff token">
+  <button type="button" id="go">Open the console</button>
+  <div class="err" id="err"></div>
+  <div class="note">This page shows signer contact details and is not for sharing. Only OneNYC staff should hold the token.</div>
+</div>
+
+<div id="dash">
+  <header class="hero">
+    <div class="hero__in">
+      <span class="eyebrow">Staff console</span>
+      <h1>Impact Partners — every organization, one page.</h1>
+      <p class="lede">Signed-up organizations, their stage in the pipeline, contact information, and how many compliance documents each has uploaded and verified.</p>
+      <div class="meta-line">Loaded <span id="genAt">—</span> · source of truth: OneNYC sovereign state · SharePoint mirrors every 15 min · <button class="linkish" id="logout" style="background:none;border:0;color:#F8A430;font-weight:700;cursor:pointer;font-size:13px">sign out</button></div>
+    </div>
+  </header>
+
+  <main>
+    <div class="kpis" id="kpis"></div>
+
+    <div class="wg">
+      <h2>Working-group dashboards</h2>
+      <div class="wg-links">
+        <a href="https://netorg19167036.sharepoint.com/sites/onenycworkinggroup/Lists/Impact%20Partners" target="_blank" rel="noopener">Impact Partners list</a>
+        <a href="https://netorg19167036.sharepoint.com/sites/onenycworkinggroup/Lists/Charity%20Funding%20Signups" target="_blank" rel="noopener">Charity Funding Signups</a>
+        <a href="https://netorg19167036.sharepoint.com/sites/onenycworkinggroup/Lists/Outstanding%20Items" target="_blank" rel="noopener">Outstanding Items board</a>
+        <a href="https://netorg19167036.sharepoint.com/sites/onenycworkinggroup/Lists/Document%20Log" target="_blank" rel="noopener">Document Log</a>
+        <a href="https://netorg19167036.sharepoint.com/sites/onenycworkinggroup/Shared%20Documents" target="_blank" rel="noopener">Documents library</a>
+      </div>
+    </div>
+
+    <div class="filters">
+      <input id="q" type="search" placeholder="Search organization, signer, email, code…" autocomplete="off">
+      <select id="stageFilter">
+        <option value="">All stages</option>
+        <option value="intake">Intake complete</option>
+        <option value="pending">Needs review / pending</option>
+        <option value="probe">Test / probe records</option>
+      </select>
+      <span class="refresh"><button id="refresh">Refresh</button> <span id="count"></span></span>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Organization</th>
+            <th>Stage</th>
+            <th>Documents</th>
+            <th>Signer / contact</th>
+            <th>Org mailbox</th>
+            <th>Borough</th>
+            <th>Passport</th>
+            <th>Code / submitted</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <div class="empty" id="empty" hidden>No organizations match.</div>
+    </div>
+
+    <div class="foot">
+      Partners see their own checklist at <a href="submitted.html">the application status page</a>. Intake questions: <a href="mailto:info@onenyc.com">info@onenyc.com</a>.
+    </div>
+  </main>
+</div>
+
+<script>
+(function () {
+  var API = (function () {
+    var h = location.hostname || '';
+    if (/(^|\.)onenyc\.org$/.test(h)) return 'https://intake.onenyc.org';
+    return '';
+  })();
+
+  var state = { token: '', data: null };
+
+  var el = function (id) { return document.getElementById(id); };
+
+  function stageOf(p) {
+    if (isProbe(p)) return { label: 'Test / probe', cls: 'pill--probe' };
+    if (p.docs_verified > 0) return { label: 'Docs verified', cls: 'pill--signed' };
+    if (p.docs_uploaded > 0) return { label: 'Docs pending review', cls: 'pill--intake' };
+    if (p.ein) return { label: 'Intake complete', cls: 'pill--intake' };
+    return { label: 'Needs review', cls: 'pill--pending' };
+  }
+
+  function isProbe(p) {
+    var src = String(p.source || '').toLowerCase();
+    var em = String(p.signer_email || '').toLowerCase();
+    var org = String(p.org || '').toLowerCase();
+    return src.indexOf('probe') >= 0 || em.indexOf('probe') >= 0 || em.indexOf('example.') >= 0 ||
+      em.indexOf('test') >= 0 || org.indexOf('probe') >= 0 || em === 'mohamed@onenyc.com';
+  }
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function fmtDate(iso) {
+    if (!iso) return '—';
+    try {
+      var d = new Date(iso);
+      return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+    } catch (e) { return String(iso).slice(0, 10); }
+  }
+
+  function render() {
+    var d = state.data;
+    if (!d) return;
+    el('genAt').textContent = new Date(d.generated_at).toLocaleString();
+
+    var partners = d.partners || [];
+    var probes = partners.filter(isProbe).length;
+
+    el('kpis').innerHTML =
+      kpi(partners.length, 'Organizations signed up', '') +
+      kpi(partners.filter(function (p) { return !isProbe(p); }).length, 'Real orgs', probes + ' probe/test records hidden in counts') +
+      kpi(d.funnel.docs_uploaded, 'Documents uploaded', 'across all partners') +
+      kpi(d.funnel.docs_verified, 'Documents verified', 'read &amp; confirmed by the desk') +
+      kpi(d.funnel.with_ein, 'With EIN on file', 'passport queue eligible');
+
+    var q = el('q').value.toLowerCase();
+    var stageFilter = el('stageFilter').value;
+    var rows = partners.filter(function (p) {
+      var hay = [p.org, p.signer_name, p.signer_email, p.confirmation_code, p.borough, p.partner_id].join(' ').toLowerCase();
+      if (q && hay.indexOf(q) < 0) return false;
+      if (stageFilter === 'probe' && !isProbe(p)) return false;
+      if (stageFilter === 'intake' && (isProbe(p) || !p.ein)) return false;
+      if (stageFilter === 'pending' && isProbe(p)) return false;
+      return true;
+    });
+
+    el('count').textContent = rows.length + ' of ' + partners.length;
+    el('empty').hidden = rows.length > 0;
+
+    el('rows').innerHTML = rows.map(function (p) {
+      var st = stageOf(p);
+      var docs = p.docs_uploaded + ' / 13';
+      var v = p.docs_verified;
+      var pct = Math.min(100, Math.round(((p.docs_uploaded + v) / 26) * 100));
+      var mailbox = p.org_email ? esc(p.org_email) : '<small style="color:var(--gray)">—</small>';
+      if (p.org_email && p.org_email_status && p.org_email_status.indexOf('reserved') >= 0) {
+        mailbox += ' <small style="display:block;color:var(--gray)">reserved</small>';
+      }
+      return '<tr>' +
+        '<td class="org">' + esc(p.org || p.partner_id) + '<small>' + esc(p.partner_id) + (p.ein ? ' · EIN ' + esc(p.ein) : '') + '</small></td>' +
+        '<td><span class="pill ' + st.cls + '">' + st.label + '</span></td>' +
+        '<td class="docs"><b>' + docs + '</b> <span class="v">' + v + ' ✓</span>' +
+          '<div class="bar-mini"><i style="width:' + pct + '%"></i></div></td>' +
+        '<td class="contact">' + esc(p.signer_name || '—') +
+          '<small>' + esc(p.signer_email || '') + '</small>' +
+          (p.signer_phone ? '<small>' + esc(p.signer_phone) + '</small>' : '') + '</td>' +
+        '<td>' + mailbox + '</td>' +
+        '<td>' + esc(p.borough || '—') + (p.council_district ? '<small style="display:block;color:var(--gray)">' + esc(p.council_district) + '</small>' : '') + '</td>' +
+        '<td>' + esc((p.passport_status || '').replace(/_/g, ' ')) + '</td>' +
+        '<td><span class="code">' + esc(p.confirmation_code) + '</span><small style="display:block;color:var(--gray)">' + fmtDate(p.submitted_at) + '</small></td>' +
+        '</tr>';
+    }).join('');
+  }
+
+  function kpi(n, label, sub) {
+    return '<div class="kpi"><b>' + n + '</b><span>' + label + '</span>' + (sub ? '<em>' + sub + '</em>' : '') + '</div>';
+  }
+
+  function load() {
+    el('err').textContent = '';
+    return fetch(API + '/api/admin', { headers: { Authorization: 'Bearer ' + state.token } })
+      .then(function (r) {
+        if (r.status === 401) throw new Error('That token was not accepted.');
+        if (!r.ok) throw new Error('The console is unavailable right now (' + r.status + ').');
+        return r.json();
+      })
+      .then(function (j) {
+        if (!j.ok) throw new Error(j.detail || 'unexpected response');
+        state.data = j;
+        render();
+      });
+  }
+
+  function openConsole(tok) {
+    state.token = tok;
+    load().then(function () {
+      el('gate').style.display = 'none';
+      el('dash').style.display = 'block';
+    }).catch(function (e) {
+      state.token = '';
+      el('err').textContent = e.message || 'Could not open the console.';
+    });
+  }
+
+  el('go').addEventListener('click', function () { openConsole(el('tok').value.trim()); });
+  el('tok').addEventListener('keydown', function (e) { if (e.key === 'Enter') openConsole(el('tok').value.trim()); });
+  el('q').addEventListener('input', render);
+  el('stageFilter').addEventListener('change', render);
+  el('refresh').addEventListener('click', function () { load().then(render).catch(function (e) { el('genAt').textContent = 'refresh failed — ' + (e.message || 'error'); }); });
+  el('logout').addEventListener('click', function () {
+    state = { token: '', data: null };
+    el('tok').value = '';
+    el('dash').style.display = 'none';
+    el('gate').style.display = 'block';
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "rewrites": [
+    { "source": "/signup", "destination": "/api/signup" },
+    { "source": "/health", "destination": "/api/ping" },
+    { "source": "/healthz", "destination": "/api/ping" },
+    { "source": "/api/healthz", "destination": "/api/ping" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "https://join.onenyc.org" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET, POST, OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, X-Intake-Token" }
+      ]
+    }
+  ]
+}

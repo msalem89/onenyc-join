@@ -17,3 +17,10 @@ __pycache__/
 .venv/
 venv/
 .github/workflows/
+
+# Vercel local config & env (project config lives in vercel/ subdir)
+.vercel/
+.env
+.env.local
+.env.blobs
+.vercel/
